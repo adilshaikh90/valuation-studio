@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Valuation Studio</title>
+    <meta name="description" content="Company Overview Hub">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-brand"><a href="/dashboard.html">Valuation Studio</a></div>
+        <div class="nav-ticker" id="currentTickerDisplay"></div>
+        <div class="nav-links">
+            <a href="dashboard.html" class="active">Overview</a>
+            <a href="football-field.html">Football Field</a>
+            <a href="valuation.html">Valuation</a>
+            <a href="comps.html">Comps</a>
+            <a href="lbo-nav.html">LBO & NAV</a>
+            <a href="quant.html">Quant Lab</a>
+            <a href="performance.html">Performance</a>
+            <a href="news.html">News</a>
+            <a href="download.html">Download</a>
+        </div>
+        <div class="nav-user">
+            <span id="userEmail"></span>
+            <button class="btn btn-ghost" onclick="app.logout()">Logout</button>
+        </div>
+    </nav>
+    <main class="container">
+        <div class="search-bar-container">
+            <input type="text" id="tickerSearch" placeholder="Search ticker..." class="input">
+            <button id="searchBtn" class="btn btn-primary">Search</button>
+        </div>
+        
+        <header class="company-header card">
+            <h1 id="companyName">Company Name</h1>
+            <span id="tickerBadge" class="badge">TICKER</span>
+            <div class="price-info">
+                <h2 id="currentPrice">$0.00</h2>
+                <span id="priceChange" class="change">0.00%</span>
+                <span id="currency">USD</span>
+            </div>
+        </header>
+
+        <section class="metrics-grid">
+            <div class="card metric-card"><h3>Market Cap</h3><p id="marketCap">-</p></div>
+            <div class="card metric-card"><h3>P/E Ratio</h3><p id="peRatio">-</p></div>
+            <div class="card metric-card"><h3>EPS</h3><p id="eps">-</p></div>
+            <div class="card metric-card"><h3>Beta</h3><p id="beta">-</p></div>
+            <div class="card metric-card">
+                <h3>52-Week Range</h3>
+                <div class="progress-bar-container"><div class="progress-bar" id="week52Bar"></div></div>
+                <div class="range-labels"><span id="week52Low">-</span><span id="week52High">-</span></div>
+            </div>
+            <div class="card metric-card"><h3>Dividend Yield</h3><p id="divYield">-</p></div>
+            <div class="card metric-card"><h3>Revenue (TTM)</h3><p id="revenue">-</p></div>
+            <div class="card metric-card"><h3>EBITDA Margin</h3><p id="ebitdaMargin">-</p></div>
+        </section>
+
+        <section class="card summary-card mt-4">
+            <h2>Business Summary</h2>
+            <p id="companySummary">Loading summary...</p>
+        </section>
+
+        <section class="nav-cards-grid mt-4">
+            <a href="football-field.html" class="card nav-card gold-highlight">
+                <h3>🎯 Football Field</h3>
+                <p>View the consensus valuation range.</p>
+            </a>
+            <a href="valuation.html" class="card nav-card">
+                <h3>📊 Valuation Models</h3>
+                <p>DCF, DDM, and APV models.</p>
+            </a>
+            <a href="comps.html" class="card nav-card">
+                <h3>📈 Trading Comps</h3>
+                <p>Peer comparison and relative valuation.</p>
+            </a>
+            <a href="quant.html" class="card nav-card">
+                <h3>🎲 Quant Lab</h3>
+                <p>Monte Carlo, Sensitivity, and Scenario Analysis.</p>
+            </a>
+            <a href="performance.html" class="card nav-card">
+                <h3>📈 Performance</h3>
+                <p>Historical price performance and returns.</p>
+            </a>
+            <a href="download.html" class="card nav-card">
+                <h3>📥 Download Model</h3>
+                <p>Export full Excel valuation model.</p>
+            </a>
+        </section>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/charts.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

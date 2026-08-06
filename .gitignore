@@ -1,0 +1,45 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+.env
+*.egg
+*.egg-info/
+dist/
+build/
+
+# Database — DO NOT commit, regenerates on startup
+*.db
+*.sqlite
+*.sqlite3
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+logs/
+
+# Railway / Heroku
+.railway/
+
+# Test artifacts
+.pytest_cache/
+htmlcov/
+.coverage
+
+# Node (if any frontend tooling)
+node_modules/

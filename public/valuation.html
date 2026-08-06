@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valuation Models | Valuation Studio</title>
+    <meta name="description" content="DCF, DDM, APV Valuation Models">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-brand"><a href="/dashboard.html">Valuation Studio</a></div>
+        <div class="nav-ticker" id="currentTickerDisplay"></div>
+        <div class="nav-links">
+            <a href="dashboard.html">Overview</a>
+            <a href="football-field.html">Football Field</a>
+            <a href="valuation.html" class="active">Valuation</a>
+            <a href="comps.html">Comps</a>
+            <a href="lbo-nav.html">LBO & NAV</a>
+            <a href="quant.html">Quant Lab</a>
+            <a href="performance.html">Performance</a>
+            <a href="news.html">News</a>
+            <a href="download.html">Download</a>
+        </div>
+        <div class="nav-user">
+            <span id="userEmail"></span>
+            <button class="btn btn-ghost" onclick="app.logout()">Logout</button>
+        </div>
+    </nav>
+    <main class="container">
+        <header class="page-header">
+            <h1>Valuation Models</h1>
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="dcf-fcff">DCF (FCFF)</button>
+                <button class="tab-btn" data-tab="dcf-fcfe">DCF (FCFE)</button>
+                <button class="tab-btn" data-tab="ddm">DDM</button>
+                <button class="tab-btn" data-tab="apv">APV</button>
+            </div>
+        </header>
+
+        <!-- Tab 1: DCF FCFF -->
+        <div id="tab-dcf-fcff" class="tab-content active">
+            <div class="layout-grid">
+                <aside class="panel card">
+                    <h3>Assumptions</h3>
+                    <div class="form-group">
+                        <label>Terminal Growth Rate (%)</label>
+                        <input type="range" id="tgrSlider" min="0" max="5" step="0.1" value="2.5">
+                        <input type="number" id="tgrInput" value="2.5" step="0.1">
+                    </div>
+                    <div class="form-group">
+                        <label>WACC Override (%)</label>
+                        <input type="number" id="waccOverride" placeholder="Auto" step="0.1">
+                    </div>
+                    <div class="form-group">
+                        <label>Projection Years</label>
+                        <select id="projYears">
+                            <option value="5" selected>5 Years</option>
+                            <option value="7">7 Years</option>
+                            <option value="10">10 Years</option>
+                        </select>
+                    </div>
+                    <div class="form-group checkbox-group">
+                        <input type="checkbox" id="midYearCheck" checked>
+                        <label for="midYearCheck">Mid-year Convention</label>
+                    </div>
+                    <div class="form-group checkbox-group">
+                        <input type="checkbox" id="sbcCheck" checked>
+                        <label for="sbcCheck">Treat SBC as Expense</label>
+                    </div>
+                    <div class="form-group">
+                        <label>Exit Multiple (Optional)</label>
+                        <input type="number" id="exitMultiple" placeholder="e.g. 10.5" step="0.1">
+                    </div>
+                    <button id="recalcFcff" class="btn btn-primary w-full mt-4">Recalculate</button>
+                </aside>
+                
+                <div class="main-content">
+                    <div class="result-highlight card">
+                        <h2>Intrinsic Value: <span id="fcffValue" class="text-gold">$-</span></h2>
+                        <p>Current Price: <span id="fcffCurrentPrice">$-</span> (<span id="fcffUpside">-</span>)</p>
+                    </div>
+                    
+                    <div class="charts-grid mt-4">
+                        <div class="card chart-card">
+                            <h3>Projected FCF</h3>
+                            <div style="height: 300px;"><canvas id="fcffChart"></canvas></div>
+                        </div>
+                        <div class="card chart-card">
+                            <h3>EV to Equity Bridge</h3>
+                            <div style="height: 300px;"><canvas id="evBridgeChart"></canvas></div>
+                        </div>
+                    </div>
+
+                    <div class="data-tables mt-4">
+                        <div class="card">
+                            <h3>WACC Breakdown</h3>
+                            <table class="data-table" id="waccTable">
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                        <div class="card">
+                            <h3>Sensitivity (WACC vs TGR)</h3>
+                            <div id="fcffSensitivity" class="heatmap-container"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 2: DCF FCFE -->
+        <div id="tab-dcf-fcfe" class="tab-content" style="display:none;">
+            <div class="card">
+                <h2>FCFE Intrinsic Value: <span id="fcfeValue" class="text-gold">$-</span></h2>
+                <div style="height: 400px;" class="mt-4"><canvas id="fcfeChart"></canvas></div>
+            </div>
+        </div>
+
+        <!-- Tab 3: DDM -->
+        <div id="tab-ddm" class="tab-content" style="display:none;">
+            <div id="ddmContent">
+                <div class="stats-grid">
+                    <div class="card stat-card"><h3>Gordon Growth</h3><p id="ddmGordon">$-</p></div>
+                    <div class="card stat-card"><h3>Two-Stage</h3><p id="ddmTwoStage">$-</p></div>
+                    <div class="card stat-card"><h3>H-Model</h3><p id="ddmHModel">$-</p></div>
+                </div>
+                <div class="card mt-4">
+                    <h3>Dividend History</h3>
+                    <div style="height: 300px;"><canvas id="ddmChart"></canvas></div>
+                </div>
+            </div>
+            <div id="ddmError" class="card mt-4" style="display:none;">
+                <p>Dividend Discount Model is not applicable for this company.</p>
+            </div>
+        </div>
+
+        <!-- Tab 4: APV -->
+        <div id="tab-apv" class="tab-content" style="display:none;">
+            <div class="card">
+                <h2>APV Enterprise Value: <span id="apvValue" class="text-gold">$-</span></h2>
+                <div class="mt-4">
+                    <p>Unlevered Firm Value: <span id="apvUnlevered">$-</span></p>
+                    <p>PV of Tax Shields: <span id="apvTaxShields">$-</span></p>
+                </div>
+            </div>
+        </div>
+
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/charts.js"></script>
+    <script src="js/valuation.js"></script>
+</body>
+</html>

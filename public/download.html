@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download Model | Valuation Studio</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+    <nav class="nav">
+        <!-- Navigation matching other pages... -->
+        <div class="nav-brand"><a href="/dashboard.html">Valuation Studio</a></div>
+        <div class="nav-ticker" id="currentTickerDisplay"></div>
+        <div class="nav-links">
+            <a href="dashboard.html">Overview</a>
+            <a href="football-field.html">Football Field</a>
+            <a href="valuation.html">Valuation</a>
+            <a href="comps.html">Comps</a>
+            <a href="lbo-nav.html">LBO & NAV</a>
+            <a href="quant.html">Quant Lab</a>
+            <a href="performance.html">Performance</a>
+            <a href="news.html">News</a>
+            <a href="download.html" class="active">Download</a>
+        </div>
+        <div class="nav-user">
+            <span id="userEmail"></span>
+            <button class="btn btn-ghost" onclick="app.logout()">Logout</button>
+        </div>
+    </nav>
+    <main class="container">
+        <header class="page-header text-center">
+            <h1>Download Financial Model</h1>
+            <p>Export a fully functional, editable Excel model populated with the latest data.</p>
+        </header>
+
+        <div class="card max-w-3xl mx-auto mt-4 text-center">
+            <h2 class="text-gold mb-4" id="downloadTitle">Valuation Model</h2>
+            
+            <div class="layout-grid text-left mb-4">
+                <div>
+                    <h3>Included Sheets:</h3>
+                    <ul class="list-disc pl-4 mt-2">
+                        <li>Cover & Assumptions</li>
+                        <li>Executive Summary</li>
+                        <li>Historical Financials (3 Statements)</li>
+                        <li>Forecast (5 Years)</li>
+                        <li>DCF Analysis</li>
+                        <li>Comparable Companies</li>
+                        <li>WACC Calculation</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Features:</h3>
+                    <ul class="list-disc pl-4 mt-2">
+                        <li>All formulas preserved</li>
+                        <li>Clean formatting</li>
+                        <li>Ready for print/PDF</li>
+                        <li>Sensitivity Data Tables</li>
+                    </ul>
+                </div>
+            </div>
+
+            <button id="downloadBtn" class="btn btn-primary btn-large mt-4 w-full">Download Excel (.xlsx)</button>
+            <p class="text-xs text-gray mt-2">Disclaimer: Model generated for informational purposes only. Do not rely solely on this output for investment decisions.</p>
+        </div>
+    </main>
+    <script src="js/api.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/download.js"></script>
+</body>
+</html>

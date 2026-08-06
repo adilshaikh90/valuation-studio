@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News | Valuation Studio</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-brand"><a href="/dashboard.html">Valuation Studio</a></div>
+        <div class="nav-ticker" id="currentTickerDisplay"></div>
+        <div class="nav-links">
+            <a href="dashboard.html">Overview</a>
+            <a href="football-field.html">Football Field</a>
+            <a href="valuation.html">Valuation</a>
+            <a href="comps.html">Comps</a>
+            <a href="lbo-nav.html">LBO & NAV</a>
+            <a href="quant.html">Quant Lab</a>
+            <a href="performance.html">Performance</a>
+            <a href="news.html" class="active">News</a>
+            <a href="download.html">Download</a>
+        </div>
+        <div class="nav-user">
+            <span id="userEmail"></span>
+            <button class="btn btn-ghost" onclick="app.logout()">Logout</button>
+        </div>
+    </nav>
+    <main class="container">
+        <header class="page-header">
+            <h1>Latest News & Catalysts</h1>
+        </header>
+
+        <div id="newsGrid" class="news-grid">
+            <!-- Populated via JS -->
+        </div>
+        
+        <div id="noNews" class="card mt-4" style="display:none; text-align:center;">
+            <p>No recent news available for this company.</p>
+        </div>
+    </main>
+    <script src="js/api.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/news.js"></script>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trading Comps | Valuation Studio</title>
+    <meta name="description" content="Comparable Company Analysis">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-brand"><a href="/dashboard.html">Valuation Studio</a></div>
+        <div class="nav-ticker" id="currentTickerDisplay"></div>
+        <div class="nav-links">
+            <a href="dashboard.html">Overview</a>
+            <a href="football-field.html">Football Field</a>
+            <a href="valuation.html">Valuation</a>
+            <a href="comps.html" class="active">Comps</a>
+            <a href="lbo-nav.html">LBO & NAV</a>
+            <a href="quant.html">Quant Lab</a>
+            <a href="performance.html">Performance</a>
+            <a href="news.html">News</a>
+            <a href="download.html">Download</a>
+        </div>
+        <div class="nav-user">
+            <span id="userEmail"></span>
+            <button class="btn btn-ghost" onclick="app.logout()">Logout</button>
+        </div>
+    </nav>
+    <main class="container">
+        <header class="page-header flex justify-between align-center">
+            <div>
+                <h1>Trading Comparables</h1>
+                <p>Peer comparison and relative valuation analysis.</p>
+            </div>
+            <div class="search-bar-container" style="margin: 0; max-width: 300px;">
+                <input type="text" id="addPeerInput" placeholder="Add peer ticker..." class="input">
+                <button id="addPeerBtn" class="btn btn-primary">Add</button>
+            </div>
+        </header>
+
+        <section class="card overflow-x-auto mt-4">
+            <table class="data-table" id="compsTable">
+                <thead>
+                    <tr>
+                        <th>Ticker</th>
+                        <th>Company</th>
+                        <th>Market Cap</th>
+                        <th>EV/EBITDA</th>
+                        <th>EV/EBIT</th>
+                        <th>P/E</th>
+                        <th>P/B</th>
+                        <th>EV/Rev</th>
+                        <th>Rev Growth</th>
+                        <th>EBITDA Margin</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Populated via JS -->
+                </tbody>
+                <tfoot id="compsFooter">
+                    <!-- Stats rows (mean, median) -->
+                </tfoot>
+            </table>
+        </section>
+
+        <div class="layout-grid mt-4">
+            <section class="card">
+                <h3>Implied Value via Multiples</h3>
+                <table class="data-table" id="impliedValueTable">
+                    <thead>
+                        <tr>
+                            <th>Metric</th>
+                            <th>Peer Median</th>
+                            <th>Implied Price</th>
+                            <th>Premium/Discount</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </section>
+            
+            <section class="card chart-card">
+                <h3>Premium/Discount to Peers</h3>
+                <div style="height: 300px;"><canvas id="premiumChart"></canvas></div>
+            </section>
+        </div>
+        
+        <section class="card chart-card mt-4">
+            <h3>Regression Analysis (Growth vs Multiple)</h3>
+            <div style="height: 400px;"><canvas id="regressionChart"></canvas></div>
+        </section>
+
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/charts.js"></script>
+    <script src="js/comps.js"></script>
+</body>
+</html>

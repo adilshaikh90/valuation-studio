@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quant Lab | Valuation Studio</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+    <nav class="nav">
+        <!-- Navigation matching other pages... -->
+        <div class="nav-brand"><a href="/dashboard.html">Valuation Studio</a></div>
+        <div class="nav-ticker" id="currentTickerDisplay"></div>
+        <div class="nav-links">
+            <a href="dashboard.html">Overview</a>
+            <a href="football-field.html">Football Field</a>
+            <a href="valuation.html">Valuation</a>
+            <a href="comps.html">Comps</a>
+            <a href="lbo-nav.html">LBO & NAV</a>
+            <a href="quant.html" class="active">Quant Lab</a>
+            <a href="performance.html">Performance</a>
+            <a href="news.html">News</a>
+            <a href="download.html">Download</a>
+        </div>
+        <div class="nav-user">
+            <span id="userEmail"></span>
+            <button class="btn btn-ghost" onclick="app.logout()">Logout</button>
+        </div>
+    </nav>
+    <main class="container">
+        <header class="page-header">
+            <h1>Quantitative Lab</h1>
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="monte-carlo">Monte Carlo</button>
+                <button class="tab-btn" data-tab="sensitivity">Sensitivity</button>
+                <button class="tab-btn" data-tab="tornado">Tornado</button>
+                <button class="tab-btn" data-tab="scenarios">Scenario Weighting</button>
+            </div>
+        </header>
+
+        <!-- Monte Carlo Tab -->
+        <div id="tab-monte-carlo" class="tab-content active">
+            <div class="card chart-card">
+                <h3>Monte Carlo Simulation (10,000 runs)</h3>
+                <div style="height: 400px; position:relative;"><canvas id="mcChart"></canvas></div>
+            </div>
+            <div class="stats-grid mt-4">
+                <div class="card stat-card"><h3>Mean Price</h3><p id="mcMean">$-</p></div>
+                <div class="card stat-card"><h3>Median Price</h3><p id="mcMedian">$-</p></div>
+                <div class="card stat-card"><h3>Std Dev</h3><p id="mcStdDev">$-</p></div>
+                <div class="card stat-card"><h3>Prob. > Current</h3><p id="mcProb">-%</p></div>
+            </div>
+        </div>
+
+        <!-- Sensitivity Tab -->
+        <div id="tab-sensitivity" class="tab-content" style="display:none;">
+            <div class="layout-grid">
+                <div class="card">
+                    <h3>WACC vs Terminal Growth</h3>
+                    <div id="sensWaccTgr" class="heatmap-container overflow-x-auto"></div>
+                </div>
+                <div class="card">
+                    <h3>WACC vs Exit Multiple</h3>
+                    <div id="sensWaccExit" class="heatmap-container overflow-x-auto"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tornado Tab -->
+        <div id="tab-tornado" class="tab-content" style="display:none;">
+            <div class="card chart-card">
+                <h3>Valuation Drivers Impact</h3>
+                <div style="height: 500px;"><canvas id="tornadoChart"></canvas></div>
+            </div>
+        </div>
+
+        <!-- Scenarios Tab -->
+        <div id="tab-scenarios" class="tab-content" style="display:none;">
+            <div class="card">
+                <table class="data-table" id="scenariosTable">
+                    <thead>
+                        <tr>
+                            <th>Scenario</th>
+                            <th>Implied Value</th>
+                            <th>Probability (%)</th>
+                            <th>Weighted Value</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="3" class="text-right text-bold">Expected Value:</td>
+                            <td id="expectedValue" class="text-gold text-bold">$-</td>
+                        </tr>
+                    </tfoot>
+                </table>
+                <button id="updateScenariosBtn" class="btn btn-primary mt-4">Update Probabilities</button>
+            </div>
+        </div>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/charts.js"></script>
+    <script src="js/quant.js"></script>
+</body>
+</html>

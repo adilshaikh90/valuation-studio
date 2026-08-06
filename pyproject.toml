@@ -1,0 +1,6 @@
+[tool.poetry]
+name = "valuation-studio"
+version = "1.0.0"
+description = "Professional financial valuation platform"
+authors = ["Valuation Studio"]
+readme = "README.md"

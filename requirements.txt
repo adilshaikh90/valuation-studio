@@ -1,0 +1,13 @@
+fastapi
+uvicorn[standard]
+yfinance
+openpyxl
+numpy
+numpy-financial
+pandas
+scipy
+bcrypt
+python-jose[cryptography]
+python-multipart
+sqlalchemy
+aiofiles

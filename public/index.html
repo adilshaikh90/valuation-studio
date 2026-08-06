@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valuation Studio | Institutional-Grade Valuation</title>
+    <meta name="description" content="DCF, DDM, APV, LBO, Monte Carlo, Trading Comps — all in one click.">
+    
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/components.css">
+    
+    <style>
+        .hero {
+            padding: 8rem 0 6rem;
+            text-align: center;
+            background: radial-gradient(circle at center, var(--bg-card) 0%, var(--bg-primary) 100%);
+        }
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, #f0b429, #fde047);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+        .hero h2 {
+            font-size: 3rem;
+            color: #fff;
+            margin-bottom: 1.5rem;
+        }
+        .hero-desc {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto 3rem;
+        }
+        .search-container {
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+            display: flex;
+            gap: 1rem;
+        }
+        .search-container input {
+            flex: 1;
+            padding: 1.2rem 1.5rem;
+            font-size: 1.1rem;
+            border-radius: var(--radius-md);
+            border: 2px solid var(--border-color);
+            background-color: rgba(0,0,0,0.3);
+        }
+        .search-container input:focus {
+            border-color: var(--accent-gold);
+            background-color: var(--bg-input);
+        }
+        .search-container button {
+            padding: 0 2rem;
+            font-size: 1.1rem;
+            border-radius: var(--radius-md);
+        }
+        .features {
+            padding: 5rem 0;
+            background-color: var(--bg-primary);
+        }
+        .feature-card {
+            text-align: center;
+            padding: 2.5rem 1.5rem;
+        }
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        .feature-title {
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+            color: var(--text-primary);
+        }
+        
+        footer {
+            padding: 3rem 0;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="nav">
+        <div class="nav-logo">
+            <span>VS</span> Valuation Studio
+        </div>
+        <div class="nav-links">
+            <a href="#features">Features</a>
+            <a href="#">About</a>
+            <a href="login.html" class="btn btn-ghost">Log In</a>
+            <a href="signup.html" class="btn btn-primary">Sign Up</a>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1>Institutional-Grade Valuation.</h1>
+                <h2>For Everyone.</h2>
+                <p class="hero-desc">DCF, DDM, APV, LBO, Monte Carlo, Trading Comps — all in one click. Enter any ticker and get a complete financial analysis in seconds.</p>
+                
+                <form id="global-search" class="search-container">
+                    <input type="text" placeholder="Enter a ticker symbol... AAPL, TSLA, RELIANCE.NS" required>
+                    <button type="submit" class="btn btn-primary">Analyze</button>
+                </form>
+            </div>
+        </section>
+
+        <section id="features" class="features">
+            <div class="container">
+                <div class="grid grid-3">
+                    <div class="card feature-card">
+                        <div class="feature-icon">📊</div>
+                        <h3 class="feature-title">9 Valuation Methods</h3>
+                        <p>DCF, DDM, APV, LBO, NAV, Trading Comps, and more.</p>
+                    </div>
+                    <div class="card feature-card">
+                        <div class="feature-icon">🎲</div>
+                        <h3 class="feature-title">Monte Carlo Simulation</h3>
+                        <p>10,000 bootstrapped scenarios with probability distributions.</p>
+                    </div>
+                    <div class="card feature-card">
+                        <div class="feature-icon">💻</div>
+                        <h3 class="feature-title">Football Field Chart</h3>
+                        <p>See all valuations side-by-side like a real IB analyst.</p>
+                    </div>
+                    <div class="card feature-card">
+                        <div class="feature-icon">📈</div>
+                        <h3 class="feature-title">5-Year Performance</h3>
+                        <p>Interactive charts with benchmark comparison.</p>
+                    </div>
+                    <div class="card feature-card">
+                        <div class="feature-icon">📥</div>
+                        <h3 class="feature-title">Excel Financial Model</h3>
+                        <p>Download complete models with live formulas.</p>
+                    </div>
+                    <div class="card feature-card">
+                        <div class="feature-icon">🌍</div>
+                        <h3 class="feature-title">Global Coverage</h3>
+                        <p>Any public company, any exchange, any currency.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Valuation Studio. All rights reserved.</p>
+            <p class="mt-1" style="font-size: 0.8rem;">Disclaimer: For educational purposes only. Not financial advice.</p>
+        </div>
+    </footer>
+
+    <script src="js/api.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

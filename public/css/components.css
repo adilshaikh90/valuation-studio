@@ -1,0 +1,164 @@
+/* Additional component-specific styles */
+
+/* Football Field Chart */
+.football-field-container {
+  position: relative;
+  width: 100%;
+  height: 400px;
+}
+
+/* Sensitivity Heatmap */
+.heatmap-grid {
+  display: grid;
+  gap: 2px;
+  overflow-x: auto;
+}
+.heatmap-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  font-size: 0.85rem;
+  color: #fff;
+  transition: transform 0.2s;
+}
+.heatmap-cell:hover {
+  transform: scale(1.1);
+  z-index: 10;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+/* Tornado Chart */
+.tornado-chart-container {
+  position: relative;
+  width: 100%;
+  height: 350px;
+}
+
+/* Monte Carlo Histogram */
+.histogram-container {
+  position: relative;
+  width: 100%;
+  height: 350px;
+}
+
+/* Stock Price Chart */
+.price-chart-container {
+  position: relative;
+  width: 100%;
+  height: 400px;
+}
+
+/* Comparison Tables */
+.comparison-table th {
+  text-align: right;
+}
+.comparison-table th:first-child {
+  text-align: left;
+}
+.comparison-table td {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.comparison-table td:first-child {
+  text-align: left;
+  font-weight: 500;
+}
+
+/* News Cards */
+.news-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  height: 100%;
+}
+.news-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+.news-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+.news-summary {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  flex-grow: 1;
+}
+
+/* Download Card */
+.download-card {
+  text-align: center;
+  padding: 3rem 2rem;
+  border: 2px dashed var(--border-color);
+  background-color: rgba(255,255,255,0.01);
+}
+.download-card:hover {
+  border-color: var(--accent-gold);
+  background-color: var(--accent-gold-light);
+}
+.download-icon {
+  font-size: 3rem;
+  color: var(--accent-gold);
+  margin-bottom: 1rem;
+}
+
+/* Admin User Table */
+.admin-table td {
+  vertical-align: middle;
+}
+.status-indicator {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 0.5rem;
+}
+.status-active { background-color: var(--accent-green); box-shadow: 0 0 5px var(--accent-green); }
+.status-inactive { background-color: var(--accent-red); }
+
+/* Scenario Weighting */
+.scenario-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.scenario-bar-container {
+  width: 100%;
+  background-color: var(--bg-input);
+  height: 24px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  display: flex;
+}
+.scenario-segment {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  color: #fff;
+  font-weight: 600;
+}
+.segment-base { background-color: var(--accent-gold); }
+.segment-bull { background-color: var(--accent-green); }
+.segment-bear { background-color: var(--accent-red); }
+
+/* Financial Statements */
+.fin-statement th:not(:first-child), 
+.fin-statement td:not(:first-child) {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.fin-row-indent {
+  padding-left: 2rem !important;
+  color: var(--text-secondary);
+}
+.fin-row-total {
+  font-weight: 700;
+  border-top: 1px solid var(--border-color-light);
+  color: var(--text-primary);
+}

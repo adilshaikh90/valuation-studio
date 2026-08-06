@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Football Field | Valuation Studio</title>
+    <meta name="description" content="Football Field Valuation Range">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-brand"><a href="/dashboard.html">Valuation Studio</a></div>
+        <div class="nav-ticker" id="currentTickerDisplay"></div>
+        <div class="nav-links">
+            <a href="dashboard.html">Overview</a>
+            <a href="football-field.html" class="active">Football Field</a>
+            <a href="valuation.html">Valuation</a>
+            <a href="comps.html">Comps</a>
+            <a href="lbo-nav.html">LBO & NAV</a>
+            <a href="quant.html">Quant Lab</a>
+            <a href="performance.html">Performance</a>
+            <a href="news.html">News</a>
+            <a href="download.html">Download</a>
+        </div>
+        <div class="nav-user">
+            <span id="userEmail"></span>
+            <button class="btn btn-ghost" onclick="app.logout()">Logout</button>
+        </div>
+    </nav>
+    <main class="container">
+        <header class="page-header">
+            <h1>Valuation Football Field</h1>
+            <p>Consensus implied value range based on multiple methodologies.</p>
+        </header>
+
+        <section class="card chart-card">
+            <div class="chart-container" style="position: relative; height:400px; width:100%">
+                <canvas id="footballFieldChart"></canvas>
+            </div>
+        </section>
+
+        <section class="stats-grid mt-4">
+            <div class="card stat-card">
+                <h3>Consensus Range</h3>
+                <p id="consensusRange" class="stat-value">-</p>
+            </div>
+            <div class="card stat-card">
+                <h3>Median Implied Value</h3>
+                <p id="medianValue" class="stat-value">-</p>
+            </div>
+            <div class="card stat-card">
+                <h3>Vs Current Price</h3>
+                <p id="priceUpside" class="stat-value">-</p>
+            </div>
+        </section>
+
+        <section class="card mt-4 data-table-container">
+            <table class="data-table" id="valuationTable">
+                <thead>
+                    <tr>
+                        <th>Methodology</th>
+                        <th>Low</th>
+                        <th>Mid</th>
+                        <th>High</th>
+                        <th>Vs Current</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Populated via JS -->
+                </tbody>
+            </table>
+        </section>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/charts.js"></script>
+    <script src="js/football-field.js"></script>
+</body>
+</html>
