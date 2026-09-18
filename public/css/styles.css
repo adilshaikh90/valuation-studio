@@ -88,13 +88,13 @@ a:hover {
 
 /* Sidebar */
 .sidebar {
-  width: 250px;
-  min-width: 250px;
+  width: 260px;
+  min-width: 260px;
   background-color: var(--surface-1);
   border-right: 1px solid var(--border-color);
   display: flex;
   flex-direction: column;
-  padding: 1.25rem 0.85rem;
+  padding: 1.25rem 1rem;
   height: 100vh;
   position: sticky;
   top: 0;
@@ -126,10 +126,15 @@ a:hover {
 .sidebar-logo-img {
   width: 100%;
   height: auto;
-  max-height: 70px;
-  max-width: 235px;
+  max-height: 82px;
+  max-width: 236px;
   object-fit: contain;
   display: block;
+}
+
+/* Legacy navigation suppression — guarantee old navbar is never visible */
+nav.nav {
+  display: none !important;
 }
 
 

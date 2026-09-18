@@ -6,8 +6,8 @@
     <title>Valuation Studio | Institutional-Grade Valuation</title>
     <meta name="description" content="DCF, DDM, APV, LBO, Monte Carlo, Trading Comps — all in one click.">
     
-    <link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="css/components.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="css/styles.css?v=2.1">
+    <link rel="stylesheet" href="css/components.css?v=2.1">
     
     <style>
         .hero {
@@ -91,13 +91,28 @@
             color: var(--text-muted);
             font-size: 0.9rem;
         }
+    
+        .landing-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.25rem 2.5rem;
+            border-bottom: 1px solid var(--border-color);
+            background-color: var(--surface-1);
+        }
+        .landing-nav .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+    
     </style>
 </head>
 <body>
 
-    <nav class="nav">
+    <nav class="landing-nav">
         <div class="nav-logo">
-            <img src="images/logo-dark-theme.png" alt="Valuation Studio" style="height:36px;">
+            <img src="images/logo-dark-theme.png?v=2.1" alt="Valuation Studio" style="height:36px;">
         </div>
         <div class="nav-links">
             <a href="#features">Features</a>
@@ -166,7 +181,7 @@
         </div>
     </footer>
 
-    <script src="js/api.js"></script>
-    <script src="js/app.js"></script>
+    <script src="js/api.js?v=2.1"></script>
+    <script src="js/app.js?v=2.1"></script>
 </body>
 </html>

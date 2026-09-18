@@ -7,6 +7,18 @@ class App {
     }
 
     async init() {
+        // Anti-stale cache guard: If browser served an ancient cached HTML file lacking the sidebar
+        const isAuthPage = window.location.pathname.includes('login')
+            || window.location.pathname.includes('signup')
+            || window.location.pathname === '/'
+            || window.location.pathname.endsWith('index.html');
+        if (!isAuthPage && !document.querySelector('.layout-with-sidebar')) {
+            const url = new URL(window.location.href);
+            url.searchParams.set('v', '2.1_' + Date.now());
+            window.location.replace(url.toString());
+            return;
+        }
+
         await this.checkAuth();
         this.setupEventListeners();
     }

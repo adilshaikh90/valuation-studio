@@ -83,8 +83,26 @@ async def serve_favicon():
 
 
 # ---------------------------------------------------------------------------
-# HTML page routes — serve frontend pages
+# HTML page routes — serve frontend pages (with anti-cache headers)
 # ---------------------------------------------------------------------------
+NO_CACHE_HEADERS = {
+    "Cache-Control": "no-cache, no-store, must-revalidate, max-age=0",
+    "Pragma": "no-cache",
+    "Expires": "0",
+    "Clear-Site-Data": '"cache"',
+}
+
+@app.middleware("http")
+async def disable_cache_for_html(request, call_next):
+    response = await call_next(request)
+    path = request.url.path
+    if path.endswith(".html") or path in ["", "/"] or (not "." in path.split("/")[-1] and not path.startswith("/api")):
+        response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate, max-age=0"
+        response.headers["Pragma"] = "no-cache"
+        response.headers["Expires"] = "0"
+        response.headers["Clear-Site-Data"] = '"cache"'
+    return response
+
 HTML_PAGES = [
     "index", "login", "signup", "dashboard", "football-field",
     "valuation", "comps", "lbo-nav", "quant", "performance",
@@ -96,7 +114,7 @@ async def serve_landing():
     """Serve the landing page."""
     index_file = PUBLIC_DIR / "index.html"
     if index_file.exists():
-        return FileResponse(str(index_file))
+        return FileResponse(str(index_file), headers=NO_CACHE_HEADERS)
     return {"message": "Valuation Studio API", "status": "running", "version": "1.0.0"}
 
 # Generate routes for all HTML pages
@@ -108,13 +126,14 @@ for _page in HTML_PAGES:
         async def handler():
             html_file = PUBLIC_DIR / f"{page_name}.html"
             if html_file.exists():
-                return FileResponse(str(html_file))
+                return FileResponse(str(html_file), headers=NO_CACHE_HEADERS)
             return {"error": f"Page {page_name} not found"}
         handler.__name__ = f"serve_{page_name.replace('-', '_')}"
         return handler
 
     app.get(f"/{_page}.html", include_in_schema=False)(_make_handler(_page))
     app.get(f"/{_page}", include_in_schema=False)(_make_handler(_page))
+
 
 # ---------------------------------------------------------------------------
 # Health check
