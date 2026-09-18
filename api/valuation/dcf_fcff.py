@@ -257,8 +257,9 @@ def calculate_dcf_fcff(
 
     # Shares in same unit as FCF (both in base currency units — yfinance uses actual $)
     shares_diluted = max(shares_diluted, 1)
-    value_per_share_gordon = equity_value_gordon / shares_diluted
-    value_per_share_exit   = equity_value_exit / shares_diluted
+    scale = data_fetcher.get_price_scale_to_financials(ticker) if hasattr(data_fetcher, 'get_price_scale_to_financials') else 1.0
+    value_per_share_gordon = (equity_value_gordon / shares_diluted) * scale
+    value_per_share_exit   = (equity_value_exit / shares_diluted) * scale
 
     # ── TV as % of EV ────────────────────────────────────────────────────────
     tv_pct = pv_tv_gordon / enterprise_value_gordon if enterprise_value_gordon > 0 else 0
@@ -280,9 +281,9 @@ def calculate_dcf_fcff(
                     bs_df_tmp = data_fetcher.get_balance_sheet(ticker)
                     try:
                         net_d = _safe_get(bs_df_tmp, ['Long Term Debt'], 0) - _safe_get(bs_df_tmp, ['Cash And Cash Equivalents'], 0)
-                        row[j] = round((v - net_d) / shares_diluted, 2)
+                        row[j] = round(((v - net_d) / shares_diluted) * scale, 2)
                     except Exception:
-                        row[j] = round(v / shares_diluted, 2)
+                        row[j] = round((v / shares_diluted) * scale, 2)
 
     upside_pct = ((value_per_share_gordon / current_price) - 1) * 100 if current_price > 0 else 0
 

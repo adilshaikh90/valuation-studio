@@ -42,6 +42,29 @@ class App {
                 // Sidebar user email
                 const sidebarEmail = document.getElementById('sidebarUserEmail');
                 if (sidebarEmail) sidebarEmail.textContent = this.user.email;
+
+                // Admin Control & Badge
+                if (this.user && this.user.role === 'admin') {
+                    const sidebarFooter = document.querySelector('.sidebar-footer');
+                    if (sidebarFooter && !document.getElementById('sidebarAdminBadge')) {
+                        const badge = document.createElement('span');
+                        badge.id = 'sidebarAdminBadge';
+                        badge.style.cssText = 'background: rgba(245, 158, 11, 0.18); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.4); padding: 2px 7px; font-size: 0.7rem; border-radius: 4px; font-weight: 700; margin-bottom: 5px; display: inline-block; letter-spacing: 0.05em;';
+                        badge.textContent = 'ADMIN';
+                        sidebarFooter.insertBefore(badge, sidebarFooter.firstChild);
+                    }
+
+                    const sidebarNav = document.querySelector('.sidebar-nav');
+                    if (sidebarNav && !document.getElementById('adminControlNavItem')) {
+                        const adminLink = document.createElement('a');
+                        adminLink.id = 'adminControlNavItem';
+                        adminLink.href = 'admin.html?v=2.1';
+                        adminLink.className = 'sidebar-item' + (window.location.pathname.includes('admin') ? ' active' : '');
+                        adminLink.style.cssText = 'color: #f59e0b; font-weight: 600; border: 1px solid rgba(245, 158, 11, 0.25); background: rgba(245, 158, 11, 0.06); margin-top: 0.6rem;';
+                        adminLink.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Admin Control';
+                        sidebarNav.appendChild(adminLink);
+                    }
+                }
             } catch (err) {
                 api.clearToken();
                 if (!isAuthPage) window.location.href = 'login.html';
@@ -49,6 +72,9 @@ class App {
         } else if (!isAuthPage) {
             window.location.href = 'login.html';
         }
+
+        // Initialize global cookie notice
+        this._initCookieBanner();
 
         // Populate sidebar ticker info
         this._populateSidebar();
@@ -245,6 +271,55 @@ class App {
         return (isNeg ? '-' : '') + s + this.fmt(Math.abs(value));
     }
 
+    // ── Cookie & Analytics Banner ────────────────────────
+    _initCookieBanner() {
+        const consent = localStorage.getItem('vs_cookie_consent');
+        const existingBanner = document.getElementById('cookieNoticeBanner');
+        if (consent) {
+            if (existingBanner) existingBanner.classList.add('hidden');
+            return;
+        }
+        if (existingBanner) return;
+
+        const banner = document.createElement('div');
+        banner.id = 'cookieNoticeBanner';
+        banner.className = 'cookie-banner';
+        banner.style.cssText = `
+            position: fixed; bottom: 0; left: 0; right: 0;
+            background: rgba(8, 14, 24, 0.96); backdrop-filter: blur(12px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1rem 2rem; z-index: 9999;
+            display: flex; justify-content: center; align-items: center;
+            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.4);
+            font-family: 'Inter', -apple-system, sans-serif;
+        `;
+        banner.innerHTML = `
+            <div style="width: 100%; max-width: 1200px; display: flex; justify-content: space-between; align-items: center; gap: 2rem; flex-wrap: wrap;">
+                <div style="color: #cbd5e1; font-size: 0.88rem; line-height: 1.45; flex: 1; min-width: 280px;">
+                    <strong style="color: #ffffff; font-weight: 600;">Cookie &amp; Analytics Notice</strong> — We use Google Analytics to understand how the tool is used. No personal financial data is included in analytics events. You can opt out at any time. <a href="#" id="cookieGlobalPrivacyLink" style="color: #94a3b8; text-decoration: underline; margin-left: 0.35rem;">Privacy Policy</a>
+                </div>
+                <div style="display: flex; gap: 0.75rem; align-items: center;">
+                    <button type="button" id="cookieGlobalDecline" style="background: rgba(30, 41, 59, 0.85); border: 1px solid rgba(255, 255, 255, 0.15); color: #e2e8f0; border-radius: 6px; padding: 0.55rem 1.25rem; font-size: 0.88rem; font-weight: 500; cursor: pointer; transition: all 0.2s;">Decline</button>
+                    <button type="button" id="cookieGlobalAccept" style="background: #d97706; border: none; color: #0f172a; border-radius: 6px; padding: 0.55rem 1.35rem; font-size: 0.88rem; font-weight: 600; cursor: pointer; transition: all 0.2s; box-shadow: 0 2px 8px rgba(217, 119, 6, 0.3);">Accept Analytics</button>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(banner);
+
+        document.getElementById('cookieGlobalPrivacyLink')?.addEventListener('click', (e) => {
+            e.preventDefault();
+            alert('Valuation Studio Privacy Policy: We do not sell or store personal financial search data without consent.');
+        });
+        document.getElementById('cookieGlobalDecline')?.addEventListener('click', () => {
+            localStorage.setItem('vs_cookie_consent', 'declined');
+            banner.remove();
+        });
+        document.getElementById('cookieGlobalAccept')?.addEventListener('click', () => {
+            localStorage.setItem('vs_cookie_consent', 'accepted');
+            banner.remove();
+        });
+    }
+
     // ── Chart helpers ────────────────────────────────────
     destroyChart(id) {
         if (this._charts[id]) { this._charts[id].destroy(); delete this._charts[id]; }
@@ -255,3 +330,4 @@ class App {
 
 const app = new App();
 document.addEventListener('DOMContentLoaded', () => app.init());
+

@@ -123,7 +123,8 @@ def calculate_lbo(
     target_moic       = (1 + target_irr) ** hold_period
     max_entry_equity  = exit_equity / target_moic if target_moic > 0 else 0
     max_entry_ev      = max_entry_equity + debt
-    floor_per_share   = max_entry_equity / max(shares, 1)
+    scale             = data_fetcher.get_price_scale_to_financials(ticker) if hasattr(data_fetcher, 'get_price_scale_to_financials') else 1.0
+    floor_per_share   = (max_entry_equity / max(shares, 1)) * scale
 
     current_price_per_share_check = market_cap / max(shares, 1) if market_cap > 0 else current_price
 

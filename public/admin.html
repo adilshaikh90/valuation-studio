@@ -3,11 +3,69 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Panel | Valuation Studio</title>
+  <title>Admin Control Center | Valuation Studio</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css?v=2.1">
   <link rel="stylesheet" href="css/components.css?v=2.1">
+  <style>
+    .admin-badge {
+      display: inline-block;
+      padding: 0.2rem 0.6rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    .badge-admin {
+      background: rgba(245, 158, 11, 0.15);
+      color: #f59e0b;
+      border: 1px solid rgba(245, 158, 11, 0.35);
+    }
+    .badge-user {
+      background: rgba(148, 163, 184, 0.15);
+      color: #94a3b8;
+      border: 1px solid rgba(148, 163, 184, 0.25);
+    }
+    .status-dot {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      margin-right: 6px;
+    }
+    .status-active { background: #22c55e; }
+    .status-inactive { background: #ef4444; }
+    .action-btn {
+      padding: 0.35rem 0.65rem;
+      font-size: 0.78rem;
+      border-radius: 6px;
+      border: 1px solid var(--border-color);
+      background: var(--surface-2);
+      color: var(--text-primary);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .action-btn:hover {
+      background: var(--surface-3);
+      border-color: var(--border-light);
+    }
+    .action-btn-danger {
+      color: #f87171;
+      border-color: rgba(239, 68, 68, 0.3);
+    }
+    .action-btn-danger:hover {
+      background: rgba(239, 68, 68, 0.15);
+      border-color: #ef4444;
+    }
+    .action-btn-gold {
+      color: #f59e0b;
+      border-color: rgba(245, 158, 11, 0.3);
+    }
+    .action-btn-gold:hover {
+      background: rgba(245, 158, 11, 0.15);
+      border-color: #f59e0b;
+    }
+  </style>
 </head>
 <body>
 <div class="layout-with-sidebar">
@@ -20,68 +78,141 @@
     </div>
     <div class="sidebar-ticker-box">
       <div class="sidebar-ticker-row">
-        <span id="sidebarTicker" class="sidebar-ticker-symbol">ADMIN</span>
-        <span id="sidebarPrice" class="sidebar-ticker-price text-gold">Console</span>
+        <span class="sidebar-ticker-symbol text-gold">ADMIN</span>
+        <span class="sidebar-ticker-price text-green">Online</span>
       </div>
     </div>
     <nav class="sidebar-nav">
       <a href="dashboard.html?v=2.1" class="sidebar-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg> App Overview</a>
-      <a href="admin.html?v=2.1" class="sidebar-item active"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Admin Dashboard</a>
+      <a href="admin.html?v=2.1" class="sidebar-item active" style="color: #f59e0b; font-weight: 600;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Admin Control Center</a>
     </nav>
     <div class="sidebar-footer">
+      <span class="admin-badge badge-admin" style="margin-bottom: 6px;">MASTER ADMIN</span>
       <span id="sidebarUserEmail" class="sidebar-user-email"></span>
       <button class="btn btn-ghost btn-sm" onclick="app.logout()">Logout</button>
     </div>
   </aside>
 
   <main class="main-content">
-    <div class="page-header">
-      <h1 class="page-title">Admin Dashboard</h1>
-      <p class="page-subtitle">Platform user analytics, search metrics, and account controls</p>
+    <div class="page-header flex justify-between align-center">
+      <div>
+        <h1 class="page-title">Admin Control Center</h1>
+        <p class="page-subtitle">Manage user accounts, roles, access permissions, and monitor platform search activity</p>
+      </div>
+      <div class="flex gap-2">
+        <button class="btn btn-secondary" onclick="loadAdminData()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:4px;"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg> Refresh Data</button>
+      </div>
     </div>
 
+    <!-- Stats Grid -->
     <section class="stats-grid mt-4">
-      <div class="card stat-card"><h3>Total Users</h3><p id="totalUsers">-</p></div>
-      <div class="card stat-card"><h3>Total Searches</h3><p id="totalSearches">-</p></div>
-      <div class="card stat-card"><h3>Searches Today</h3><p id="searchesToday">-</p></div>
-      <div class="card stat-card"><h3>Top Ticker</h3><p id="topTicker" class="text-gold">-</p></div>
+      <div class="card stat-card">
+        <div class="stat-label">Total Users</div>
+        <div class="stat-value" id="totalUsers">-</div>
+        <div class="text-muted text-sm mt-1" id="activeUsersCount">Loading active count...</div>
+      </div>
+      <div class="card stat-card">
+        <div class="stat-label">Total Searches</div>
+        <div class="stat-value" id="totalSearches">-</div>
+        <div class="text-muted text-sm mt-1">Lifetime platform queries</div>
+      </div>
+      <div class="card stat-card">
+        <div class="stat-label">Searches Today</div>
+        <div class="stat-value text-green" id="searchesToday">-</div>
+        <div class="text-muted text-sm mt-1">24-hour search volume</div>
+      </div>
+      <div class="card stat-card">
+        <div class="stat-label">Top Searched Ticker</div>
+        <div class="stat-value text-gold" id="topTicker">-</div>
+        <div class="text-muted text-sm mt-1" id="topTickerCount">Most requested asset</div>
+      </div>
     </section>
 
-    <div class="layout-grid mt-4">
-      <section class="card chart-card">
-        <h3>Searches (Last 30 Days)</h3>
-        <div style="height: 300px;"><canvas id="searchesChart"></canvas></div>
-      </section>
-      <section class="card chart-card">
-        <h3>Top 10 Tickers</h3>
-        <div style="height: 300px;"><canvas id="topTickersChart"></canvas></div>
-      </section>
+    <!-- Visual Analytics Charts -->
+    <div class="grid grid-2 gap-4 mt-6">
+      <div class="card">
+        <div class="card-header">Search Activity (Last 30 Days)</div>
+        <div style="height: 260px;"><canvas id="searchesChart"></canvas></div>
+      </div>
+      <div class="card">
+        <div class="card-header">Top 10 Searched Equities</div>
+        <div style="height: 260px;"><canvas id="topTickersChart"></canvas></div>
+      </div>
     </div>
 
-    <section class="card mt-4">
-      <div class="flex justify-between align-center mb-4">
-        <h2>User Management</h2>
-        <input type="text" id="userSearch" placeholder="Search users..." class="input" style="max-width: 300px; padding: 0.5rem 0.75rem; background: var(--surface-2); border: 1px solid var(--border-color); border-radius: var(--radius-md); color: var(--text-primary);">
+    <!-- User Management Section -->
+    <section class="card mt-6">
+      <div class="flex justify-between align-center mb-4 flex-wrap gap-2">
+        <div>
+          <h2 style="font-size: 1.25rem; font-weight: 600;">User Account Management</h2>
+          <p class="text-secondary text-sm">Control account active status, promote to Admin, or remove access</p>
+        </div>
+        <div class="flex gap-2">
+          <input type="text" id="userSearchInput" placeholder="Filter by email or role..." style="width: 240px; padding: 0.5rem 0.85rem; background: var(--surface-2); border: 1px solid var(--border-color); border-radius: var(--radius-md); color: var(--text-primary); font-size: 0.85rem;">
+        </div>
       </div>
-      <div class="overflow-x-auto">
+
+      <div class="table-scroll">
         <table class="data-table" id="usersTable">
           <thead>
             <tr>
-              <th>Email</th>
+              <th>User ID</th>
+              <th>Email Address</th>
               <th>Role</th>
               <th>Status</th>
               <th>Created</th>
-              <th>Last Login</th>
-              <th>Actions</th>
+              <th>Last Active</th>
+              <th style="text-align: right;">Control Actions</th>
             </tr>
           </thead>
-          <tbody></tbody>
+          <tbody>
+            <tr><td colspan="7" class="text-center py-4 text-muted">Loading user accounts...</td></tr>
+          </tbody>
         </table>
       </div>
     </section>
-  </main>
 
+    <!-- Search Audit Trail -->
+    <section class="card mt-6">
+      <div class="card-header flex justify-between align-center">
+        <span>Recent Search Audit Trail</span>
+        <span class="text-secondary text-sm" id="auditCount">Latest 50 events</span>
+      </div>
+      <div class="table-scroll" style="max-height: 380px;">
+        <table class="data-table" id="logsTable">
+          <thead>
+            <tr>
+              <th>Time (UTC)</th>
+              <th>User</th>
+              <th>Ticker</th>
+              <th>Company</th>
+              <th>Currency</th>
+              <th>Country</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td colspan="6" class="text-center py-4 text-muted">Loading audit log...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- System Info Footer -->
+    <section class="card mt-6 mb-8" style="background: var(--surface-2); border-color: rgba(255, 255, 255, 0.05);">
+      <div class="flex justify-between align-center flex-wrap gap-4">
+        <div>
+          <div class="font-semibold text-sm">Platform Health &amp; Infrastructure</div>
+          <div class="text-muted text-xs mt-1">FastAPI Backend • SQLite Database • YFinance Real-Time Feed • GBX / Pence Currency Scaling Active</div>
+        </div>
+        <div class="flex gap-2">
+          <button class="action-btn" onclick="app.showToast('Server cache purged', 'success')">Clear In-Memory Cache</button>
+        </div>
+      </div>
+    </section>
+
+  </main>
 </div>
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="js/api.js?v=2.1"></script>
 <script src="js/app.js?v=2.1"></script>

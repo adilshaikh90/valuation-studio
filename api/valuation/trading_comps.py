@@ -228,33 +228,35 @@ def calculate_trading_comps(ticker: str, data_fetcher, custom_peers: Optional[Li
     # 3. Calculate implied equity value per share
     implied_values = {}
 
+    scale = data_fetcher.get_price_scale_to_financials(ticker) if hasattr(data_fetcher, 'get_price_scale_to_financials') else 1.0
+
     # EV / EBITDA
     if peer_stats['ev_ebitda']['median'] and target_metrics['ebitda'] > 0:
         imp_ev = peer_stats['ev_ebitda']['median'] * target_metrics['ebitda']
         imp_eq = max(0, imp_ev - target_metrics['net_debt'])
-        implied_values['ev_ebitda'] = round(imp_eq / target_shares, 2)
+        implied_values['ev_ebitda'] = round((imp_eq / target_shares) * scale, 2)
 
     # EV / EBIT
     if peer_stats['ev_ebit']['median'] and target_metrics['ev_ebit'] and target_ebit > 0:
         imp_ev = peer_stats['ev_ebit']['median'] * target_ebit
         imp_eq = max(0, imp_ev - target_metrics['net_debt'])
-        implied_values['ev_ebit'] = round(imp_eq / target_shares, 2)
+        implied_values['ev_ebit'] = round((imp_eq / target_shares) * scale, 2)
 
     # P / E
     if peer_stats['p_e']['median'] and target_metrics['net_income'] > 0:
         imp_eq = peer_stats['p_e']['median'] * target_metrics['net_income']
-        implied_values['p_e'] = round(imp_eq / target_shares, 2)
+        implied_values['p_e'] = round((imp_eq / target_shares) * scale, 2)
 
     # P / B
     if peer_stats['p_b']['median'] and target_metrics['book_value'] > 0:
         imp_eq = peer_stats['p_b']['median'] * target_metrics['book_value']
-        implied_values['p_b'] = round(imp_eq / target_shares, 2)
+        implied_values['p_b'] = round((imp_eq / target_shares) * scale, 2)
 
     # EV / Revenue
     if peer_stats['ev_revenue']['median'] and target_metrics['revenue'] > 0:
         imp_ev = peer_stats['ev_revenue']['median'] * target_metrics['revenue']
         imp_eq = max(0, imp_ev - target_metrics['net_debt'])
-        implied_values['ev_revenue'] = round(imp_eq / target_shares, 2)
+        implied_values['ev_revenue'] = round((imp_eq / target_shares) * scale, 2)
 
     # Regression multiple analysis (Growth vs EV/EBITDA or P/E)
     regression_results = {}

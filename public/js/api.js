@@ -121,6 +121,9 @@ class ApiClient {
     // ── Admin ────────────────────────────────────────────
     async getUsers(page = 1, limit = 50) { return this.request('GET', `/admin/users?page=${page}&limit=${limit}`); }
     async toggleUser(userId) { return this.request('PATCH', `/admin/users/${userId}`); }
+    async updateUserRole(userId, role) { return this.request('PATCH', `/admin/users/${userId}/role`, { role }); }
+    async deleteUser(userId) { return this.request('DELETE', `/admin/users/${userId}`); }
+    async getAdminLogs(limit = 50) { return this.request('GET', `/admin/logs?limit=${limit}`); }
     async getAnalytics() { return this.request('GET', '/admin/analytics'); }
 }
 

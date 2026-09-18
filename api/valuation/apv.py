@@ -117,7 +117,8 @@ def calculate_apv(
         shares_used  = shares
 
     shares_used = max(shares_used, 1)
-    value_per_share = equity_value / shares_used
+    scale = data_fetcher.get_price_scale_to_financials(ticker) if hasattr(data_fetcher, 'get_price_scale_to_financials') else 1.0
+    value_per_share = (equity_value / shares_used) * scale
     upside_pct = ((value_per_share / current_price) - 1) * 100 if current_price > 0 else 0
 
     return {

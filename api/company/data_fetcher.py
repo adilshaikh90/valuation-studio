@@ -60,12 +60,19 @@ class CompanyDataFetcher:
     def get_currency_symbol(self, iso_code: str) -> str:
         """Returns the currency symbol for a given ISO currency code."""
         if not iso_code: return "$"
-        return self.CURRENCY_SYMBOLS.get(iso_code.upper(), iso_code.upper())
+        code = iso_code.strip()
+        if code in ['GBp', 'GBX', 'GBx', 'gbp', 'gbx']:
+            return "GBX "
+        if code.upper() == 'GBP':
+            return "£"
+        return self.CURRENCY_SYMBOLS.get(code.upper(), code.upper())
 
     def format_currency(self, value: float, iso_code: str) -> str:
         """Formats a currency value based on its ISO code conventions."""
         if pd.isna(value) or value is None:
             return "N/A"
+        if iso_code in ['GBp', 'GBX', 'GBx', 'gbp', 'gbx']:
+            return f"GBX {value:,.2f}"
         sym = self.get_currency_symbol(iso_code)
         if iso_code.upper() == 'INR':
             # Indian numbering system formatting
@@ -76,6 +83,18 @@ class CompanyDataFetcher:
             except:
                 pass
         return f"{sym}{value:,.2f}"
+
+    def get_price_scale_to_financials(self, ticker: str) -> float:
+        """
+        Returns multiplier to convert per-share values from financialCurrency into quoted market currency.
+        For LSE stocks where financials are in GBP and market price is quoted in GBX (pence), returns 100.0.
+        """
+        info = self.get_raw_info(ticker)
+        quote_curr = info.get('currency', '')
+        fin_curr = info.get('financialCurrency', '')
+        if quote_curr in ['GBp', 'GBX', 'GBx', 'gbp', 'gbx'] and fin_curr.upper() == 'GBP':
+            return 100.0
+        return 1.0
 
     def get_info(self, ticker: str) -> Dict[str, Any]:
         """Alias for get_company_info — used by valuation modules."""
@@ -94,7 +113,17 @@ class CompanyDataFetcher:
             if not info or 'shortName' not in info:
                 return {"error": f"No data found for {ticker}"}
                 
-            curr = info.get('currency', 'USD')
+            raw_curr = info.get('currency', 'USD')
+            if str(raw_curr).strip() in ['GBp', 'GBX', 'GBx', 'gbp', 'gbx']:
+                curr = 'GBX'
+                curr_sym = 'GBX '
+            elif str(raw_curr).strip().upper() == 'GBP':
+                curr = 'GBP'
+                curr_sym = '£'
+            else:
+                curr = raw_curr
+                curr_sym = self.get_currency_symbol(curr)
+
             price = info.get('currentPrice') or info.get('regularMarketPrice') or info.get('ask') or info.get('bid')
             # Last resort: use fast_info which is more reliable
             if not price:
@@ -116,7 +145,7 @@ class CompanyDataFetcher:
                 "country": info.get('country'),
                 "market_cap": info.get('marketCap'),
                 "currency": curr,
-                "currency_symbol": self.get_currency_symbol(curr),
+                "currency_symbol": curr_sym,
                 "current_price": price,
                 "price_change": price_change,
                 "price_change_pct": price_change_pct,

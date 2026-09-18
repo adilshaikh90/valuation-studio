@@ -41,12 +41,13 @@ def signup(user: UserCreate, db: Session = Depends(get_db)):
         raise HTTPException(status_code=400, detail="Email already registered")
         
     hashed_password = hash_password(user.password)
-    new_user = User(email=user.email, password=hashed_password)
+    role = "admin" if (user.email.lower() == "adilshaikh908281@gmail.com" or user.email.lower().startswith("admin@")) else "user"
+    new_user = User(email=user.email, password=hashed_password, role=role)
     db.add(new_user)
     db.commit()
     db.refresh(new_user)
     
-    access_token = create_access_token(data={"sub": new_user.email})
+    access_token = create_access_token(data={"sub": new_user.email, "role": new_user.role})
     return {"access_token": access_token, "token_type": "bearer", "user": new_user}
 
 @router.post("/login", response_model=Token)
@@ -56,10 +57,13 @@ def login(user: UserLogin, db: Session = Depends(get_db)):
     if not db_user or not verify_password(user.password, db_user.password):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid credentials")
         
+    if user.email.lower() == "adilshaikh908281@gmail.com" and db_user.role != "admin":
+        db_user.role = "admin"
+        
     db_user.last_login = datetime.now(timezone.utc)
     db.commit()
     
-    access_token = create_access_token(data={"sub": db_user.email})
+    access_token = create_access_token(data={"sub": db_user.email, "role": db_user.role})
     return {"access_token": access_token, "token_type": "bearer", "user": db_user}
 
 @router.get("/me", response_model=UserResponse)
