@@ -41,10 +41,13 @@ async function loadDashboard(ticker) {
         const sum     = summary.status === 'fulfilled' ? summary.value : null;
 
         if (!company) {
+            setText('companyName', `Symbol "${ticker}" Not Found`);
+            setText('companyDesc', `Could not find active market data for ticker "${ticker}". Please verify the symbol (e.g. AAPL, MSFT, NVDA, TSLA, ASML).`);
             app.showError(`Could not load data for "${ticker}". Check the ticker symbol.`);
             app.hideLoading();
             return;
         }
+
 
         const sym = company.currency_symbol || '$';
 

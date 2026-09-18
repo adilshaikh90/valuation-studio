@@ -61,11 +61,14 @@ async function loadNews(ticker) {
                 const link = item.link || item.url || '#';
                 const publisher = item.publisher || item.source || 'Yahoo Finance';
                 
-                let rawDate = item.published_date || item.providerPublishTime || item.published;
-                let dateStr = '';
-                if (rawDate) {
-                    const d = new Date(typeof rawDate === 'number' && rawDate < 1000000000000 ? rawDate * 1000 : rawDate);
-                    dateStr = d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+                let dateStr = item.published_date || '';
+                if (!dateStr && rawDate) {
+                    try {
+                        const d = new Date(typeof rawDate === 'number' && rawDate < 1000000000000 ? rawDate * 1000 : rawDate);
+                        dateStr = d.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' });
+                    } catch(e) {
+                        dateStr = '';
+                    }
                 }
 
                 const summary = item.summary || item.text || '';
@@ -73,40 +76,41 @@ async function loadNews(ticker) {
                 const type = item.type || (item.video ? 'VIDEO' : 'STORY');
                 
                 const card = document.createElement('div');
-                card.className = 'card news-item mb-4';
+                card.className = 'card news-item';
                 card.style.display = 'flex';
                 card.style.gap = '1.5rem';
                 card.style.alignItems = 'flex-start';
+                card.style.padding = '1.25rem';
 
                 let imageHtml = '';
                 if (thumb) {
-                    imageHtml = `<div style="flex-shrink:0; width:120px; height:80px; border-radius:8px; overflow:hidden; background: #1f2937;">
-                        <img src="${thumb}" alt="" style="width:100%; height:100%; object-fit:cover;" onerror="this.style.display='none'">
+                    imageHtml = `<div style="flex-shrink:0; width:130px; height:85px; border-radius:8px; overflow:hidden; background: var(--surface-3);">
+                        <img src="${thumb}" alt="" style="width:100%; height:100%; object-fit:cover;" onerror="this.parentElement.style.display='none'">
                     </div>`;
                 } else {
-                    // Placeholder gradient
-                    imageHtml = `<div style="flex-shrink:0; width:120px; height:80px; border-radius:8px; background: linear-gradient(135deg, #3b82f6, #8b5cf6); display:flex; align-items:center; justify-content:center; color:white; font-weight:bold; font-size:12px; text-align:center; padding: 0.5rem; word-break: break-word;">
-                        ${publisher.substring(0, 15)}
+                    imageHtml = `<div style="flex-shrink:0; width:130px; height:85px; border-radius:8px; background: var(--surface-3); border:1px solid var(--border-color); display:flex; align-items:center; justify-content:center; color:var(--text-muted); font-weight:600; font-size:11px; text-align:center; padding: 0.5rem;">
+                        ${publisher.substring(0, 18)}
                     </div>`;
                 }
 
                 card.innerHTML = `
                     ${imageHtml}
-                    <div style="flex-grow:1;">
-                        <div style="display:flex; gap:0.75rem; align-items:center; margin-bottom:0.5rem;">
-                            <span class="badge" style="background-color:rgba(59,130,246,0.2); color:#60a5fa; padding:2px 8px; border-radius:12px; font-size:0.75rem;">${publisher}</span>
-                            ${type === 'VIDEO' ? `<span class="badge" style="background-color:rgba(239,68,68,0.2); color:#f87171; padding:2px 8px; border-radius:12px; font-size:0.75rem;">VIDEO</span>` : ''}
-                            <span style="font-size:0.85rem; color:#9ca3af;">${dateStr}</span>
+                    <div style="flex-grow:1; min-width:0;">
+                        <div style="display:flex; gap:0.6rem; align-items:center; margin-bottom:0.4rem; flex-wrap:wrap;">
+                            <span class="badge badge-blue" style="font-size:0.75rem;">${publisher}</span>
+                            ${type === 'VIDEO' ? `<span class="badge badge-red" style="font-size:0.75rem;">VIDEO</span>` : ''}
+                            <span style="font-size:0.8rem; color:var(--text-muted);">${dateStr}</span>
                         </div>
                         <a href="${link}" target="_blank" rel="noopener noreferrer" style="text-decoration:none;">
-                            <h3 style="margin:0 0 0.5rem 0; font-size:1.25rem; color:#f3f4f6;">${title}</h3>
+                            <h3 style="margin:0 0 0.4rem 0; font-size:1.15rem; color:var(--text-primary); line-height:1.35;">${title}</h3>
                         </a>
-                        ${summary ? `<p style="margin:0; font-size:0.95rem; color:#d1d5db; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">${summary}</p>` : ''}
+                        ${summary ? `<p style="margin:0; font-size:0.875rem; color:var(--text-secondary); line-height:1.5; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">${summary}</p>` : ''}
                     </div>
                 `;
 
                 container.appendChild(card);
                 itemsAdded++;
+
             });
 
             if (itemsAdded === 0 && noNews) {

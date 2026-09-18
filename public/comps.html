@@ -1,130 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trading Comps | Valuation Studio</title>
-    <meta name="description" content="Comparable Company Analysis">
-    <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="css/components.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trading Comps | Stock Valuation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/components.css">
 </head>
 <body>
-    <div class="layout-with-sidebar">
-        <aside class="sidebar">
-            <div class="sidebar-logo">
-                <a href="dashboard.html"><img src="images/logo-full.png" alt="Stock Valuation" class="sidebar-logo-img"></a>
-            </div>
-            <div class="sidebar-ticker" id="sidebarTickerInfo">
-                <span id="sidebarTicker">AAPL</span>
-                <span id="sidebarPrice" class="text-green"></span>
-            </div>
-            <nav class="sidebar-nav">
-                <a href="dashboard.html" class="sidebar-item" data-page="dashboard">
-                    <span class="sidebar-icon">&#9632;</span> Overview
-                </a>
-                <a href="football-field.html" class="sidebar-item" data-page="football-field">
-                    <span class="sidebar-icon">&#9650;</span> Football Field
-                </a>
-                <a href="valuation.html" class="sidebar-item" data-page="valuation">
-                    <span class="sidebar-icon">&#9670;</span> Valuation
-                </a>
-                <a href="comps.html" class="sidebar-item active" data-page="comps">
-                    <span class="sidebar-icon">&#8801;</span> Trading Comps
-                </a>
-                <a href="lbo-nav.html" class="sidebar-item" data-page="lbo-nav">
-                    <span class="sidebar-icon">&#9875;</span> LBO &amp; NAV
-                </a>
-                <a href="quant.html" class="sidebar-item" data-page="quant">
-                    <span class="sidebar-icon">&#8734;</span> Quant Lab
-                </a>
-                <a href="performance.html" class="sidebar-item" data-page="performance">
-                    <span class="sidebar-icon">&#9650;</span> Performance
-                </a>
-                <a href="news.html" class="sidebar-item" data-page="news">
-                    <span class="sidebar-icon">&#128240;</span> News
-                </a>
-                <a href="download.html" class="sidebar-item" data-page="download">
-                    <span class="sidebar-icon">&#8659;</span> Export Model
-                </a>
-            </nav>
-            <div class="sidebar-footer">
-                <div class="sidebar-user">
-                    <span id="sidebarUserEmail" class="text-muted"></span>
-                    <button class="btn btn-ghost btn-sm" onclick="app.logout()">Logout</button>
-                </div>
-            </div>
-        </aside>
-        <main class="main-content">
-            <header class="page-header flex justify-between align-center">
-                <div>
-                    <h1>Trading Comparables</h1>
-                    <p>Peer comparison and relative valuation analysis.</p>
-                </div>
-                <div class="search-bar-container" style="margin: 0; max-width: 300px;">
-                    <input type="text" id="addPeerInput" placeholder="Add peer ticker..." class="input" style="width: 200px;">
-                    <button id="addPeerBtn" class="btn btn-primary">Add</button>
-                </div>
-            </header>
+<div class="layout-with-sidebar">
 
-            <section class="card overflow-x-auto mt-4">
-                <table class="data-table" id="compsTable">
-                    <thead>
-                        <tr>
-                            <th>Ticker</th>
-                            <th>Company</th>
-                            <th>Market Cap</th>
-                            <th>EV/EBITDA</th>
-                            <th>EV/EBIT</th>
-                            <th>P/E</th>
-                            <th>P/B</th>
-                            <th>EV/Rev</th>
-                            <th>Rev Growth</th>
-                            <th>EBITDA Margin</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Populated via JS -->
-                    </tbody>
-                    <tfoot id="compsFooter">
-                        <!-- Stats rows (mean, median) -->
-                    </tfoot>
-                </table>
-            </section>
-
-            <div class="layout-grid mt-4">
-                <section class="card">
-                    <h3>Implied Value via Multiples</h3>
-                    <table class="data-table" id="impliedValueTable">
-                        <thead>
-                            <tr>
-                                <th>Metric</th>
-                                <th>Peer Median</th>
-                                <th>Implied Price</th>
-                                <th>Premium/Discount</th>
-                            </tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
-                </section>
-                
-                <section class="card chart-card">
-                    <h3>Premium/Discount to Peers</h3>
-                    <div style="height: 300px;"><canvas id="premiumChart"></canvas></div>
-                </section>
-            </div>
-            
-            <section class="card chart-card mt-4">
-                <h3>Regression Analysis (Growth vs Multiple)</h3>
-                <div style="height: 400px;"><canvas id="regressionChart"></canvas></div>
-            </section>
-
-        </main>
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <a href="dashboard.html">
+        <img src="images/logo-dark-theme.png" alt="Stock Valuation" class="sidebar-logo-img">
+      </a>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="js/api.js"></script>
-    <script src="js/app.js"></script>
-    <script src="js/charts.js"></script>
-    <script src="js/comps.js"></script>
+    <div class="sidebar-ticker-box">
+      <div class="sidebar-ticker-row">
+        <span id="sidebarTicker" class="sidebar-ticker-symbol">—</span>
+        <span id="sidebarPrice" class="sidebar-ticker-price"></span>
+      </div>
+      <div class="sidebar-search">
+        <input type="text" id="navTickerInput" placeholder="Search ticker..." autocomplete="off">
+        <button id="navSearchBtn" class="btn-search">Go</button>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="dashboard.html" class="sidebar-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg> Overview</a>
+      <a href="football-field.html" class="sidebar-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg> Football Field</a>
+      <a href="valuation.html" class="sidebar-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> Valuation</a>
+      <a href="comps.html" class="sidebar-item active"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/></svg> Trading Comps</a>
+      <a href="lbo-nav.html" class="sidebar-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/></svg> LBO &amp; NAV</a>
+      <a href="quant.html" class="sidebar-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg> Quant Lab</a>
+      <a href="performance.html" class="sidebar-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg> Performance</a>
+      <a href="news.html" class="sidebar-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 0-2 2Z"/></svg> News</a>
+      <a href="download.html" class="sidebar-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Export Model</a>
+    </nav>
+    <div class="sidebar-footer">
+      <span id="sidebarUserEmail" class="sidebar-user-email"></span>
+      <button class="btn btn-ghost btn-sm" onclick="app.logout()">Logout</button>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <div class="page-header flex justify-between align-center">
+      <div>
+        <h1 class="page-title">Trading Comparables</h1>
+        <p class="page-subtitle">Relative valuation analysis using industry peer multiples and margins</p>
+      </div>
+      <div class="flex gap-2">
+        <input type="text" id="addPeerInput" placeholder="Add custom peer (e.g. NVDA)..." style="width: 220px; padding: 0.5rem 0.75rem; background: var(--surface-2); border: 1px solid var(--border-color); border-radius: var(--radius-md); color: var(--text-primary); font-size: 0.85rem;">
+        <button id="addPeerBtn" class="btn btn-primary" style="padding: 0.5rem 1rem;">Add Peer</button>
+      </div>
+    </div>
+
+    <!-- Peer Comparison Table -->
+    <section class="section">
+      <div class="card">
+        <div class="card-header">Comparable Companies Universe</div>
+        <div class="table-scroll">
+          <table class="data-table" id="compsTable">
+            <thead>
+              <tr>
+                <th>Ticker</th>
+                <th>Company</th>
+                <th>Market Cap</th>
+                <th>EV/EBITDA</th>
+                <th>EV/EBIT</th>
+                <th>P/E</th>
+                <th>P/B</th>
+                <th>EV/Rev</th>
+                <th>Rev Growth</th>
+                <th>EBITDA Margin</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Populated via JS -->
+            </tbody>
+            <tfoot id="compsFooter">
+              <!-- Stats rows (mean, median) -->
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Implied Value Grid -->
+    <div class="grid grid-2 gap-4 section">
+      <div class="card">
+        <div class="card-header">Implied Value via Peer Multiples</div>
+        <div class="table-scroll">
+          <table class="data-table" id="impliedValueTable">
+            <thead>
+              <tr>
+                <th>Metric</th>
+                <th>Peer Median</th>
+                <th>Implied Share Price</th>
+                <th>Upside / Downside</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+      
+      <div class="card">
+        <div class="card-header">Growth vs EV/EBITDA Regression</div>
+        <div class="chart-wrapper" style="height: 300px;">
+          <canvas id="regressionChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="js/api.js"></script>
+<script src="js/app.js"></script>
+<script src="js/charts.js"></script>
+<script src="js/comps.js"></script>
 </body>
 </html>

@@ -41,6 +41,22 @@ class CompanyDataFetcher:
             'timestamp': time.time()
         }
 
+    def get_raw_info(self, ticker: str) -> Dict[str, Any]:
+        """Fetches and caches raw yf.Ticker(ticker).info dictionary."""
+        ticker = ticker.upper()
+        cache_key = f"raw_info_{ticker}"
+        cached = self._get_from_cache(cache_key)
+        if cached is not None:
+            return cached
+        try:
+            t = yf.Ticker(ticker)
+            info = t.info or {}
+            self._set_cache(cache_key, info)
+            return info
+        except Exception:
+            return {}
+
+
     def get_currency_symbol(self, iso_code: str) -> str:
         """Returns the currency symbol for a given ISO currency code."""
         if not iso_code: return "$"
