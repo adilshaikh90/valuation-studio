@@ -16,10 +16,11 @@
 
 .hv-dash-meta-text {
   font-family: var(--font-mono, 'JetBrains Mono', monospace);
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--text-secondary, #8e8e99);
+  letter-spacing: 0.18em;
+  font-weight: 700;
+  color: #ffffff;
 }
 
 .hv-dash-live-badge {
