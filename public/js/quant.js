@@ -1,12 +1,19 @@
 /* quant.js — Monte Carlo, Sensitivity, Tornado, Scenarios */
+let companySym = '$';
+let companyPrice = 0;
+let scenariosData = [];
+
 document.addEventListener('DOMContentLoaded', async () => {
     if (!app.isAuthenticated()) { window.location.href = 'login.html'; return; }
 
     const ticker = app.getTicker();
     if (!ticker) { document.body.innerHTML = '<p style="padding:2rem;color:#f0b429;">No ticker selected.</p>'; return; }
 
-    document.querySelectorAll('.currentTickerDisplay').forEach(el => el.textContent = ticker);
+    const tickerEl = document.getElementById('sidebarTicker');
+    if (tickerEl) tickerEl.textContent = ticker;
+
     setupTabs();
+    setupSliders();
     await loadQuantData(ticker);
 });
 
@@ -25,6 +32,24 @@ function setupTabs() {
     if (first) first.click();
 }
 
+function setupSliders() {
+    const sliders = ['bearWeight', 'baseWeight', 'bullWeight'];
+    sliders.forEach(id => {
+        const el = document.getElementById(id);
+        const valEl = document.getElementById(id + 'Val');
+        if (el && valEl) {
+            el.addEventListener('input', () => {
+                valEl.textContent = el.value;
+            });
+        }
+    });
+
+    const updateBtn = document.getElementById('updateWeightsBtn');
+    if (updateBtn) {
+        updateBtn.addEventListener('click', updateWeightedScenarios);
+    }
+}
+
 async function loadQuantData(ticker) {
     app.showLoading();
     try {
@@ -37,49 +62,71 @@ async function loadQuantData(ticker) {
         ]);
 
         const company = await api.getCompany(ticker);
-        const sym = company.currency_symbol || '$';
-        const price = company.current_price || 0;
+        companySym = company.currency_symbol || '$';
+        companyPrice = company.current_price || 0;
+
+        const priceEl = document.getElementById('sidebarPrice');
+        if (priceEl) priceEl.textContent = companySym + app.fmt(companyPrice);
 
         // ── Monte Carlo ─────────────────────────────────────
         if (mcRes.status === 'fulfilled') {
             const mc = mcRes.value;
-            setText('mcMean',    sym + app.fmt(mc.mean));
-            setText('mcMedian',  sym + app.fmt(mc.median));
-            setText('mcStdDev',  sym + app.fmt(mc.std_dev || mc.std));
-            setText('mcP5',      sym + app.fmt(mc.percentile_5));
-            setText('mcP95',     sym + app.fmt(mc.percentile_95));
-            const prob = mc.probability_of_upside != null ? mc.probability_of_upside * 100 : null;
-            setText('mcProb',    prob != null ? prob.toFixed(1) + '% chance of upside' : '–');
-            if (mc.bins && mc.frequencies) renderMCChart(mc, sym, price);
+            setText('mcMean',    companySym + app.fmt(mc.mean));
+            setText('mcP10',     companySym + app.fmt(mc.percentile_10 || 0));
+            setText('mcP25',     companySym + app.fmt(mc.percentile_25 || 0));
+            setText('mcP75',     companySym + app.fmt(mc.percentile_75 || 0));
+            setText('mcP90',     companySym + app.fmt(mc.percentile_90 || 0));
+            setText('mcP95',     companySym + app.fmt(mc.percentile_95 || 0));
+            
+            const prob = mc.probability_of_upside != null ? mc.probability_of_upside * 100 : 0;
+            const probGauge = document.getElementById('mcProbGauge');
+            if (probGauge) {
+                probGauge.textContent = prob.toFixed(1) + '%';
+                probGauge.style.color = prob >= 50 ? '#10b981' : '#ef4444';
+            }
+            if (mc.bins && mc.frequencies) renderMCChart(mc, companySym, companyPrice);
         }
 
         // ── Sensitivity ─────────────────────────────────────
         if (sensRes.status === 'fulfilled') {
             const s = sensRes.value;
-            setText('sensBaseValue', sym + app.fmt(s.base_value));
-            renderHeatmap('sensWaccTgr', s.wacc_vs_tg, price, sym);
-            renderHeatmap('sensWaccExit', s.wacc_vs_em, price, sym);
+            setText('sensBaseValue', companySym + app.fmt(s.base_value));
+            renderHeatmap('sensWaccTgr', s.wacc_vs_tg, companyPrice, companySym);
+            renderHeatmap('sensWaccExit', s.wacc_vs_em, companyPrice, companySym);
         }
 
         // ── Tornado ─────────────────────────────────────────
         if (torRes.status === 'fulfilled') {
             const t = torRes.value;
-            setText('tornadoBase', sym + app.fmt(t.base_price));
+            setText('tornadoBase', companySym + app.fmt(t.base_price));
             renderTornado(t.tornado_data || []);
         }
 
         // ── Scenarios ────────────────────────────────────────
         if (scenRes.status === 'fulfilled') {
-            renderScenarios(scenRes.value.scenarios || [], sym, price);
+            scenariosData = scenRes.value.scenarios || [];
+            renderScenarios(scenariosData, companySym, companyPrice);
+            
+            // Try to set initial weights based on loaded data
+            if (wScenRes.status === 'fulfilled' && wScenRes.value.scenarios) {
+                const ws = wScenRes.value.scenarios;
+                const wbear = ws.find(s => s.scenario_name === 'Bear')?.probability || 0.33;
+                const wbase = ws.find(s => s.scenario_name === 'Base')?.probability || 0.34;
+                const wbull = ws.find(s => s.scenario_name === 'Bull')?.probability || 0.33;
+                
+                setSlider('bearWeight', Math.round(wbear * 100));
+                setSlider('baseWeight', Math.round(wbase * 100));
+                setSlider('bullWeight', Math.round(wbull * 100));
+            }
         }
 
         // ── Weighted Scenarios ──────────────────────────────
         if (wScenRes.status === 'fulfilled') {
             const ws = wScenRes.value;
-            setText('weightedValue',  sym + app.fmt(ws.weighted_value));
-            const upside = ws.upside_pct != null ? ws.upside_pct * 100 : null;
+            setText('weightedValue',  companySym + app.fmt(ws.weighted_value));
+            const upside = ws.upside_pct != null ? ws.upside_pct * 100 : 0;
             setUpsideEl('weightedUpside', upside);
-            renderWeightedScenarios(ws.scenarios || [], sym);
+            renderWeightedScenarios(ws.scenarios || [], companySym);
         }
 
     } catch (err) {
@@ -88,6 +135,58 @@ async function loadQuantData(ticker) {
     } finally {
         app.hideLoading();
     }
+}
+
+function setSlider(id, val) {
+    const el = document.getElementById(id);
+    const valEl = document.getElementById(id + 'Val');
+    if (el) el.value = val;
+    if (valEl) valEl.textContent = val;
+}
+
+function updateWeightedScenarios() {
+    let bear = parseInt(document.getElementById('bearWeight').value) || 0;
+    let base = parseInt(document.getElementById('baseWeight').value) || 0;
+    let bull = parseInt(document.getElementById('bullWeight').value) || 0;
+    
+    let total = bear + base + bull;
+    if (total === 0) {
+        bear = 33; base = 34; bull = 33; total = 100;
+    }
+    
+    // Normalize to 100
+    bear = Math.round((bear / total) * 100);
+    bull = Math.round((bull / total) * 100);
+    base = 100 - bear - bull;
+    
+    setSlider('bearWeight', bear);
+    setSlider('baseWeight', base);
+    setSlider('bullWeight', bull);
+    
+    // Recalculate
+    const ws = scenariosData.map(s => {
+        let prob = 0;
+        if (s.scenario_name === 'Bear') prob = bear / 100;
+        else if (s.scenario_name === 'Base') prob = base / 100;
+        else if (s.scenario_name === 'Bull') prob = bull / 100;
+        
+        return {
+            ...s,
+            probability: prob
+        };
+    }).filter(s => s.probability > 0);
+    
+    let weightedVal = 0;
+    ws.forEach(s => {
+        weightedVal += (s.implied_price || 0) * s.probability;
+    });
+    
+    setText('weightedValue', companySym + app.fmt(weightedVal));
+    
+    const upside = companyPrice > 0 ? ((weightedVal / companyPrice) - 1) * 100 : 0;
+    setUpsideEl('weightedUpside', upside);
+    
+    renderWeightedScenarios(ws, companySym);
 }
 
 function renderMCChart(mc, sym, currentPrice) {
@@ -190,18 +289,14 @@ function renderWeightedScenarios(scenarios, sym) {
         tr.innerHTML = `
             <td>${s.scenario_name}</td>
             <td>${sym}${app.fmt(s.implied_price)}</td>
-            <td>
-                <input type="range" min="0" max="100" step="1" value="${Math.round((s.probability || 0) * 100)}"
-                    style="width:100px;vertical-align:middle;" disabled>
-                <span style="margin-left:.5rem">${Math.round((s.probability || 0) * 100)}%</span>
-            </td>
+            <td>${Math.round((s.probability || 0) * 100)}%</td>
             <td>${sym}${app.fmt((s.implied_price || 0) * (s.probability || 0))}</td>
         `;
         tbody.appendChild(tr);
     });
 }
 
-function setText(id, val) { const e = document.getElementById(id); if (e) e.textContent = val ?? '–'; }
+function setText(id, val) { const e = document.getElementById(id); if (e) e.textContent = val ?? '0'; }
 function setUpsideEl(id, upside) {
     const el = document.getElementById(id);
     if (!el || upside == null) return;

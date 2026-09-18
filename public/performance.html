@@ -1,67 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Performance | Valuation Studio</title>
-    <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="css/components.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Performance | Valuation Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/components.css">
 </head>
 <body>
-    <nav class="nav">
-        <!-- Navigation matching other pages... -->
-        <div class="nav-brand"><a href="/dashboard.html">Valuation Studio</a></div>
-        <div class="nav-ticker" id="currentTickerDisplay"></div>
-        <div class="nav-links">
-            <a href="dashboard.html">Overview</a>
-            <a href="football-field.html">Football Field</a>
-            <a href="valuation.html">Valuation</a>
-            <a href="comps.html">Comps</a>
-            <a href="lbo-nav.html">LBO & NAV</a>
-            <a href="quant.html">Quant Lab</a>
-            <a href="performance.html" class="active">Performance</a>
-            <a href="news.html">News</a>
-            <a href="download.html">Download</a>
-        </div>
-        <div class="nav-user">
-            <span id="userEmail"></span>
-            <button class="btn btn-ghost" onclick="app.logout()">Logout</button>
-        </div>
+<div class="layout-with-sidebar">
+
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <a href="dashboard.html">
+        <img src="images/logo-full.png" alt="Stock Valuation" class="sidebar-logo-img">
+      </a>
+    </div>
+    <div class="sidebar-ticker-box">
+      <div class="sidebar-ticker-row">
+        <span id="sidebarTicker" class="sidebar-ticker-symbol">—</span>
+        <span id="sidebarPrice" class="sidebar-ticker-price"></span>
+      </div>
+      <div class="sidebar-search">
+        <input type="text" id="navTickerInput" placeholder="Search ticker..." autocomplete="off">
+        <button id="navSearchBtn" class="btn-search">Go</button>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="dashboard.html" class="sidebar-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg> Overview</a>
+      <a href="football-field.html" class="sidebar-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg> Football Field</a>
+      <a href="valuation.html" class="sidebar-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> Valuation</a>
+      <a href="comps.html" class="sidebar-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/></svg> Trading Comps</a>
+      <a href="lbo-nav.html" class="sidebar-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/></svg> LBO &amp; NAV</a>
+      <a href="quant.html" class="sidebar-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg> Quant Lab</a>
+      <a href="performance.html" class="sidebar-item active"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg> Performance</a>
+      <a href="news.html" class="sidebar-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 0-2 2Z"/><path d="M18 14h-8"/><path d="M15 18h-5"/></svg> News</a>
+      <a href="download.html" class="sidebar-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Export Model</a>
     </nav>
-    <main class="container">
-        <header class="page-header">
-            <h1>Historical Performance</h1>
-            <div class="time-filters tabs mt-2">
-                <button class="tab-btn" data-period="1M">1M</button>
-                <button class="tab-btn" data-period="3M">3M</button>
-                <button class="tab-btn" data-period="6M">6M</button>
-                <button class="tab-btn" data-period="1Y">1Y</button>
-                <button class="tab-btn" data-period="3Y">3Y</button>
-                <button class="tab-btn active" data-period="5Y">5Y</button>
-            </div>
-        </header>
+    <div class="sidebar-footer">
+      <span id="sidebarUserEmail" class="sidebar-user-email"></span>
+      <button class="btn btn-ghost btn-sm" onclick="app.logout()">Logout</button>
+    </div>
+  </aside>
 
-        <section class="card chart-card">
-            <div style="height: 400px;"><canvas id="perfChart"></canvas></div>
-        </section>
+  <main class="main-content">
+    <div class="page-header">
+      <h1 class="page-title">Performance</h1>
+      <p class="page-subtitle">Historical price performance and risk metrics</p>
+    </div>
 
-        <section class="stats-grid mt-4">
-            <div class="card stat-card"><h3>Total Return</h3><p id="totalReturn">-</p></div>
-            <div class="card stat-card"><h3>CAGR</h3><p id="cagr">-</p></div>
-            <div class="card stat-card"><h3>Max Drawdown</h3><p id="maxDrawdown">-</p></div>
-            <div class="card stat-card"><h3>Volatility</h3><p id="volatility">-</p></div>
-            <div class="card stat-card"><h3>Sharpe Ratio</h3><p id="sharpeRatio">-</p></div>
-        </section>
+    <!-- Stats Grid -->
+    <section class="section">
+      <div class="grid grid-4">
+        <div class="stat-card">
+          <div class="stat-label">Total Return</div>
+          <div class="stat-value" id="totalReturn">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">CAGR</div>
+          <div class="stat-value" id="cagr">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Max Drawdown</div>
+          <div class="stat-value text-red" id="maxDrawdown">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Volatility (Ann.)</div>
+          <div class="stat-value" id="volatility">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Sharpe Ratio</div>
+          <div class="stat-value" id="sharpeRatio">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Sortino Ratio</div>
+          <div class="stat-value" id="sortinoRatio">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">VaR (95%)</div>
+          <div class="stat-value text-red" id="var95">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Beta</div>
+          <div class="stat-value" id="perfBeta">—</div>
+        </div>
+      </div>
+    </section>
 
-        <section class="card mt-4 overflow-x-auto">
-            <h3>Monthly Returns Heatmap</h3>
-            <div id="heatmapContainer"></div>
-        </section>
-    </main>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="js/api.js"></script>
-    <script src="js/app.js"></script>
-    <script src="js/charts.js"></script>
-    <script src="js/performance.js"></script>
+    <!-- Price Chart -->
+    <section class="section">
+      <div class="card">
+        <div class="card-header">
+          Price Performance vs S&amp;P 500 (Normalised to 100)
+          <div class="time-filters">
+            <button class="time-filter-btn active" data-period="5y">5Y</button>
+            <button class="time-filter-btn" data-period="3y">3Y</button>
+            <button class="time-filter-btn" data-period="1y">1Y</button>
+          </div>
+        </div>
+        <div class="chart-wrapper" style="height:360px">
+          <canvas id="perfChart"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <!-- Monthly Returns Heatmap -->
+    <section class="section">
+      <div class="card">
+        <div class="card-header">Monthly Returns Heatmap</div>
+        <div class="table-scroll" id="heatmapContainer"></div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="js/api.js"></script>
+<script src="js/app.js"></script>
+<script src="js/charts.js"></script>
+<script src="js/performance.js"></script>
 </body>
 </html>

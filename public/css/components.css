@@ -1,164 +1,305 @@
-/* Additional component-specific styles */
+/* c:\Users\adils\Downloads\valuation-studio\public\css\components.css */
 
-/* Football Field Chart */
-.football-field-container {
-  position: relative;
-  width: 100%;
-  height: 400px;
-}
-
-/* Sensitivity Heatmap */
-.heatmap-grid {
-  display: grid;
-  gap: 2px;
-  overflow-x: auto;
-}
-.heatmap-cell {
+/* Page Header */
+.page-header {
+  margin-bottom: var(--spacing-8);
   display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.page-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+
+.page-subtitle {
+  color: var(--text-secondary);
+  font-size: 1rem;
+}
+
+/* Empty State */
+.empty-state {
+  display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 0.5rem;
-  font-size: 0.85rem;
-  color: #fff;
-  transition: transform 0.2s;
-}
-.heatmap-cell:hover {
-  transform: scale(1.1);
-  z-index: 10;
-  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  padding: var(--spacing-10) var(--spacing-6);
+  text-align: center;
+  background-color: var(--surface-1);
+  border: 1px dashed var(--border-color);
+  border-radius: var(--radius-lg);
 }
 
-/* Tornado Chart */
-.tornado-chart-container {
-  position: relative;
-  width: 100%;
-  height: 350px;
+.empty-state-icon {
+  font-size: 3rem;
+  color: var(--surface-3);
+  margin-bottom: var(--spacing-4);
 }
 
-/* Monte Carlo Histogram */
-.histogram-container {
-  position: relative;
-  width: 100%;
-  height: 350px;
+.empty-state-text {
+  color: var(--text-secondary);
+  font-size: 1.125rem;
 }
 
-/* Stock Price Chart */
-.price-chart-container {
-  position: relative;
-  width: 100%;
-  height: 400px;
+/* Football Field Chart */
+.football-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
 }
 
-/* Comparison Tables */
-.comparison-table th {
+.field-row {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-4);
+}
+
+.field-label {
+  width: 140px;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
   text-align: right;
 }
-.comparison-table th:first-child {
-  text-align: left;
+
+.field-bar-container {
+  flex: 1;
+  height: 24px;
+  background-color: var(--surface-2);
+  border-radius: var(--radius-full);
+  position: relative;
+  overflow: hidden;
 }
-.comparison-table td {
-  text-align: right;
-  font-variant-numeric: tabular-nums;
+
+.field-bar {
+  position: absolute;
+  height: 100%;
+  background-color: var(--accent);
+  border-radius: var(--radius-full);
+  min-width: 4px;
+  opacity: 0.8;
 }
-.comparison-table td:first-child {
-  text-align: left;
+
+.field-value {
+  width: 80px;
+  font-size: 0.875rem;
   font-weight: 500;
 }
 
-/* News Cards */
+/* Sensitivity Table Heatmap */
+.sensitivity-table td {
+  text-align: center;
+  font-weight: 500;
+}
+
+/* Heatmap scale: highly negative to highly positive */
+.heatmap-very-low { background-color: rgba(239, 68, 68, 0.3); color: #fff; }
+.heatmap-low { background-color: rgba(239, 68, 68, 0.15); color: #fff; }
+.heatmap-neutral { background-color: var(--surface-2); }
+.heatmap-high { background-color: rgba(34, 197, 94, 0.15); color: #fff; }
+.heatmap-very-high { background-color: rgba(34, 197, 94, 0.3); color: #fff; }
+
+/* News Article Card */
 .news-card {
   display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
+  background-color: var(--surface-1);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: border-color 0.2s ease;
   height: 100%;
 }
+
+.news-card:hover {
+  border-color: var(--border-light);
+}
+
+.news-thumbnail {
+  width: 120px;
+  flex-shrink: 0;
+  background-color: var(--surface-2);
+}
+
+.news-thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.news-content {
+  padding: var(--spacing-4);
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.news-title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: var(--spacing-2);
+  color: var(--text-primary);
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
 .news-meta {
+  margin-top: auto;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   font-size: 0.75rem;
   color: var(--text-muted);
 }
-.news-title {
-  font-size: 1.1rem;
-  font-weight: 600;
-  line-height: 1.4;
-}
-.news-summary {
-  font-size: 0.9rem;
-  color: var(--text-secondary);
-  flex-grow: 1;
+
+/* Scenario Weights Slider */
+.scenario-slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 6px;
+  background: var(--surface-3);
+  border-radius: var(--radius-full);
+  outline: none;
 }
 
-/* Download Card */
-.download-card {
-  text-align: center;
-  padding: 3rem 2rem;
-  border: 2px dashed var(--border-color);
-  background-color: rgba(255,255,255,0.01);
-}
-.download-card:hover {
-  border-color: var(--accent-gold);
-  background-color: var(--accent-gold-light);
-}
-.download-icon {
-  font-size: 3rem;
-  color: var(--accent-gold);
-  margin-bottom: 1rem;
-}
-
-/* Admin User Table */
-.admin-table td {
-  vertical-align: middle;
-}
-.status-indicator {
-  display: inline-block;
-  width: 8px;
-  height: 8px;
+.scenario-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
   border-radius: 50%;
-  margin-right: 0.5rem;
+  background: var(--accent);
+  cursor: pointer;
+  transition: transform 0.1s ease;
 }
-.status-active { background-color: var(--accent-green); box-shadow: 0 0 5px var(--accent-green); }
-.status-inactive { background-color: var(--accent-red); }
 
-/* Scenario Weighting */
-.scenario-bars {
+.scenario-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+}
+
+.scenario-slider::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--accent);
+  cursor: pointer;
+  border: none;
+}
+
+/* Performance Stats Grid */
+.perf-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: var(--spacing-4);
+  background-color: var(--surface-2);
+  padding: var(--spacing-4);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+}
+
+.perf-stat {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 0.25rem;
 }
-.scenario-bar-container {
-  width: 100%;
-  background-color: var(--bg-input);
-  height: 24px;
-  border-radius: var(--radius-sm);
-  overflow: hidden;
+
+.perf-label {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.perf-value {
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+/* AI Summary Section */
+.ai-summary {
+  background: linear-gradient(to right, rgba(168, 85, 247, 0.05), transparent);
+  border-left: 2px solid var(--purple);
+  padding: var(--spacing-4) var(--spacing-5);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  margin-bottom: var(--spacing-6);
+}
+
+.ai-summary-header {
   display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  color: var(--purple);
+  font-weight: 600;
+  margin-bottom: var(--spacing-3);
+  font-size: 0.875rem;
 }
-.scenario-segment {
-  height: 100%;
+
+.ai-summary-content {
+  color: var(--text-secondary);
+  font-size: 0.9375rem;
+  line-height: 1.6;
+}
+
+.ai-summary-content p {
+  margin-bottom: 0.5rem;
+}
+
+.ai-summary-content ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.ai-summary-content li {
+  position: relative;
+  padding-left: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.ai-summary-content li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: var(--purple);
+}
+
+/* Excel Download Card */
+.excel-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: rgba(34, 197, 94, 0.05);
+  border: 1px solid rgba(34, 197, 94, 0.2);
+  padding: var(--spacing-6);
+  border-radius: var(--radius-lg);
+}
+
+.excel-info {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-4);
+}
+
+.excel-icon {
+  width: 48px;
+  height: 48px;
+  background-color: rgba(34, 197, 94, 0.1);
+  color: var(--accent);
+  border-radius: var(--radius-md);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.75rem;
-  color: #fff;
-  font-weight: 600;
+  font-size: 1.5rem;
 }
-.segment-base { background-color: var(--accent-gold); }
-.segment-bull { background-color: var(--accent-green); }
-.segment-bear { background-color: var(--accent-red); }
 
-/* Financial Statements */
-.fin-statement th:not(:first-child), 
-.fin-statement td:not(:first-child) {
-  text-align: right;
-  font-variant-numeric: tabular-nums;
-}
-.fin-row-indent {
-  padding-left: 2rem !important;
-  color: var(--text-secondary);
-}
-.fin-row-total {
-  font-weight: 700;
-  border-top: 1px solid var(--border-color-light);
+.excel-text h3 {
+  margin-bottom: 0.25rem;
   color: var(--text-primary);
+}
+
+.excel-text p {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
 }

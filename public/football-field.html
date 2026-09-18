@@ -1,81 +1,123 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Football Field | Valuation Studio</title>
-    <meta name="description" content="Football Field Valuation Range">
-    <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="css/components.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Football Field | Valuation Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/components.css">
 </head>
 <body>
-    <nav class="nav">
-        <div class="nav-brand"><a href="/dashboard.html">Valuation Studio</a></div>
-        <div class="nav-ticker" id="currentTickerDisplay"></div>
-        <div class="nav-links">
-            <a href="dashboard.html">Overview</a>
-            <a href="football-field.html" class="active">Football Field</a>
-            <a href="valuation.html">Valuation</a>
-            <a href="comps.html">Comps</a>
-            <a href="lbo-nav.html">LBO & NAV</a>
-            <a href="quant.html">Quant Lab</a>
-            <a href="performance.html">Performance</a>
-            <a href="news.html">News</a>
-            <a href="download.html">Download</a>
-        </div>
-        <div class="nav-user">
-            <span id="userEmail"></span>
-            <button class="btn btn-ghost" onclick="app.logout()">Logout</button>
-        </div>
+<div class="layout-with-sidebar">
+
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <a href="dashboard.html">
+        <img src="images/logo-full.png" alt="Stock Valuation" class="sidebar-logo-img">
+      </a>
+    </div>
+    <div class="sidebar-ticker-box">
+      <div class="sidebar-ticker-row">
+        <span id="sidebarTicker" class="sidebar-ticker-symbol">—</span>
+        <span id="sidebarPrice" class="sidebar-ticker-price"></span>
+      </div>
+      <div class="sidebar-search">
+        <input type="text" id="navTickerInput" placeholder="Search ticker..." autocomplete="off">
+        <button id="navSearchBtn" class="btn-search">Go</button>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="dashboard.html" class="sidebar-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg> Overview</a>
+      <a href="football-field.html" class="sidebar-item active"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg> Football Field</a>
+      <a href="valuation.html" class="sidebar-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> Valuation</a>
+      <a href="comps.html" class="sidebar-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/></svg> Trading Comps</a>
+      <a href="lbo-nav.html" class="sidebar-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/></svg> LBO &amp; NAV</a>
+      <a href="quant.html" class="sidebar-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg> Quant Lab</a>
+      <a href="performance.html" class="sidebar-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg> Performance</a>
+      <a href="news.html" class="sidebar-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 0-2 2Z"/></svg> News</a>
+      <a href="download.html" class="sidebar-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Export Model</a>
     </nav>
-    <main class="container">
-        <header class="page-header">
-            <h1>Valuation Football Field</h1>
-            <p>Consensus implied value range based on multiple methodologies.</p>
-        </header>
+    <div class="sidebar-footer">
+      <span id="sidebarUserEmail" class="sidebar-user-email"></span>
+      <button class="btn btn-ghost btn-sm" onclick="app.logout()">Logout</button>
+    </div>
+  </aside>
 
-        <section class="card chart-card">
-            <div class="chart-container" style="position: relative; height:400px; width:100%">
-                <canvas id="footballFieldChart"></canvas>
-            </div>
-        </section>
+  <main class="main-content">
+    <div class="page-header">
+      <h1 class="page-title">Football Field</h1>
+      <p class="page-subtitle">All valuation models side-by-side</p>
+    </div>
 
-        <section class="stats-grid mt-4">
-            <div class="card stat-card">
-                <h3>Consensus Range</h3>
-                <p id="consensusRange" class="stat-value">-</p>
-            </div>
-            <div class="card stat-card">
-                <h3>Median Implied Value</h3>
-                <p id="medianValue" class="stat-value">-</p>
-            </div>
-            <div class="card stat-card">
-                <h3>Vs Current Price</h3>
-                <p id="priceUpside" class="stat-value">-</p>
-            </div>
-        </section>
+    <!-- Summary Stats -->
+    <section class="section">
+      <div class="grid grid-4">
+        <div class="stat-card">
+          <div class="stat-label">Current Price</div>
+          <div class="stat-value text-gold" id="currentPriceVal">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Valuation Range</div>
+          <div class="stat-value" id="consensusRange">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Consensus Mid</div>
+          <div class="stat-value" id="medianValue">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Upside / Downside</div>
+          <div class="stat-value" id="priceUpside">—</div>
+        </div>
+      </div>
+    </section>
 
-        <section class="card mt-4 data-table-container">
-            <table class="data-table" id="valuationTable">
-                <thead>
-                    <tr>
-                        <th>Methodology</th>
-                        <th>Low</th>
-                        <th>Mid</th>
-                        <th>High</th>
-                        <th>Vs Current</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Populated via JS -->
-                </tbody>
-            </table>
-        </section>
-    </main>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="js/api.js"></script>
-    <script src="js/app.js"></script>
-    <script src="js/charts.js"></script>
-    <script src="js/football-field.js"></script>
+    <!-- Chart -->
+    <section class="section">
+      <div class="card">
+        <div class="card-header">Valuation Range by Method</div>
+        <div class="chart-wrapper" style="height:380px">
+          <canvas id="footballFieldChart"></canvas>
+        </div>
+        <div class="ff-legend">
+          <span class="ff-legend-item"><span class="ff-dot ff-dot-green"></span> Price in range</span>
+          <span class="ff-legend-item"><span class="ff-dot ff-dot-blue"></span> Undervalued vs range</span>
+          <span class="ff-legend-item"><span class="ff-dot ff-dot-red"></span> Overvalued vs range</span>
+          <span class="ff-legend-item"><span class="ff-dot ff-dot-gold"></span> Current price line</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Table -->
+    <section class="section">
+      <div class="card">
+        <div class="card-header">Method Summary</div>
+        <div class="table-scroll">
+          <table class="data-table" id="valuationTable">
+            <thead>
+              <tr>
+                <th>Method</th>
+                <th>Low</th>
+                <th>Mid</th>
+                <th>High</th>
+                <th>Upside</th>
+                <th>Notes</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3"></script>
+<script src="js/api.js"></script>
+<script src="js/app.js"></script>
+<script src="js/charts.js"></script>
+<script src="js/football-field.js"></script>
 </body>
 </html>

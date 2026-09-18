@@ -1,100 +1,235 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard | Valuation Studio</title>
-    <meta name="description" content="Company Overview Hub">
-    <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="css/components.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Overview | Valuation Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/components.css">
 </head>
 <body>
-    <nav class="nav">
-        <div class="nav-brand"><a href="/dashboard.html">Valuation Studio</a></div>
-        <div class="nav-ticker" id="currentTickerDisplay"></div>
-        <div class="nav-links">
-            <a href="dashboard.html" class="active">Overview</a>
-            <a href="football-field.html">Football Field</a>
-            <a href="valuation.html">Valuation</a>
-            <a href="comps.html">Comps</a>
-            <a href="lbo-nav.html">LBO & NAV</a>
-            <a href="quant.html">Quant Lab</a>
-            <a href="performance.html">Performance</a>
-            <a href="news.html">News</a>
-            <a href="download.html">Download</a>
-        </div>
-        <div class="nav-user">
-            <span id="userEmail"></span>
-            <button class="btn btn-ghost" onclick="app.logout()">Logout</button>
-        </div>
+<div class="layout-with-sidebar">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <a href="dashboard.html">
+        <img src="images/logo-full.png" alt="Stock Valuation" class="sidebar-logo-img">
+      </a>
+    </div>
+    <div class="sidebar-ticker-box">
+      <div class="sidebar-ticker-row">
+        <span id="sidebarTicker" class="sidebar-ticker-symbol">—</span>
+        <span id="sidebarPrice" class="sidebar-ticker-price"></span>
+      </div>
+      <div class="sidebar-search">
+        <input type="text" id="navTickerInput" placeholder="Search ticker..." autocomplete="off" spellcheck="false">
+        <button id="navSearchBtn" class="btn-search">Go</button>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="dashboard.html" class="sidebar-item active">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        Overview
+      </a>
+      <a href="football-field.html" class="sidebar-item">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+        Football Field
+      </a>
+      <a href="valuation.html" class="sidebar-item">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        Valuation
+      </a>
+      <a href="comps.html" class="sidebar-item">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+        Trading Comps
+      </a>
+      <a href="lbo-nav.html" class="sidebar-item">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+        LBO &amp; NAV
+      </a>
+      <a href="quant.html" class="sidebar-item">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>
+        Quant Lab
+      </a>
+      <a href="performance.html" class="sidebar-item">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        Performance
+      </a>
+      <a href="news.html" class="sidebar-item">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 0-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8"/><path d="M15 18h-5"/><path d="M10 6h8v4h-8V6Z"/></svg>
+        News
+      </a>
+      <a href="download.html" class="sidebar-item">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Export Model
+      </a>
     </nav>
-    <main class="container">
-        <div class="search-bar-container">
-            <input type="text" id="tickerSearch" placeholder="Search ticker..." class="input">
-            <button id="searchBtn" class="btn btn-primary">Search</button>
+    <div class="sidebar-footer">
+      <span id="sidebarUserEmail" class="sidebar-user-email"></span>
+      <button class="btn btn-ghost btn-sm" onclick="app.logout()">Logout</button>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content" id="dashboardHero">
+
+    <!-- Company Header -->
+    <div class="page-header-bar">
+      <div class="company-header">
+        <div class="company-title">
+          <h1 id="companyName" class="company-name">Loading...</h1>
+          <div class="company-meta">
+            <span id="tickerBadge" class="badge badge-gray"></span>
+            <span id="sectorBadge" class="badge badge-blue"></span>
+            <span id="currencyLabel" class="badge badge-gray"></span>
+          </div>
         </div>
-        
-        <header class="company-header card">
-            <h1 id="companyName">Company Name</h1>
-            <span id="tickerBadge" class="badge">TICKER</span>
-            <div class="price-info">
-                <h2 id="currentPrice">$0.00</h2>
-                <span id="priceChange" class="change">0.00%</span>
-                <span id="currency">USD</span>
+        <div class="price-block">
+          <div id="currentPrice" class="price-large">—</div>
+          <div id="priceChange" class="price-change">—</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Key Metrics Grid -->
+    <section class="section">
+      <div class="grid grid-4">
+        <div class="stat-card">
+          <div class="stat-label">Market Cap</div>
+          <div class="stat-value" id="marketCap">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">P/E Ratio</div>
+          <div class="stat-value" id="peRatio">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Forward P/E</div>
+          <div class="stat-value" id="fwdPE">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">EPS</div>
+          <div class="stat-value" id="epsVal">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Beta</div>
+          <div class="stat-value" id="betaVal">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Dividend Yield</div>
+          <div class="stat-value" id="divYield">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Employees</div>
+          <div class="stat-value" id="employees">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Country</div>
+          <div class="stat-value" id="country">—</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 52 Week Range -->
+    <section class="section">
+      <div class="card">
+        <div class="card-header">52-Week Range</div>
+        <div class="range-bar-wrapper">
+          <span id="week52Low" class="range-label">—</span>
+          <div class="range-track">
+            <div class="range-fill" id="week52Bar" style="width:50%"></div>
+          </div>
+          <span id="week52High" class="range-label">—</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Description + Quick Links -->
+    <div class="grid grid-2 section">
+      <div class="card">
+        <div class="card-header">About</div>
+        <p id="companyDesc" class="company-desc-text">—</p>
+      </div>
+
+      <div class="card">
+        <div class="card-header">Analysis Modules</div>
+        <div class="quick-links">
+          <a href="football-field.html" class="quick-link-item" data-nav-page="football-field.html">
+            <div class="quick-link-icon">📊</div>
+            <div>
+              <div class="quick-link-title">Football Field</div>
+              <div class="quick-link-desc">Consensus valuation range</div>
             </div>
-        </header>
-
-        <section class="metrics-grid">
-            <div class="card metric-card"><h3>Market Cap</h3><p id="marketCap">-</p></div>
-            <div class="card metric-card"><h3>P/E Ratio</h3><p id="peRatio">-</p></div>
-            <div class="card metric-card"><h3>EPS</h3><p id="eps">-</p></div>
-            <div class="card metric-card"><h3>Beta</h3><p id="beta">-</p></div>
-            <div class="card metric-card">
-                <h3>52-Week Range</h3>
-                <div class="progress-bar-container"><div class="progress-bar" id="week52Bar"></div></div>
-                <div class="range-labels"><span id="week52Low">-</span><span id="week52High">-</span></div>
+          </a>
+          <a href="valuation.html" class="quick-link-item" data-nav-page="valuation.html">
+            <div class="quick-link-icon">📐</div>
+            <div>
+              <div class="quick-link-title">Valuation Models</div>
+              <div class="quick-link-desc">DCF, DDM, APV models</div>
             </div>
-            <div class="card metric-card"><h3>Dividend Yield</h3><p id="divYield">-</p></div>
-            <div class="card metric-card"><h3>Revenue (TTM)</h3><p id="revenue">-</p></div>
-            <div class="card metric-card"><h3>EBITDA Margin</h3><p id="ebitdaMargin">-</p></div>
-        </section>
+          </a>
+          <a href="comps.html" class="quick-link-item" data-nav-page="comps.html">
+            <div class="quick-link-icon">🏢</div>
+            <div>
+              <div class="quick-link-title">Trading Comps</div>
+              <div class="quick-link-desc">Peer comparison</div>
+            </div>
+          </a>
+          <a href="quant.html" class="quick-link-item" data-nav-page="quant.html">
+            <div class="quick-link-icon">🎲</div>
+            <div>
+              <div class="quick-link-title">Quant Lab</div>
+              <div class="quick-link-desc">Monte Carlo, Sensitivity</div>
+            </div>
+          </a>
+          <a href="performance.html" class="quick-link-item" data-nav-page="performance.html">
+            <div class="quick-link-icon">📈</div>
+            <div>
+              <div class="quick-link-title">Performance</div>
+              <div class="quick-link-desc">Historical returns</div>
+            </div>
+          </a>
+          <a href="download.html" class="quick-link-item" data-nav-page="download.html">
+            <div class="quick-link-icon">📥</div>
+            <div>
+              <div class="quick-link-title">Export Model</div>
+              <div class="quick-link-desc">Excel financial model</div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
 
-        <section class="card summary-card mt-4">
-            <h2>Business Summary</h2>
-            <p id="companySummary">Loading summary...</p>
-        </section>
+    <!-- AI Summary -->
+    <section class="section">
+      <div class="card ai-summary-card">
+        <div class="card-header">AI Analysis</div>
+        <p id="aiSummaryText" class="ai-summary-text"></p>
 
-        <section class="nav-cards-grid mt-4">
-            <a href="football-field.html" class="card nav-card gold-highlight">
-                <h3>🎯 Football Field</h3>
-                <p>View the consensus valuation range.</p>
-            </a>
-            <a href="valuation.html" class="card nav-card">
-                <h3>📊 Valuation Models</h3>
-                <p>DCF, DDM, and APV models.</p>
-            </a>
-            <a href="comps.html" class="card nav-card">
-                <h3>📈 Trading Comps</h3>
-                <p>Peer comparison and relative valuation.</p>
-            </a>
-            <a href="quant.html" class="card nav-card">
-                <h3>🎲 Quant Lab</h3>
-                <p>Monte Carlo, Sensitivity, and Scenario Analysis.</p>
-            </a>
-            <a href="performance.html" class="card nav-card">
-                <h3>📈 Performance</h3>
-                <p>Historical price performance and returns.</p>
-            </a>
-            <a href="download.html" class="card nav-card">
-                <h3>📥 Download Model</h3>
-                <p>Export full Excel valuation model.</p>
-            </a>
-        </section>
-    </main>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="js/api.js"></script>
-    <script src="js/app.js"></script>
-    <script src="js/charts.js"></script>
-    <script src="js/dashboard.js"></script>
+        <div class="strengths-risks-grid">
+          <div class="strengths-box">
+            <div class="sr-title sr-title-green">Strengths</div>
+            <ul id="strengthsList" class="sr-list"></ul>
+          </div>
+          <div class="risks-box">
+            <div class="sr-title sr-title-red">Risks</div>
+            <ul id="risksList" class="sr-list"></ul>
+          </div>
+        </div>
+
+        <p id="aiDisclaimer" class="ai-disclaimer"></p>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="js/api.js"></script>
+<script src="js/app.js"></script>
+<script src="js/charts.js"></script>
+<script src="js/dashboard.js"></script>
 </body>
 </html>

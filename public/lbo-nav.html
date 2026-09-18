@@ -1,125 +1,167 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LBO & NAV | Valuation Studio</title>
-    <meta name="description" content="Leveraged Buyout and Net Asset Value analysis">
-    <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="css/components.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LBO &amp; NAV | Stock Valuation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/components.css">
 </head>
 <body>
-    <nav class="nav">
-        <div class="nav-brand"><a href="/dashboard.html">Valuation Studio</a></div>
-        <div class="nav-ticker" id="currentTickerDisplay"></div>
-        <div class="nav-links">
-            <a href="dashboard.html">Overview</a>
-            <a href="football-field.html">Football Field</a>
-            <a href="valuation.html">Valuation</a>
-            <a href="comps.html">Comps</a>
-            <a href="lbo-nav.html" class="active">LBO & NAV</a>
-            <a href="quant.html">Quant Lab</a>
-            <a href="performance.html">Performance</a>
-            <a href="news.html">News</a>
-            <a href="download.html">Download</a>
-        </div>
-        <div class="nav-user">
-            <span id="userEmail"></span>
-            <button class="btn btn-ghost" onclick="app.logout()">Logout</button>
-        </div>
+<div class="layout-with-sidebar">
+
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <a href="dashboard.html">
+        <img src="images/logo-full.png" alt="Stock Valuation" class="sidebar-logo-img">
+      </a>
+    </div>
+    <div class="sidebar-ticker-box">
+      <div class="sidebar-ticker-row">
+        <span id="sidebarTicker" class="sidebar-ticker-symbol">—</span>
+        <span id="sidebarPrice" class="sidebar-ticker-price"></span>
+      </div>
+      <div class="sidebar-search">
+        <input type="text" id="navTickerInput" placeholder="Search ticker..." autocomplete="off">
+        <button id="navSearchBtn" class="btn-search">Go</button>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="dashboard.html" class="sidebar-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg> Overview</a>
+      <a href="football-field.html" class="sidebar-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg> Football Field</a>
+      <a href="valuation.html" class="sidebar-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> Valuation</a>
+      <a href="comps.html" class="sidebar-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/></svg> Trading Comps</a>
+      <a href="lbo-nav.html" class="sidebar-item active"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/></svg> LBO &amp; NAV</a>
+      <a href="quant.html" class="sidebar-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg> Quant Lab</a>
+      <a href="performance.html" class="sidebar-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg> Performance</a>
+      <a href="news.html" class="sidebar-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 0-2 2Z"/></svg> News</a>
+      <a href="download.html" class="sidebar-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Export Model</a>
     </nav>
-    <main class="container">
-        <header class="page-header">
-            <h1>LBO & NAV Analysis</h1>
-        </header>
+    <div class="sidebar-footer">
+      <span id="sidebarUserEmail" class="sidebar-user-email"></span>
+      <button class="btn btn-ghost btn-sm" onclick="app.logout()">Logout</button>
+    </div>
+  </aside>
 
-        <div class="layout-grid">
-            <div class="stack">
-                <section class="card">
-                    <h2>LBO Assumptions</h2>
-                    <div class="form-group mt-2">
-                        <label>Entry Multiple (EV/EBITDA)</label>
-                        <input type="number" id="entryMultiple" value="10" step="0.5">
-                    </div>
-                    <div class="form-group">
-                        <label>Exit Multiple (EV/EBITDA)</label>
-                        <input type="number" id="exitMultiple" value="10" step="0.5">
-                    </div>
-                    <div class="form-group">
-                        <label>Leverage (Debt/EBITDA): <span id="leverageVal">5.0x</span></label>
-                        <input type="range" id="leverage" min="3" max="7" step="0.1" value="5.0">
-                    </div>
-                    <div class="form-group">
-                        <label>Hold Period</label>
-                        <select id="holdPeriod">
-                            <option value="3">3 Years</option>
-                            <option value="5" selected>5 Years</option>
-                            <option value="7">7 Years</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Target IRR: <span id="targetIrrVal">20%</span></label>
-                        <input type="range" id="targetIrr" min="15" max="30" step="1" value="20">
-                    </div>
-                    <button id="calcLboBtn" class="btn btn-primary w-full mt-4">Calculate LBO</button>
-                </section>
+  <main class="main-content">
+    <div class="page-header">
+      <h1 class="page-title">LBO &amp; NAV Analysis</h1>
+      <p class="page-subtitle">Private equity sponsor buyout economics and liquidation value</p>
+    </div>
 
-                <section class="card mt-4">
-                    <h2>NAV Summary</h2>
-                    <div class="mt-4">
-                        <p>Total Assets: <span id="navAssets" class="float-right">-</span></p>
-                        <p>Total Liabilities: <span id="navLiab" class="float-right">-</span></p>
-                        <hr style="border-color: rgba(255,255,255,0.1); margin: 10px 0;">
-                        <p class="text-bold">NAV per share: <span id="navPerShare" class="float-right text-gold">-</span></p>
-                        <p class="text-bold">Tangible NAV per share: <span id="tangibleNavPerShare" class="float-right text-gold">-</span></p>
-                    </div>
-                    <div class="mt-4" style="height: 200px;"><canvas id="navChart"></canvas></div>
-                </section>
+    <div class="grid grid-3 gap-4 section">
+      <!-- LBO Assumptions -->
+      <div class="card" style="grid-column: span 1;">
+        <div class="card-header">LBO Assumptions</div>
+        <div class="form-group mb-3">
+          <label class="stat-label">Entry Multiple (EV/EBITDA)</label>
+          <input type="number" id="entryMultiple" value="10" step="0.5">
+        </div>
+        <div class="form-group mb-3">
+          <label class="stat-label">Exit Multiple (EV/EBITDA)</label>
+          <input type="number" id="exitMultiple" value="10" step="0.5">
+        </div>
+        <div class="form-group mb-3">
+          <label class="stat-label">Leverage (Debt/EBITDA): <span id="leverageVal" class="text-gold">5.0x</span></label>
+          <input type="range" id="leverage" min="3" max="7" step="0.1" value="5.0" class="w-full">
+        </div>
+        <div class="form-group mb-3">
+          <label class="stat-label">Hold Period</label>
+          <select id="holdPeriod">
+            <option value="3">3 Years</option>
+            <option value="5" selected>5 Years</option>
+            <option value="7">7 Years</option>
+          </select>
+        </div>
+        <div class="form-group mb-3">
+          <label class="stat-label">Target IRR: <span id="targetIrrVal" class="text-gold">20%</span></label>
+          <input type="range" id="targetIrr" min="15" max="30" step="1" value="20" class="w-full">
+        </div>
+        <button id="calcLboBtn" class="btn btn-primary w-full mt-3">Calculate LBO</button>
+      </div>
+
+      <!-- LBO Returns & NAV Summary -->
+      <div style="grid-column: span 2;" class="flex flex-col gap-4">
+        <!-- LBO Returns Grid -->
+        <div class="card">
+          <div class="card-header">LBO Returns Overview</div>
+          <div class="grid grid-3">
+            <div class="stat-card">
+              <div class="stat-label">MOIC (Multiple on Invested Capital)</div>
+              <div class="stat-value text-gold" id="lboMoic">—</div>
             </div>
-
-            <div class="stack">
-                <section class="card">
-                    <h2>LBO Returns</h2>
-                    <div class="stats-grid mt-4">
-                        <div class="card stat-card">
-                            <h3>MOIC</h3>
-                            <p id="lboMoic" class="text-gold">-</p>
-                        </div>
-                        <div class="card stat-card">
-                            <h3>IRR</h3>
-                            <p id="lboIrr" class="text-gold">-</p>
-                        </div>
-                        <div class="card stat-card">
-                            <h3>LBO Floor Price</h3>
-                            <p id="lboFloorPrice" class="text-gold">-</p>
-                        </div>
-                    </div>
-                </section>
-
-                <section class="card mt-4 overflow-x-auto">
-                    <h2>Debt Schedule</h2>
-                    <table class="data-table mt-2" id="debtTable">
-                        <thead>
-                            <tr>
-                                <th>Year</th>
-                                <th>Beg. Debt</th>
-                                <th>Interest</th>
-                                <th>Cash Flow</th>
-                                <th>Paydown</th>
-                                <th>End Debt</th>
-                            </tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
-                </section>
+            <div class="stat-card">
+              <div class="stat-label">Sponsor Projected IRR</div>
+              <div class="stat-value text-green" id="lboIrr">—</div>
             </div>
+            <div class="stat-card">
+              <div class="stat-label">LBO Floor Price (Max Bid)</div>
+              <div class="stat-value text-gold" id="lboFloorPrice">—</div>
+            </div>
+          </div>
         </div>
 
-    </main>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="js/api.js"></script>
-    <script src="js/app.js"></script>
-    <script src="js/charts.js"></script>
-    <script src="js/lbo-nav.js"></script>
+        <!-- NAV Summary -->
+        <div class="card">
+          <div class="card-header">Net Asset Value (NAV) Breakdown</div>
+          <div class="grid grid-2 gap-4">
+            <div>
+              <div class="flex justify-between py-2 border-b border-border">
+                <span class="text-secondary">Total Assets:</span>
+                <strong id="navAssets">—</strong>
+              </div>
+              <div class="flex justify-between py-2 border-b border-border">
+                <span class="text-secondary">Total Liabilities:</span>
+                <strong id="navLiab">—</strong>
+              </div>
+              <div class="flex justify-between py-2 border-b border-border">
+                <span class="text-secondary">NAV per Share:</span>
+                <strong id="navPerShare" class="text-gold">—</strong>
+              </div>
+              <div class="flex justify-between py-2">
+                <span class="text-secondary">Tangible NAV per Share:</span>
+                <strong id="tangibleNavPerShare" class="text-gold">—</strong>
+              </div>
+            </div>
+            <div class="chart-wrapper" style="height: 180px;">
+              <canvas id="navChart"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Debt Schedule Table -->
+    <section class="section">
+      <div class="card">
+        <div class="card-header">5-Year LBO Debt Paydown Schedule</div>
+        <div class="table-scroll">
+          <table class="data-table" id="debtTable">
+            <thead>
+              <tr>
+                <th>Year</th>
+                <th>Beginning Debt</th>
+                <th>Interest Expense</th>
+                <th>Available Cash Flow</th>
+                <th>Debt Paydown</th>
+                <th>Ending Debt</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="js/api.js"></script>
+<script src="js/app.js"></script>
+<script src="js/charts.js"></script>
+<script src="js/lbo-nav.js"></script>
 </body>
 </html>

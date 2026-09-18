@@ -24,10 +24,12 @@ class App {
         if (api.token) {
             try {
                 this.user = await api.getMe();
-                // Store user for other pages
                 localStorage.setItem('vs_user', JSON.stringify(this.user));
                 const userEl = document.getElementById('user-menu-name');
                 if (userEl) userEl.textContent = this.user.email;
+                // Sidebar user email
+                const sidebarEmail = document.getElementById('sidebarUserEmail');
+                if (sidebarEmail) sidebarEmail.textContent = this.user.email;
             } catch (err) {
                 api.clearToken();
                 if (!isAuthPage) window.location.href = 'login.html';
@@ -35,7 +37,42 @@ class App {
         } else if (!isAuthPage) {
             window.location.href = 'login.html';
         }
+
+        // Populate sidebar ticker info
+        this._populateSidebar();
+
+        // Mark active sidebar item
+        const currentPage = window.location.pathname.split('/').pop() || 'dashboard.html';
+        document.querySelectorAll('.sidebar-item').forEach(item => {
+            item.classList.remove('active');
+            const href = item.getAttribute('href') || '';
+            if (href === currentPage || href.split('?')[0] === currentPage) {
+                item.classList.add('active');
+            }
+        });
     }
+
+    async _populatSidebar() { this._populateSidebar(); }
+
+    _populateSidebar() {
+        const ticker = this.getTicker();
+        const tickerEl = document.getElementById('sidebarTicker');
+        if (tickerEl && ticker) tickerEl.textContent = ticker;
+
+        // Fetch price for sidebar if ticker exists
+        if (ticker && api.token) {
+            api.getCompany(ticker).then(info => {
+                const priceEl = document.getElementById('sidebarPrice');
+                if (priceEl && info.current_price) {
+                    const sym = info.currency_symbol || '$';
+                    priceEl.textContent = sym + this.fmt(info.current_price);
+                    const pct = info.price_change_pct || 0;
+                    priceEl.className = 'sidebar-ticker-price ' + (pct >= 0 ? 'text-green' : 'text-red');
+                }
+            }).catch(() => {});
+        }
+    }
+
 
     getUser() {
         try { return JSON.parse(localStorage.getItem('vs_user') || '{}'); } catch { return {}; }

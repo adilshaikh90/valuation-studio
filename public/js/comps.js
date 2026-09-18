@@ -1,11 +1,19 @@
 /* comps.js — trading comps, implied values, regression chart */
+let peersList = [];
+let companySym = '$';
+let companyPrice = 0;
+
 document.addEventListener('DOMContentLoaded', async () => {
     if (!app.isAuthenticated()) { window.location.href = 'login.html'; return; }
 
     const ticker = app.getTicker();
     if (!ticker) { document.body.innerHTML = '<p style="padding:2rem;color:#f0b429;">No ticker selected.</p>'; return; }
 
-    document.querySelectorAll('.currentTickerDisplay').forEach(el => el.textContent = ticker);
+    const tickerEl = document.getElementById('sidebarTicker');
+    if (tickerEl) tickerEl.textContent = ticker;
+    
+    const tickerDisp = document.getElementById('currentTickerDisplay');
+    if (tickerDisp) tickerDisp.textContent = ticker;
 
     const addPeerBtn = document.getElementById('addPeerBtn');
     if (addPeerBtn) addPeerBtn.addEventListener('click', addPeer);
@@ -13,34 +21,31 @@ document.addEventListener('DOMContentLoaded', async () => {
     await loadComps(ticker);
 });
 
-let peersList = [];
-
 async function loadComps(ticker) {
     app.showLoading();
     try {
         const data = await api.getComps(ticker, peersList);
         const company = await api.getCompany(ticker);
-        const sym = company.currency_symbol || '$';
-        const price = company.current_price || 0;
+        companySym = company.currency_symbol || '$';
+        companyPrice = company.current_price || 0;
 
-        // ── Target metrics ────────────────────────────────────
-        const t = data.target_metrics || {};
-        setText('targetEVEBITDA',  t.ev_ebitda ? app.fmt(t.ev_ebitda) + 'x' : 'N/A');
-        setText('targetPE',        t.p_e ? app.fmt(t.p_e) + 'x' : 'N/A');
-        setText('targetEVRev',     t.ev_revenue ? app.fmt(t.ev_revenue) + 'x' : 'N/A');
-        setText('targetPB',        t.p_b ? app.fmt(t.p_b) + 'x' : 'N/A');
+        const priceEl = document.getElementById('sidebarPrice');
+        if (priceEl) priceEl.textContent = companySym + app.fmt(companyPrice);
 
-        // ── Peer stats table ──────────────────────────────────
-        renderPeerStats(data.peer_stats || {}, sym);
+        // ── Peer stats table & details ──────────────────────
+        renderPeerTable(data.peer_data || []);
+        renderPeerStats(data.peer_stats || {}, companySym);
 
         // ── Implied values ────────────────────────────────────
-        renderImpliedValues(data.implied_values || {}, price, sym);
+        renderImpliedValues(data.implied_values || {}, data.peer_stats || {}, companyPrice, companySym);
 
         // ── Regression chart ──────────────────────────────────
-        if (data.regression_results) renderRegressionChart(data.regression_results, ticker);
-
-        // Show active peers
-        renderActivePeers();
+        if (data.regression_results && Object.keys(data.regression_results).length > 0) {
+            renderRegressionChart(data.regression_results, ticker);
+        } else {
+            const rc = document.getElementById('regressionChart');
+            if (rc && rc.parentElement) rc.parentElement.style.display = 'none';
+        }
 
     } catch (err) {
         console.error(err);
@@ -50,43 +55,93 @@ async function loadComps(ticker) {
     }
 }
 
-function renderPeerStats(stats, sym) {
-    const el = document.getElementById('peerStatsTable');
-    if (!el) return;
-    const metrics = ['ev_ebitda', 'ev_ebit', 'p_e', 'p_b', 'ev_revenue'];
-    const labels  = { ev_ebitda: 'EV/EBITDA', ev_ebit: 'EV/EBIT', p_e: 'P/E', p_b: 'P/B', ev_revenue: 'EV/Revenue' };
-    let html = '<table class="data-table"><thead><tr><th>Metric</th><th>Mean</th><th>Median</th><th>P25</th><th>P75</th></tr></thead><tbody>';
-    metrics.forEach(m => {
-        const s = stats[m];
-        if (!s) return;
-        html += `<tr>
-            <td>${labels[m] || m}</td>
-            <td>${s.mean != null ? app.fmt(s.mean) + 'x' : '–'}</td>
-            <td><strong>${s.median != null ? app.fmt(s.median) + 'x' : '–'}</strong></td>
-            <td>${s.p25 != null ? app.fmt(s.p25) + 'x' : '–'}</td>
-            <td>${s.p75 != null ? app.fmt(s.p75) + 'x' : '–'}</td>
-        </tr>`;
+function renderPeerTable(peers) {
+    const tbody = document.querySelector('#compsTable tbody');
+    if (!tbody) return;
+    
+    if (!peers || peers.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="11" style="text-align:center; padding: 2rem;">Peer data loading or not available for this ticker</td></tr>';
+        return;
+    }
+    
+    tbody.innerHTML = '';
+    peers.forEach(p => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td><strong>${p.ticker || 'N/A'}</strong></td>
+            <td>${p.company_name || p.ticker || 'N/A'}</td>
+            <td>${p.market_cap ? companySym + app.fmt(p.market_cap) : 'N/A'}</td>
+            <td>${p.ev_ebitda != null ? app.fmt(p.ev_ebitda) + 'x' : 'N/A'}</td>
+            <td>${p.ev_ebit != null ? app.fmt(p.ev_ebit) + 'x' : 'N/A'}</td>
+            <td>${p.p_e != null ? app.fmt(p.p_e) + 'x' : 'N/A'}</td>
+            <td>${p.p_b != null ? app.fmt(p.p_b) + 'x' : 'N/A'}</td>
+            <td>${p.ev_rev != null || p.ev_revenue != null ? app.fmt(p.ev_rev || p.ev_revenue) + 'x' : 'N/A'}</td>
+            <td>${p.rev_growth != null ? (p.rev_growth * 100).toFixed(1) + '%' : 'N/A'}</td>
+            <td>${p.ebitda_margin != null ? (p.ebitda_margin * 100).toFixed(1) + '%' : 'N/A'}</td>
+            <td><button class="btn btn-sm btn-ghost" onclick="removePeer('${p.ticker}')" style="color:#ef4444; padding:0;">Remove</button></td>
+        `;
+        tbody.appendChild(tr);
     });
-    el.innerHTML = html + '</tbody></table>';
 }
 
-function renderImpliedValues(implied, price, sym) {
+function renderPeerStats(stats, sym) {
+    const tfoot = document.getElementById('compsFooter');
+    if (!tfoot) return;
+    
+    let html = '';
+    
+    // Mean Row
+    html += '<tr style="background: rgba(255,255,255,0.02); font-weight: 500;">';
+    html += '<td colspan="3" style="text-align: right;"><strong>Mean</strong></td>';
+    html += `<td>${stats.ev_ebitda?.mean != null ? app.fmt(stats.ev_ebitda.mean) + 'x' : 'N/A'}</td>`;
+    html += `<td>${stats.ev_ebit?.mean != null ? app.fmt(stats.ev_ebit.mean) + 'x' : 'N/A'}</td>`;
+    html += `<td>${stats.p_e?.mean != null ? app.fmt(stats.p_e.mean) + 'x' : 'N/A'}</td>`;
+    html += `<td>${stats.p_b?.mean != null ? app.fmt(stats.p_b.mean) + 'x' : 'N/A'}</td>`;
+    html += `<td>${stats.ev_revenue?.mean != null ? app.fmt(stats.ev_revenue.mean) + 'x' : 'N/A'}</td>`;
+    html += '<td colspan="3"></td></tr>';
+    
+    // Median Row
+    html += '<tr style="background: rgba(255,255,255,0.02); font-weight: 500;">';
+    html += '<td colspan="3" style="text-align: right;"><strong>Median</strong></td>';
+    html += `<td>${stats.ev_ebitda?.median != null ? app.fmt(stats.ev_ebitda.median) + 'x' : 'N/A'}</td>`;
+    html += `<td>${stats.ev_ebit?.median != null ? app.fmt(stats.ev_ebit.median) + 'x' : 'N/A'}</td>`;
+    html += `<td>${stats.p_e?.median != null ? app.fmt(stats.p_e.median) + 'x' : 'N/A'}</td>`;
+    html += `<td>${stats.p_b?.median != null ? app.fmt(stats.p_b.median) + 'x' : 'N/A'}</td>`;
+    html += `<td>${stats.ev_revenue?.median != null ? app.fmt(stats.ev_revenue.median) + 'x' : 'N/A'}</td>`;
+    html += '<td colspan="3"></td></tr>';
+
+    tfoot.innerHTML = html;
+}
+
+function renderImpliedValues(implied, stats, price, sym) {
     const tbody = document.querySelector('#impliedValueTable tbody');
     if (!tbody) return;
     tbody.innerHTML = '';
-    const labels = { ev_ebitda: 'EV/EBITDA', ev_ebit: 'EV/EBIT', p_e: 'P/E', p_b: 'P/B' };
+    const labels = { ev_ebitda: 'EV/EBITDA', ev_ebit: 'EV/EBIT', p_e: 'P/E', p_b: 'P/B', ev_revenue: 'EV/Rev' };
+    
+    let hasData = false;
     Object.entries(implied).forEach(([metric, val]) => {
         if (val == null || val === 0) return;
+        hasData = true;
         const diff = price > 0 ? ((val / price) - 1) * 100 : 0;
         const cl   = diff >= 0 ? 'text-green' : 'text-red';
         const tr   = document.createElement('tr');
+        
+        let peerMed = stats[metric]?.median;
+        let peerMedStr = peerMed != null ? app.fmt(peerMed) + 'x' : 'N/A';
+        
         tr.innerHTML = `
             <td>${labels[metric] || metric}</td>
+            <td>${peerMedStr}</td>
             <td>${sym}${app.fmt(val)}</td>
             <td class="${cl}">${diff >= 0 ? '+' : ''}${diff.toFixed(1)}%</td>
         `;
         tbody.appendChild(tr);
     });
+    
+    if (!hasData) {
+        tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">No implied values available</td></tr>';
+    }
 }
 
 function renderRegressionChart(reg, ticker) {
@@ -119,14 +174,6 @@ function renderRegressionChart(reg, ticker) {
     }));
 }
 
-function renderActivePeers() {
-    const el = document.getElementById('activePeers');
-    if (!el) return;
-    el.innerHTML = peersList.length
-        ? peersList.map(p => `<span class="badge" style="cursor:pointer;margin:.25rem;" onclick="removePeer('${p}')">${p} ×</span>`).join('')
-        : '<span style="color:#6b7280;font-size:.85rem;">Using auto-detected peers</span>';
-}
-
 async function addPeer() {
     const inp = document.getElementById('addPeerInput');
     const peer = inp?.value.trim().toUpperCase();
@@ -142,4 +189,4 @@ window.removePeer = async function(peer) {
     await loadComps(app.getTicker());
 };
 
-function setText(id, val) { const e = document.getElementById(id); if (e) e.textContent = val ?? '–'; }
+function setText(id, val) { const e = document.getElementById(id); if (e) e.textContent = val ?? '0'; }

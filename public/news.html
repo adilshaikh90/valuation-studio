@@ -8,40 +8,79 @@
     <link rel="stylesheet" href="css/components.css">
 </head>
 <body>
-    <nav class="nav">
-        <div class="nav-brand"><a href="/dashboard.html">Valuation Studio</a></div>
-        <div class="nav-ticker" id="currentTickerDisplay"></div>
-        <div class="nav-links">
-            <a href="dashboard.html">Overview</a>
-            <a href="football-field.html">Football Field</a>
-            <a href="valuation.html">Valuation</a>
-            <a href="comps.html">Comps</a>
-            <a href="lbo-nav.html">LBO & NAV</a>
-            <a href="quant.html">Quant Lab</a>
-            <a href="performance.html">Performance</a>
-            <a href="news.html" class="active">News</a>
-            <a href="download.html">Download</a>
-        </div>
-        <div class="nav-user">
-            <span id="userEmail"></span>
-            <button class="btn btn-ghost" onclick="app.logout()">Logout</button>
-        </div>
-    </nav>
-    <main class="container">
-        <header class="page-header">
-            <h1>Latest News & Catalysts</h1>
-        </header>
+    <div class="layout-with-sidebar">
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <a href="dashboard.html"><img src="images/logo-full.png" alt="Stock Valuation" class="sidebar-logo-img"></a>
+            </div>
+            <div class="sidebar-ticker" id="sidebarTickerInfo">
+                <span id="sidebarTicker">AAPL</span>
+                <span id="sidebarPrice" class="text-green"></span>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="sidebar-item" data-page="dashboard">
+                    <span class="sidebar-icon">&#9632;</span> Overview
+                </a>
+                <a href="football-field.html" class="sidebar-item" data-page="football-field">
+                    <span class="sidebar-icon">&#9650;</span> Football Field
+                </a>
+                <a href="valuation.html" class="sidebar-item" data-page="valuation">
+                    <span class="sidebar-icon">&#9670;</span> Valuation
+                </a>
+                <a href="comps.html" class="sidebar-item" data-page="comps">
+                    <span class="sidebar-icon">&#8801;</span> Trading Comps
+                </a>
+                <a href="lbo-nav.html" class="sidebar-item" data-page="lbo-nav">
+                    <span class="sidebar-icon">&#9875;</span> LBO &amp; NAV
+                </a>
+                <a href="quant.html" class="sidebar-item" data-page="quant">
+                    <span class="sidebar-icon">&#8734;</span> Quant Lab
+                </a>
+                <a href="performance.html" class="sidebar-item" data-page="performance">
+                    <span class="sidebar-icon">&#9650;</span> Performance
+                </a>
+                <a href="news.html" class="sidebar-item active" data-page="news">
+                    <span class="sidebar-icon">&#128240;</span> News
+                </a>
+                <a href="download.html" class="sidebar-item" data-page="download">
+                    <span class="sidebar-icon">&#8659;</span> Export Model
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="sidebar-user">
+                    <span id="sidebarUserEmail" class="text-muted"></span>
+                    <button class="btn btn-ghost btn-sm" onclick="app.logout()">Logout</button>
+                </div>
+            </div>
+        </aside>
+        <main class="main-content">
+            <header class="page-header flex justify-between align-center">
+                <div>
+                    <h1>Latest News & Catalysts</h1>
+                    <p>Recent news, press releases, and articles.</p>
+                </div>
+                <div class="search-bar-container" style="margin: 0; max-width: 300px;">
+                    <input type="text" id="newsSearchInput" placeholder="Filter news..." class="input" style="width: 250px;">
+                </div>
+            </header>
 
-        <div id="newsGrid" class="news-grid">
-            <!-- Populated via JS -->
-        </div>
-        
-        <div id="noNews" class="card mt-4" style="display:none; text-align:center;">
-            <p>No recent news available for this company.</p>
-        </div>
-    </main>
+            <div id="newsLoading" style="display:none; text-align:center; padding: 2rem;">
+                <p>Loading news...</p>
+            </div>
+
+            <div id="newsContainer" class="news-list mt-4">
+                <!-- Populated via JS -->
+            </div>
+            
+            <div id="noNews" class="card mt-4" style="display:none; text-align:center;">
+                <p>No recent news available for this company.</p>
+            </div>
+        </main>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="js/api.js"></script>
     <script src="js/app.js"></script>
+    <script src="js/charts.js"></script>
     <script src="js/news.js"></script>
 </body>
 </html>

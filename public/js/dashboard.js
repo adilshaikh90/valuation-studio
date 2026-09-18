@@ -114,6 +114,18 @@ function setText(id, value) {
 function renderStrengthsRisks(strengths, risks) {
     const sEl = document.getElementById('strengthsList');
     const rEl = document.getElementById('risksList');
-    if (sEl) sEl.innerHTML = strengths.map(s => `<li>✅ ${s}</li>`).join('') || '<li>–</li>';
-    if (rEl) rEl.innerHTML = risks.map(r => `<li>⚠️ ${r}</li>`).join('') || '<li>–</li>';
+    if (sEl) {
+        if (strengths.length) {
+            sEl.innerHTML = strengths.map(s => `<li class="sr-item sr-item-green">${s}</li>`).join('');
+        } else {
+            sEl.innerHTML = '<li class="sr-item sr-empty">No specific strengths identified.</li>';
+        }
+    }
+    if (rEl) {
+        if (risks.length) {
+            rEl.innerHTML = risks.map(r => `<li class="sr-item sr-item-red">${r}</li>`).join('');
+        } else {
+            rEl.innerHTML = '<li class="sr-item sr-empty">No elevated risks identified.</li>';
+        }
+    }
 }

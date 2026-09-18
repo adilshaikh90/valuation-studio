@@ -69,8 +69,18 @@ if (PUBLIC_DIR / "css").exists():
     app.mount("/css", StaticFiles(directory=str(PUBLIC_DIR / "css")), name="css")
 if (PUBLIC_DIR / "js").exists():
     app.mount("/js", StaticFiles(directory=str(PUBLIC_DIR / "js")), name="js")
+if (PUBLIC_DIR / "images").exists():
+    app.mount("/images", StaticFiles(directory=str(PUBLIC_DIR / "images")), name="images")
 if (PUBLIC_DIR / "assets").exists():
     app.mount("/assets", StaticFiles(directory=str(PUBLIC_DIR / "assets")), name="assets")
+
+@app.get("/favicon.ico", include_in_schema=False)
+async def serve_favicon():
+    fav = PUBLIC_DIR / "favicon.ico"
+    if fav.exists():
+        return FileResponse(str(fav), media_type="image/x-icon")
+    return {"error": "Favicon not found"}
+
 
 # ---------------------------------------------------------------------------
 # HTML page routes — serve frontend pages

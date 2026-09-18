@@ -47,11 +47,19 @@
             font-size: 1.1rem;
             border-radius: var(--radius-md);
             border: 2px solid var(--border-color);
-            background-color: rgba(0,0,0,0.3);
+            background-color: rgba(255,255,255,0.08);
+            color: #ffffff;
+            -webkit-text-fill-color: #ffffff;
+            outline: none;
+        }
+        .search-container input::placeholder {
+            color: rgba(255,255,255,0.4);
+            -webkit-text-fill-color: rgba(255,255,255,0.4);
         }
         .search-container input:focus {
             border-color: var(--accent-gold);
-            background-color: var(--bg-input);
+            background-color: rgba(255,255,255,0.12);
+            -webkit-text-fill-color: #ffffff;
         }
         .search-container button {
             padding: 0 2rem;
@@ -89,7 +97,7 @@
 
     <nav class="nav">
         <div class="nav-logo">
-            <span>VS</span> Valuation Studio
+            <img src="images/logo-full.png" alt="Stock Valuation" style="height:36px;">
         </div>
         <div class="nav-links">
             <a href="#features">Features</a>
