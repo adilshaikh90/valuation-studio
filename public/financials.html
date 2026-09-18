@@ -7,9 +7,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Financial Statements | Valuation Studio</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css?v=2.1">
-  <link rel="stylesheet" href="css/components.css?v=2.1">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css?v=3.0">
+  <link rel="stylesheet" href="css/components.css?v=3.0">
+  <link rel="stylesheet" href="css/havu-theme.css?v=3.0">
+  <link rel="stylesheet" href="css/dashboard-havu.css?v=3.0">
   <style>
     .fin-table-wrapper {
       overflow-x: auto;
@@ -33,10 +36,12 @@
       padding: 0.75rem 1rem;
       border-bottom: 2px solid rgba(255, 255, 255, 0.08);
       text-align: right;
+      font-family: var(--font-mono, 'JetBrains Mono', monospace);
     }
     .fin-table th:first-child {
       text-align: left;
       min-width: 260px;
+      font-family: inherit;
     }
     .fin-table td {
       padding: 0.65rem 1rem;
@@ -44,6 +49,7 @@
       text-align: right;
       color: #e2e8f0;
       font-variant-numeric: tabular-nums;
+      font-family: var(--font-mono, 'JetBrains Mono', monospace);
     }
     .fin-table td:first-child {
       text-align: left;
@@ -100,7 +106,7 @@
     }
   </style>
 </head>
-<body>
+<body class="havu-body">
 <div class="layout-with-sidebar">
 
   <!-- Sidebar -->
@@ -170,6 +176,17 @@
 
   <!-- Main Content -->
   <main class="main-content">
+    <!-- HAVU Technical Metadata Bar -->
+    <div class="hv-dash-meta-bar">
+      <div class="hv-dash-meta-text">
+        LONDON — CANARY WHARF / VALUATION STUDIO TERMINAL v3.0 &bull; <span style="color:var(--hv-ink-muted);">3-STATEMENT FINANCIAL MODEL</span>
+      </div>
+      <div class="hv-dash-live-badge">
+        <span class="hv-dash-live-dot"></span>
+        <span>144HZ QUANTITATIVE ENGINE ONLINE</span>
+      </div>
+    </div>
+
     <div class="page-header flex justify-between align-center">
       <div>
         <h1 class="page-title">3-Statement Financial Model</h1>
@@ -262,8 +279,9 @@
   </main>
 </div>
 
-<script src="js/api.js?v=2.1"></script>
-<script src="js/app.js?v=2.1"></script>
+<script src="js/api.js?v=3.0"></script>
+<script src="js/app.js?v=3.0"></script>
+<script src="js/havu-engine.js?v=3.0"></script>
 <script src="js/financials.js?v=3.0"></script>
 </body>
 </html>

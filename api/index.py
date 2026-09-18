@@ -110,6 +110,7 @@ HTML_PAGES = [
 ]
 
 @app.get("/", include_in_schema=False)
+@app.get("/index.html", include_in_schema=False)
 async def serve_landing():
     """Serve the landing page."""
     index_file = PUBLIC_DIR / "index.html"

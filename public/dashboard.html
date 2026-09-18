@@ -7,17 +7,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Overview | Valuation Studio</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css?v=2.1">
-  <link rel="stylesheet" href="css/components.css?v=2.1">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css?v=3.0">
+  <link rel="stylesheet" href="css/components.css?v=3.0">
+  <link rel="stylesheet" href="css/havu-theme.css?v=3.0">
+  <link rel="stylesheet" href="css/dashboard-havu.css?v=3.0">
 </head>
-<body>
+<body class="havu-body">
 <div class="layout-with-sidebar">
 
   <!-- Sidebar -->
   <aside class="sidebar">
     <div class="sidebar-logo">
-      <a href="dashboard.html?v=2.1">
+      <a href="dashboard.html?v=3.0">
         <img src="images/logo-dark-theme.png?v=3.0" alt="Valuation Studio" class="sidebar-logo-img">
       </a>
     </div>
@@ -44,31 +47,31 @@
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
         Football Field
       </a>
-      <a href="valuation.html?v=2.1" class="sidebar-item">
+      <a href="valuation.html?v=3.0" class="sidebar-item">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
         Valuation
       </a>
-      <a href="comps.html?v=2.1" class="sidebar-item">
+      <a href="comps.html?v=3.0" class="sidebar-item">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
         Trading Comps
       </a>
-      <a href="lbo-nav.html?v=2.1" class="sidebar-item">
+      <a href="lbo-nav.html?v=3.0" class="sidebar-item">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
         LBO &amp; NAV
       </a>
-      <a href="quant.html?v=2.1" class="sidebar-item">
+      <a href="quant.html?v=3.0" class="sidebar-item">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>
         Quant Lab
       </a>
-      <a href="performance.html?v=2.1" class="sidebar-item">
+      <a href="performance.html?v=3.0" class="sidebar-item">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
         Performance
       </a>
-      <a href="news.html?v=2.1" class="sidebar-item">
+      <a href="news.html?v=3.0" class="sidebar-item">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 0-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8"/><path d="M15 18h-5"/><path d="M10 6h8v4h-8V6Z"/></svg>
         News
       </a>
-      <a href="download.html?v=2.1" class="sidebar-item">
+      <a href="download.html?v=3.0" class="sidebar-item">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
         Export Model
       </a>
@@ -82,33 +85,59 @@
   <!-- Main Content -->
   <main class="main-content" id="dashboardHero">
 
+    <!-- HAVU Technical Metadata Bar -->
+    <div class="hv-dash-meta-bar">
+      <div class="hv-dash-meta-text">
+        LONDON — CANARY WHARF / VALUATION STUDIO TERMINAL v3.0 &bull; <span style="color:var(--hv-ink-muted);">REAL-TIME CAPITAL MARKETS ENGINE</span>
+      </div>
+      <div class="hv-dash-live-badge">
+        <span class="hv-dash-live-dot"></span>
+        <span>144HZ QUANTITATIVE ENGINE ONLINE</span>
+      </div>
+    </div>
+
     <!-- Company Header -->
     <div class="page-header-bar">
       <div class="company-header">
         <div class="company-title">
+          <div style="font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.12em; color: var(--gold); text-transform: uppercase; margin-bottom: 0.35rem; display: flex; align-items: center; gap: 0.5rem;">
+            <span>[ ACTIVE VALUATION TARGET ]</span>
+          </div>
           <h1 id="companyName" class="company-name">Loading...</h1>
           <div class="company-meta">
-            <span id="tickerBadge" class="badge badge-gray"></span>
-            <span id="sectorBadge" class="badge badge-blue"></span>
-            <span id="currencyLabel" class="badge badge-gray"></span>
+            <span id="tickerBadge" class="badge badge-mono">—</span>
+            <span id="sectorBadge" class="badge badge-mono">—</span>
+            <span id="countryBadge" class="badge badge-mono">—</span>
+            <span id="currencyLabel" class="badge badge-mono">—</span>
           </div>
         </div>
         <div class="price-block">
+          <div style="font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.1em; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.2rem;">
+            MARKET SPOT PRICE
+          </div>
           <div id="currentPrice" class="price-large">—</div>
           <div id="priceChange" class="price-change">—</div>
+          <div style="margin-top: 0.85rem; display: flex; gap: 0.5rem;">
+            <a href="financials.html" id="btnLaunchFinancials" class="btn btn-primary btn-sm" style="border-radius: 9999px; font-weight: 700; font-size: 0.8rem; padding: 0.45rem 1rem;">Launch 3-Statement &rarr;</a>
+            <a href="download.html" id="btnExportModel" class="btn btn-secondary btn-sm" style="border-radius: 9999px; font-size: 0.8rem; padding: 0.45rem 0.95rem;">Export Model</a>
+          </div>
         </div>
       </div>
     </div>
 
     <!-- Key Metrics Grid -->
     <section class="section">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem;">
+        <span style="font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-secondary);">[ 01 // CORE MARKET METRICS ]</span>
+        <span style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-muted);">LSE / NYSE / NASDAQ SYNCHRONIZED</span>
+      </div>
       <div class="grid grid-4">
         <div class="stat-card">
-          <div class="stat-label">Market Cap</div>
+          <div class="stat-label">Market Capitalisation</div>
           <div class="stat-value" id="marketCap">—</div>
         </div>
         <div class="stat-card">
-          <div class="stat-label">P/E Ratio</div>
+          <div class="stat-label">P/E Ratio (Trailing)</div>
           <div class="stat-value" id="peRatio">—</div>
         </div>
         <div class="stat-card">
@@ -116,11 +145,11 @@
           <div class="stat-value" id="fwdPE">—</div>
         </div>
         <div class="stat-card">
-          <div class="stat-label">EPS</div>
+          <div class="stat-label">Earnings Per Share (EPS)</div>
           <div class="stat-value" id="epsVal">—</div>
         </div>
         <div class="stat-card">
-          <div class="stat-label">Beta</div>
+          <div class="stat-label">Beta (5Y Monthly)</div>
           <div class="stat-value" id="betaVal">—</div>
         </div>
         <div class="stat-card">
@@ -128,11 +157,11 @@
           <div class="stat-value" id="divYield">—</div>
         </div>
         <div class="stat-card">
-          <div class="stat-label">Employees</div>
+          <div class="stat-label">Total Employees</div>
           <div class="stat-value" id="employees">—</div>
         </div>
         <div class="stat-card">
-          <div class="stat-label">Country</div>
+          <div class="stat-label">Country of Listing</div>
           <div class="stat-value" id="country">—</div>
         </div>
       </div>
@@ -140,75 +169,144 @@
 
     <!-- 52 Week Range -->
     <section class="section">
-      <div class="card">
-        <div class="card-header">52-Week Range</div>
+      <div class="card" style="padding: 1.25rem 1.5rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+          <span style="font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-secondary);">[ 02 // 52-WEEK TRADING RANGE ]</span>
+          <span id="rangeSpreadPct" style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--gold); font-weight: 600;">RANGE POSITION</span>
+        </div>
         <div class="range-bar-wrapper">
-          <span id="week52Low" class="range-label">—</span>
+          <div>
+            <span style="display: block; font-size: 0.65rem; text-transform: uppercase; color: var(--text-muted); font-family: var(--font-mono); margin-bottom: 2px;">52W LOW</span>
+            <span id="week52Low" class="range-label">—</span>
+          </div>
           <div class="range-track">
             <div class="range-fill" id="week52Bar" style="width:50%"></div>
           </div>
-          <span id="week52High" class="range-label">—</span>
+          <div style="text-align: right;">
+            <span style="display: block; font-size: 0.65rem; text-transform: uppercase; color: var(--text-muted); font-family: var(--font-mono); margin-bottom: 2px;">52W HIGH</span>
+            <span id="week52High" class="range-label">—</span>
+          </div>
         </div>
       </div>
     </section>
 
     <!-- Description + Quick Links -->
     <div class="grid grid-2 section">
-      <div class="card">
-        <div class="card-header">About</div>
-        <p id="companyDesc" class="company-desc-text">—</p>
+      <div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
+        <div>
+          <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+            <span style="font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-secondary);">[ 03 // COMPANY DOSSIER ]</span>
+            <div id="companyWebsiteLink"></div>
+          </div>
+          <p id="companyDesc" class="company-desc-text" style="font-size: 0.92rem; line-height: 1.65; color: #d4d4d8;">—</p>
+        </div>
+        <div style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid rgba(255, 255, 255, 0.06); display: flex; justify-content: space-between; align-items: center;">
+          <span style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-muted);">SOURCE: SEC EDGAR / LSE REGULATORY NEWS</span>
+          <span style="font-family: var(--font-mono); font-size: 0.7rem; color: #10b981;">● AUDITED DATA FEED</span>
+        </div>
       </div>
 
       <div class="card">
-        <div class="card-header">Analysis Modules</div>
+        <div class="card-header" style="margin-bottom: 0.75rem;">
+          <span style="font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-secondary);">[ 04 // VALUATION WORKSPACE MODULES ]</span>
+        </div>
         <div class="quick-links">
           <a href="financials.html?v=3.0" class="quick-link-item" data-nav-page="financials.html?v=3.0">
-            <div class="quick-link-icon">📑</div>
+            <div class="ql-head-row">
+              <span class="ql-num">01</span>
+              <span class="ql-badge">[3-STATEMENT]</span>
+            </div>
             <div>
               <div class="quick-link-title">Financial Statements</div>
-              <div class="quick-link-desc">3-statement model &amp; ratios</div>
+              <div class="quick-link-desc">5-year chronological IS/BS/CF &amp; DuPont 3-way ROE breakdown.</div>
+            </div>
+            <div class="ql-footer-action">
+              <span>Open Model</span>
+              <span>&rarr;</span>
             </div>
           </a>
-          <a href="football-field.html?v=2.1" class="quick-link-item" data-nav-page="football-field.html?v=2.1">
-            <div class="quick-link-icon">📊</div>
+          <a href="football-field.html?v=3.0" class="quick-link-item" data-nav-page="football-field.html?v=3.0">
+            <div class="ql-head-row">
+              <span class="ql-num">02</span>
+              <span class="ql-badge">[CONSENSUS]</span>
+            </div>
             <div>
               <div class="quick-link-title">Football Field</div>
-              <div class="quick-link-desc">Consensus valuation range</div>
+              <div class="quick-link-desc">Cross-methodology valuation range, target price spread &amp; consensus band.</div>
+            </div>
+            <div class="ql-footer-action">
+              <span>Open Field</span>
+              <span>&rarr;</span>
             </div>
           </a>
-          <a href="valuation.html?v=2.1" class="quick-link-item" data-nav-page="valuation.html?v=2.1">
-            <div class="quick-link-icon">📐</div>
+          <a href="valuation.html?v=3.0" class="quick-link-item" data-nav-page="valuation.html?v=3.0">
+            <div class="ql-head-row">
+              <span class="ql-num">03</span>
+              <span class="ql-badge">[INTRINSIC]</span>
+            </div>
             <div>
               <div class="quick-link-title">Valuation Models</div>
-              <div class="quick-link-desc">DCF, DDM, APV models</div>
+              <div class="quick-link-desc">Unlevered DCF (FCFF), Dividend Discount (DDM), and APV models.</div>
+            </div>
+            <div class="ql-footer-action">
+              <span>Open Models</span>
+              <span>&rarr;</span>
             </div>
           </a>
-          <a href="comps.html?v=2.1" class="quick-link-item" data-nav-page="comps.html?v=2.1">
-            <div class="quick-link-icon">🏢</div>
+          <a href="comps.html?v=3.0" class="quick-link-item" data-nav-page="comps.html?v=3.0">
+            <div class="ql-head-row">
+              <span class="ql-num">04</span>
+              <span class="ql-badge">[PEERS]</span>
+            </div>
             <div>
               <div class="quick-link-title">Trading Comps</div>
-              <div class="quick-link-desc">Peer comparison</div>
+              <div class="quick-link-desc">Industry peer benchmarking with UK &amp; US relative valuation multiples.</div>
+            </div>
+            <div class="ql-footer-action">
+              <span>Open Comps</span>
+              <span>&rarr;</span>
             </div>
           </a>
-          <a href="quant.html?v=2.1" class="quick-link-item" data-nav-page="quant.html?v=2.1">
-            <div class="quick-link-icon">🎲</div>
+          <a href="quant.html?v=3.0" class="quick-link-item" data-nav-page="quant.html?v=3.0">
+            <div class="ql-head-row">
+              <span class="ql-num">05</span>
+              <span class="ql-badge">[PROBABILISTIC]</span>
+            </div>
             <div>
               <div class="quick-link-title">Quant Lab</div>
-              <div class="quick-link-desc">Monte Carlo, Sensitivity</div>
+              <div class="quick-link-desc">10,000-path Monte Carlo simulation &amp; 9x9 WACC sensitivity matrix.</div>
+            </div>
+            <div class="ql-footer-action">
+              <span>Open Lab</span>
+              <span>&rarr;</span>
             </div>
           </a>
-          <a href="performance.html?v=2.1" class="quick-link-item" data-nav-page="performance.html?v=2.1">
-            <div class="quick-link-icon">📈</div>
+          <a href="performance.html?v=3.0" class="quick-link-item" data-nav-page="performance.html?v=3.0">
+            <div class="ql-head-row">
+              <span class="ql-num">06</span>
+              <span class="ql-badge">[BENCHMARK]</span>
+            </div>
             <div>
-              <div class="quick-link-title">Performance</div>
-              <div class="quick-link-desc">Historical returns</div>
+              <div class="quick-link-title">Performance &amp; Alpha</div>
+              <div class="quick-link-desc">FTSE 100 / S&amp;P 500 relative alpha, Sharpe ratio, and max drawdown.</div>
+            </div>
+            <div class="ql-footer-action">
+              <span>Open Alpha</span>
+              <span>&rarr;</span>
             </div>
           </a>
-          <a href="download.html?v=2.1" class="quick-link-item" data-nav-page="download.html?v=2.1">
-            <div class="quick-link-icon">📥</div>
+          <a href="download.html?v=3.0" class="quick-link-item" data-nav-page="download.html?v=3.0">
+            <div class="ql-head-row">
+              <span class="ql-num">07</span>
+              <span class="ql-badge">[DYNAMIC EXCEL]</span>
+            </div>
             <div>
               <div class="quick-link-title">Export Model</div>
-              <div class="quick-link-desc">Excel financial model</div>
+              <div class="quick-link-desc">Export institutional financial model with live formula cells &amp; audit trail.</div>
+            </div>
+            <div class="ql-footer-action">
+              <span>Generate Excel</span>
+              <span>&rarr;</span>
             </div>
           </a>
         </div>
@@ -217,17 +315,20 @@
 
     <!-- AI Summary -->
     <section class="section">
-      <div class="card ai-summary-card">
-        <div class="card-header">AI Analysis</div>
+      <div class="card ai-summary-card" style="padding: 1.5rem 1.75rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem;">
+          <div class="ai-kicker">[ 05 // NEURAL VALUATION SYNTHESIS ]</div>
+          <span style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--gold); border: 1px solid rgba(245, 158, 11, 0.3); padding: 2px 8px; border-radius: 9999px;">AI AUDITED</span>
+        </div>
         <p id="aiSummaryText" class="ai-summary-text"></p>
 
         <div class="strengths-risks-grid">
           <div class="strengths-box">
-            <div class="sr-title sr-title-green">Strengths</div>
+            <div class="sr-title sr-title-green">Fundamental Strengths</div>
             <ul id="strengthsList" class="sr-list"></ul>
           </div>
           <div class="risks-box">
-            <div class="sr-title sr-title-red">Risks</div>
+            <div class="sr-title sr-title-red">Key Risk Factors</div>
             <ul id="risksList" class="sr-list"></ul>
           </div>
         </div>
@@ -240,9 +341,10 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="js/api.js?v=2.1"></script>
-<script src="js/app.js?v=2.1"></script>
-<script src="js/charts.js?v=2.1"></script>
-<script src="js/dashboard.js"></script>
+<script src="js/api.js?v=3.0"></script>
+<script src="js/app.js?v=3.0"></script>
+<script src="js/charts.js?v=3.0"></script>
+<script src="js/havu-engine.js?v=3.0"></script>
+<script src="js/dashboard.js?v=3.0"></script>
 </body>
 </html>

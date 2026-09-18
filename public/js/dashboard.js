@@ -53,17 +53,34 @@ async function loadDashboard(ticker) {
 
         // ── Header ─────────────────────────────────────────
         setText('companyName',   company.name || ticker);
-        setText('tickerBadge',   ticker);
-        setText('sectorBadge',   company.sector || '');
+        setText('tickerBadge',   `[${ticker}]`);
+        setText('sectorBadge',   company.sector ? `[${company.sector.toUpperCase()}]` : '[SECTOR: N/A]');
+        setText('countryBadge',  company.country ? `[${company.country.toUpperCase()}]` : '[GLOBAL]');
+        
+        // Currency badge formatting
+        let currDisplay = company.currency || 'USD';
+        if (currDisplay.toUpperCase() === 'GBX' || ticker.endsWith('.L')) {
+            currDisplay = 'GBX (PENCE)';
+        }
+        setText('currencyLabel', `[${currDisplay}]`);
+
         setText('currentPrice',  sym + app.fmt(company.current_price));
 
         const changeEl = document.getElementById('priceChange');
         if (changeEl) {
             const pct = company.price_change_pct || 0;
             changeEl.textContent = (pct >= 0 ? '+' : '') + app.fmt(pct, 2) + '%';
-            changeEl.className = pct >= 0 ? 'badge text-green' : 'badge text-red';
+            changeEl.className = pct >= 0 ? 'price-change text-green' : 'price-change text-red';
+            changeEl.style.cssText = pct >= 0 
+                ? 'background: rgba(16, 185, 129, 0.12); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.3);' 
+                : 'background: rgba(239, 68, 68, 0.12); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3);';
         }
-        setText('currencyLabel', company.currency || 'USD');
+
+        // Action buttons
+        const btnFin = document.getElementById('btnLaunchFinancials');
+        if (btnFin) btnFin.href = `financials.html?ticker=${encodeURIComponent(ticker)}`;
+        const btnExp = document.getElementById('btnExportModel');
+        if (btnExp) btnExp.href = `download.html?ticker=${encodeURIComponent(ticker)}`;
 
         // ── Key metrics ─────────────────────────────────────
         setText('marketCap',    app.fmtLarge(company.market_cap));
@@ -84,10 +101,15 @@ async function loadDashboard(ticker) {
             const pct = Math.min(100, Math.max(0, ((company.current_price - low52) / (high52 - low52)) * 100));
             const bar = document.getElementById('week52Bar');
             if (bar) bar.style.width = pct + '%';
+            setText('rangeSpreadPct', `${app.fmt(pct, 1)}% OF 52W RANGE`);
         }
 
-        // ── Description ─────────────────────────────────────
-        setText('companyDesc', company.description || 'No description available.');
+        // ── Description & Website ───────────────────────────
+        setText('companyDesc', company.description || 'No business description available.');
+        const webEl = document.getElementById('companyWebsiteLink');
+        if (webEl && company.website) {
+            webEl.innerHTML = `<a href="${company.website}" target="_blank" rel="noopener" style="font-family:var(--font-mono); font-size:0.75rem; color:var(--gold); text-decoration:none; display:inline-flex; align-items:center; gap:4px; border:1px solid rgba(245,158,11,0.3); padding:3px 10px; border-radius:9999px; background:rgba(245,158,11,0.06);">WEBSITE ↗</a>`;
+        }
 
         // ── AI Summary ──────────────────────────────────────
         if (sum) {
@@ -98,7 +120,7 @@ async function loadDashboard(ticker) {
 
         // ── Quick nav links with current ticker ─────────────
         document.querySelectorAll('[data-nav-page]').forEach(link => {
-            link.href = link.dataset.navPage + '?ticker=' + ticker;
+            link.href = link.dataset.navPage + '?ticker=' + encodeURIComponent(ticker);
         });
 
     } catch (err) {

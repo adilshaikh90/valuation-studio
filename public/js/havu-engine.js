@@ -45,7 +45,7 @@ function initHavuCursor() {
   requestAnimationFrame(renderCursor);
 
   // Expand follower on interactive elements
-  const interactives = 'a, button, input, .hv-pixel-glyph, .hv-trend-pill, .hv-module-card';
+  const interactives = 'a, button, input, select, textarea, .hv-pixel-glyph, .hv-trend-pill, .hv-module-card, .stat-card, .quick-link-item, .sidebar-item, .tab-btn, .badge';
   document.addEventListener('mouseover', (e) => {
     if (e.target.closest(interactives)) {
       document.body.classList.add('hv-cursor-active');
