@@ -104,7 +104,7 @@ async def disable_cache_for_html(request, call_next):
     return response
 
 HTML_PAGES = [
-    "index", "login", "signup", "dashboard", "football-field",
+    "index", "login", "signup", "dashboard", "financials", "football-field",
     "valuation", "comps", "lbo-nav", "quant", "performance",
     "news", "download", "admin",
 ]

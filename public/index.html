@@ -1,189 +1,405 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link rel='icon' type='image/png' href='images/favicon-192.png'>
-  <link rel='shortcut icon' href='favicon.ico'>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Valuation Studio | Institutional-Grade Valuation</title>
-    <meta name="description" content="DCF, DDM, APV, LBO, Monte Carlo, Trading Comps — all in one click.">
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="css/styles.css?v=2.1">
-    <link rel="stylesheet" href="css/components.css?v=2.1">
-    
-    <style>
-        .hero {
-            padding: 8rem 0 6rem;
-            text-align: center;
-            background: radial-gradient(circle at center, var(--bg-card) 0%, var(--bg-primary) 100%);
-        }
-        .hero h1 {
-            font-size: 4rem;
-            font-weight: 700;
-            background: linear-gradient(90deg, #f0b429, #fde047);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 0.5rem;
-        }
-        .hero h2 {
-            font-size: 3rem;
-            color: #fff;
-            margin-bottom: 1.5rem;
-        }
-        .hero-desc {
-            font-size: 1.2rem;
-            color: var(--text-secondary);
-            max-width: 700px;
-            margin: 0 auto 3rem;
-        }
-        .search-container {
-            max-width: 600px;
-            margin: 0 auto;
-            position: relative;
-            display: flex;
-            gap: 1rem;
-        }
-        .search-container input {
-            flex: 1;
-            padding: 1.2rem 1.5rem;
-            font-size: 1.1rem;
-            border-radius: var(--radius-md);
-            border: 2px solid var(--border-color);
-            background-color: rgba(255,255,255,0.08);
-            color: #ffffff;
-            -webkit-text-fill-color: #ffffff;
-            outline: none;
-        }
-        .search-container input::placeholder {
-            color: rgba(255,255,255,0.4);
-            -webkit-text-fill-color: rgba(255,255,255,0.4);
-        }
-        .search-container input:focus {
-            border-color: var(--accent-gold);
-            background-color: rgba(255,255,255,0.12);
-            -webkit-text-fill-color: #ffffff;
-        }
-        .search-container button {
-            padding: 0 2rem;
-            font-size: 1.1rem;
-            border-radius: var(--radius-md);
-        }
-        .features {
-            padding: 5rem 0;
-            background-color: var(--bg-primary);
-        }
-        .feature-card {
-            text-align: center;
-            padding: 2.5rem 1.5rem;
-        }
-        .feature-icon {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-        .feature-title {
-            font-size: 1.25rem;
-            margin-bottom: 0.75rem;
-            color: var(--text-primary);
-        }
-        
-        footer {
-            padding: 3rem 0;
-            text-align: center;
-            border-top: 1px solid var(--border-color);
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-    
-        .landing-nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1.25rem 2.5rem;
-            border-bottom: 1px solid var(--border-color);
-            background-color: var(--surface-1);
-        }
-        .landing-nav .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-        }
-    
-    </style>
+  <link rel="icon" type="image/png" href="images/favicon-192.png">
+  <link rel="shortcut icon" href="favicon.ico">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Valuation Studio | Institutional Valuation &amp; Quantitative Engine</title>
+  <meta name="description" content="An institutional valuation and quantitative engineering platform. DCF, Trading Comps, LBO, NAV, Monte Carlo &amp; 3-Statement financial modeling.">
+
+  <!-- Inter & JetBrains Mono Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/styles.css?v=3.0">
+  <link rel="stylesheet" href="css/components.css?v=3.0">
+  <link rel="stylesheet" href="css/havu-theme.css?v=3.0">
 </head>
-<body>
+<body class="havu-body">
 
-    <nav class="landing-nav">
-        <div class="nav-logo">
-            <img src="images/logo-dark-theme.png?v=3.0" alt="Valuation Studio" style="height:36px;">
-        </div>
-        <div class="nav-links">
-            <a href="#features">Features</a>
-            <a href="#">About</a>
-            <a href="login.html" class="btn btn-ghost">Log In</a>
-            <a href="signup.html" class="btn btn-primary">Sign Up</a>
-        </div>
-    </nav>
+  <!-- Top Navigation Header -->
+  <header class="hv-header">
+    <a href="index.html" class="hv-logo-group">
+      <div class="hv-logo-row">
+        <img src="images/logo-dark-theme.png?v=3.0" alt="Valuation Studio" class="hv-logo-img">
+        <span class="hv-nav-badge">v3.0 ENTERPRISE</span>
+      </div>
+      <p class="hv-kicker">AN INSTITUTIONAL VALUATION &amp; QUANTITATIVE PARTNER</p>
+    </a>
 
-    <main>
-        <section class="hero">
-            <div class="container">
-                <h1>Institutional-Grade Valuation.</h1>
-                <h2>For Everyone.</h2>
-                <p class="hero-desc">DCF, DDM, APV, LBO, Monte Carlo, Trading Comps — all in one click. Enter any ticker and get a complete financial analysis in seconds.</p>
-                
-                <form id="global-search" class="search-container">
-                    <input type="text" placeholder="Enter a ticker symbol... AAPL, TSLA, RELIANCE.NS" required>
-                    <button type="submit" class="btn btn-primary">Analyze</button>
-                </form>
+    <div class="hv-nav-right">
+      <ul class="hv-nav-links">
+        <li><a href="#architecture">Architecture</a></li>
+        <li><a href="#models">Engines</a></li>
+        <li><a href="#simulation">Simulator</a></li>
+        <li><a href="financials.html?v=3.0">3-Statement</a></li>
+        <li><a href="download.html?v=3.0">Excel Model</a></li>
+      </ul>
+
+      <div style="display:flex; align-items:center; gap:0.75rem;">
+        <a href="login.html" class="hv-pill-cta-ghost">Sign In</a>
+        <a href="signup.html" class="hv-pill-cta">
+          Launch Studio
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="hv-hero">
+      <!-- Top Metadata Line -->
+      <div class="hv-hero-metadata-row">
+        <div class="hv-meta-tag">
+          LONDON — CANARY WHARF / EST. 2026
+        </div>
+        <div class="hv-meta-tag hv-live-indicator">
+          <span class="hv-live-dot"></span>
+          144HZ QUANTITATIVE ENGINE ONLINE
+        </div>
+      </div>
+
+      <!-- Signature Interactive Dot-Matrix Canvas (HAVU "LESS IS MORE" Style) -->
+      <div class="hv-matrix-display-container">
+        <canvas id="hvDotMatrixCanvas"></canvas>
+        <span class="hv-matrix-overlay-caption">INTERACTIVE PHOSPHOR LED MATRIX • MOUSE TO DISPLACE</span>
+      </div>
+
+      <!-- Main Editorial Headline -->
+      <h1 class="hv-hero-title">
+        <span>We don't just calculate numbers.</span><br>
+        <span>We engineer the valuation systems</span><br>
+        <span class="hv-title-gold">that drive capital decisions.</span>
+
+        <!-- Retro-Futuristic Pixel Glyphs (Inspired by havu.cc) -->
+        <span class="hv-pixel-crew-container">
+          <!-- Pixel Robot -->
+          <span class="hv-pixel-glyph" title="Autonomous Valuation Agent">
+            <svg width="36" height="36" viewBox="0 0 16 16" fill="#ffffff" shape-rendering="crispEdges">
+              <rect x="5" y="1" width="6" height="1"/>
+              <rect x="7" y="2" width="2" height="1"/>
+              <rect x="3" y="3" width="10" height="4"/>
+              <rect x="5" y="4" width="2" height="1" fill="#000000"/>
+              <rect x="9" y="4" width="2" height="1" fill="#000000"/>
+              <rect x="6" y="7" width="4" height="1"/>
+              <rect x="2" y="8" width="12" height="5"/>
+              <rect x="0" y="9" width="2" height="4"/>
+              <rect x="14" y="9" width="2" height="4"/>
+              <rect x="4" y="13" width="3" height="3"/>
+              <rect x="9" y="13" width="3" height="3"/>
+            </svg>
+          </span>
+
+          <!-- Pixel UFO -->
+          <span class="hv-pixel-glyph" title="Sovereign Indexing Engine">
+            <svg width="42" height="24" viewBox="0 0 21 8" fill="#ffffff" shape-rendering="crispEdges">
+              <rect x="8" y="0" width="5" height="1"/>
+              <rect x="7" y="1" width="7" height="1"/>
+              <rect x="6" y="2" width="9" height="1"/>
+              <rect x="2" y="3" width="17" height="1"/>
+              <rect x="0" y="4" width="21" height="1"/>
+              <rect x="2" y="5" width="17" height="1"/>
+              <rect x="5" y="6" width="11" height="1"/>
+              <rect x="7" y="7" width="1" height="1"/>
+              <rect x="10" y="7" width="1" height="1"/>
+              <rect x="13" y="7" width="1" height="1"/>
+            </svg>
+          </span>
+
+          <!-- Pixel [DCF] Badge -->
+          <span class="hv-pixel-glyph" title="Discounted Cash Flow Model">
+            <svg width="40" height="24" viewBox="0 0 20 12" fill="none" shape-rendering="crispEdges">
+              <rect x="0" y="0" width="20" height="12" stroke="#ffffff" stroke-width="1"/>
+              <text x="3" y="9" fill="#f59e0b" font-family="monospace" font-size="8" font-weight="bold">DCF</text>
+            </svg>
+          </span>
+
+          <!-- Pixel [10K] Monte Carlo Badge -->
+          <span class="hv-pixel-glyph" title="10,000 Monte Carlo Simulations">
+            <svg width="40" height="24" viewBox="0 0 20 12" fill="none" shape-rendering="crispEdges">
+              <rect x="0" y="0" width="20" height="12" stroke="#ffffff" stroke-width="1"/>
+              <text x="3" y="9" fill="#38bdf8" font-family="monospace" font-size="8" font-weight="bold">10K</text>
+            </svg>
+          </span>
+        </span>
+      </h1>
+
+      <p class="hv-hero-subtext">
+        Come to us before capital is allocated. Institutional DCF, Trading Comps, LBO &amp; 10,000-scenario Monte Carlo simulations calibrated to sovereign national benchmarks and Wall Street pitchbook standards.
+      </p>
+
+      <!-- Pill Command Palette Console -->
+      <div class="hv-console-row">
+        <form id="global-search" class="hv-command-palette">
+          <span class="hv-cmd-icon">❯</span>
+          <input type="text" class="hv-cmd-input" placeholder="Enter any global ticker (e.g. ADM.L, AAPL, NVDA, HSX.L, TSLA)..." autocomplete="off" spellcheck="false" required>
+          <button type="submit" class="hv-cmd-submit">
+            Analyze Company
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </button>
+        </form>
+
+        <!-- Trending Ticker Pills -->
+        <div class="hv-trending-strip">
+          <span class="hv-trend-label">BENCHMARK PICKS:</span>
+          <button type="button" class="hv-trend-pill" data-ticker="ADM.L">ADM.L [LSE UK]</button>
+          <button type="button" class="hv-trend-pill" data-ticker="AAPL">AAPL [NASDAQ]</button>
+          <button type="button" class="hv-trend-pill" data-ticker="NVDA">NVDA [SEMI]</button>
+          <button type="button" class="hv-trend-pill" data-ticker="HSX.L">HSX.L [UK INS]</button>
+          <button type="button" class="hv-trend-pill" data-ticker="MSFT">MSFT [CLOUD]</button>
+          <button type="button" class="hv-trend-pill" data-ticker="AV.L">AV.L [LSE]</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- The Architecture Loop Section (Inspired by HAVU loop diagram) -->
+    <section id="architecture" class="hv-loop-section">
+      <div class="hv-section-title-row">
+        <div class="hv-section-num">[ 01 / ARCHITECTURE ]</div>
+        <h2 class="hv-section-headline">The valuation engine loop that updates accuracy every iteration.</h2>
+      </div>
+
+      <div class="hv-loop-architecture-grid">
+        <!-- Ingestion Column -->
+        <div class="hv-loop-card-column">
+          <div class="hv-loop-step-box">
+            <div class="hv-step-mono">INPUT LAYER 01</div>
+            <h4 class="hv-step-title">Real-Time Exchange Telemetry</h4>
+            <p class="hv-step-desc">Sub-second quote streaming, bid-ask spreads, and 5-year historical prices across 50+ global exchanges.</p>
+          </div>
+          <div class="hv-loop-step-box">
+            <div class="hv-step-mono">INPUT LAYER 02</div>
+            <h4 class="hv-step-title">5-Year 3-Statement Ingestion</h4>
+            <p class="hv-step-desc">Audited IFRS &amp; US GAAP Income Statement, Balance Sheet, and Cash Flow reconciliation with line-item tagging.</p>
+          </div>
+          <div class="hv-loop-step-box">
+            <div class="hv-step-mono">INPUT LAYER 03</div>
+            <h4 class="hv-step-title">Sovereign Benchmark &amp; Peers</h4>
+            <p class="hv-step-desc">Local benchmark alignment (FTSE 100, DAX 40, S&amp;P 500) and curated business-model peer mapping across 25+ sub-sectors.</p>
+          </div>
+        </div>
+
+        <!-- Center Orbital Hub -->
+        <div class="hv-loop-orbit-container">
+          <div class="hv-orbit-circle-wrap">
+            <div class="hv-orbit-ring"></div>
+            <div class="hv-orbit-center-card">
+              <div class="hv-orbit-hub-kicker">CORE COMPUTATION</div>
+              <div class="hv-orbit-hub-title">Valuation Engine Loop</div>
+              <p style="font-size:0.7rem; color:#8e8e99; margin-top:0.4rem;">WACC • FCFF • Comps • Monte Carlo</p>
             </div>
-        </section>
-
-        <section id="features" class="features">
-            <div class="container">
-                <div class="grid grid-3">
-                    <div class="card feature-card">
-                        <div class="feature-icon">📊</div>
-                        <h3 class="feature-title">9 Valuation Methods</h3>
-                        <p>DCF, DDM, APV, LBO, NAV, Trading Comps, and more.</p>
-                    </div>
-                    <div class="card feature-card">
-                        <div class="feature-icon">🎲</div>
-                        <h3 class="feature-title">Monte Carlo Simulation</h3>
-                        <p>10,000 bootstrapped scenarios with probability distributions.</p>
-                    </div>
-                    <div class="card feature-card">
-                        <div class="feature-icon">💻</div>
-                        <h3 class="feature-title">Football Field Chart</h3>
-                        <p>See all valuations side-by-side like a real IB analyst.</p>
-                    </div>
-                    <div class="card feature-card">
-                        <div class="feature-icon">📈</div>
-                        <h3 class="feature-title">5-Year Performance</h3>
-                        <p>Interactive charts with benchmark comparison.</p>
-                    </div>
-                    <div class="card feature-card">
-                        <div class="feature-icon">📥</div>
-                        <h3 class="feature-title">Excel Financial Model</h3>
-                        <p>Download complete models with live formulas.</p>
-                    </div>
-                    <div class="card feature-card">
-                        <div class="feature-icon">🌍</div>
-                        <h3 class="feature-title">Global Coverage</h3>
-                        <p>Any public company, any exchange, any currency.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer>
-        <div class="container">
-            <p>&copy; 2026 Valuation Studio. All rights reserved.</p>
-            <p class="mt-1" style="font-size: 0.8rem;">Disclaimer: For educational purposes only. Not financial advice.</p>
+          </div>
         </div>
-    </footer>
 
-    <script src="js/api.js?v=2.1"></script>
-    <script src="js/app.js?v=2.1"></script>
+        <!-- Deliverables Column -->
+        <div class="hv-loop-card-column">
+          <div class="hv-loop-step-box">
+            <div class="hv-step-mono">OUTPUT SYNTHESIS 01</div>
+            <h4 class="hv-step-title">Consensus Football Field</h4>
+            <p class="hv-step-desc">Cross-methodology valuation range chart displaying DCF, Comps, DDM, and APV spreads against market price.</p>
+          </div>
+          <div class="hv-loop-step-box">
+            <div class="hv-step-mono">OUTPUT SYNTHESIS 02</div>
+            <h4 class="hv-step-title">10,000-Scenario Monte Carlo</h4>
+            <p class="hv-step-desc">Probabilistic confidence intervals (P10, P50, P90) with revenue, margin, and discount rate sensitivity distributions.</p>
+          </div>
+          <div class="hv-loop-step-box">
+            <div class="hv-step-mono">OUTPUT SYNTHESIS 03</div>
+            <h4 class="hv-step-title">Audit-Ready Dynamic Excel</h4>
+            <p class="hv-step-desc">Complete 8-sheet financial model formatted to J.P. Morgan investment banking standards with live dynamic formulas.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6-Module Monochrome Grid -->
+    <section id="models" class="hv-features-section">
+      <div class="hv-section-title-row">
+        <div class="hv-section-num">[ 02 / VALUATION SUITE ]</div>
+        <h2 class="hv-section-headline">6 Quantitative Engines Built For Wall Street.</h2>
+      </div>
+
+      <div class="hv-grid-6">
+        <!-- Card 1 -->
+        <div class="hv-module-card">
+          <div>
+            <div class="hv-card-head">
+              <span class="hv-card-index">01</span>
+              <span class="hv-card-badge">9 ENGINES</span>
+            </div>
+            <h3 class="hv-card-title">Multi-Model Valuation</h3>
+            <p class="hv-card-desc">DCF (FCFF &amp; FCFE), Dividend Discount Model (DDM), Adjusted Present Value (APV), Leveraged Buyout (LBO), and Net Asset Value (NAV).</p>
+          </div>
+          <a href="valuation.html?v=3.0" class="hv-card-arrow-link">Explore Models →</a>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="hv-module-card">
+          <div>
+            <div class="hv-card-head">
+              <span class="hv-card-index">02</span>
+              <span class="hv-card-badge">10K RUNS</span>
+            </div>
+            <h3 class="hv-card-title">Monte Carlo Simulation</h3>
+            <p class="hv-card-desc">10,000 bootstrapped stochastic iterations modeling revenue CAGR, operating margin variance, WACC volatility, and probability density curves.</p>
+          </div>
+          <a href="quant.html?v=3.0" class="hv-card-arrow-link">Launch Quant Lab →</a>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="hv-module-card">
+          <div>
+            <div class="hv-card-head">
+              <span class="hv-card-index">03</span>
+              <span class="hv-card-badge">PITCHBOOK</span>
+            </div>
+            <h3 class="hv-card-title">Consensus Football Field</h3>
+            <p class="hv-card-desc">Synthesize all valuation methodologies into a Wall Street pitchbook range chart with real-time market price overlay and spread analysis.</p>
+          </div>
+          <a href="football-field.html?v=3.0" class="hv-card-arrow-link">View Football Field →</a>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="hv-module-card">
+          <div>
+            <div class="hv-card-head">
+              <span class="hv-card-index">04</span>
+              <span class="hv-card-badge">IFRS &amp; GAAP</span>
+            </div>
+            <h3 class="hv-card-title">3-Statement Financials</h3>
+            <p class="hv-card-desc">5-year consolidated Income Statement, Balance Sheet, Cash Flows &amp; DuPont financial ratios with real-time line item filtering and YoY growth.</p>
+          </div>
+          <a href="financials.html?v=3.0" class="hv-card-arrow-link">Inspect Financials →</a>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="hv-module-card">
+          <div>
+            <div class="hv-card-head">
+              <span class="hv-card-index">05</span>
+              <span class="hv-card-badge">8 SHEETS</span>
+            </div>
+            <h3 class="hv-card-title">Dynamic Excel Generation</h3>
+            <p class="hv-card-desc">Export audit-ready J.P. Morgan standard 8-sheet workbooks complete with live formula links, dynamic WACC, sensitivity matrices, and comps.</p>
+          </div>
+          <a href="download.html?v=3.0" class="hv-card-arrow-link">Download Model →</a>
+        </div>
+
+        <!-- Card 6 -->
+        <div class="hv-module-card">
+          <div>
+            <div class="hv-card-head">
+              <span class="hv-card-index">06</span>
+              <span class="hv-card-badge">GLOBAL</span>
+            </div>
+            <h3 class="hv-card-title">Sovereign Peer Engine</h3>
+            <p class="hv-card-desc">Automatic regional benchmarking (FTSE 100 for UK, DAX for Germany, S&amp;P 500 for US) and curated peer mapping across 25+ sub-industries.</p>
+          </div>
+          <a href="comps.html?v=3.0" class="hv-card-arrow-link">View Peer Engine →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive Live DCF Sandbox Section -->
+    <section id="simulation" class="hv-sandbox-section">
+      <div class="hv-section-title-row">
+        <div class="hv-section-num">[ 03 / LIVE SIMULATION ]</div>
+        <h2 class="hv-section-headline">Test-drive the quantitative valuation engine in real time.</h2>
+      </div>
+
+      <div class="hv-sandbox-panel">
+        <div>
+          <h3 style="font-size:1.4rem; font-weight:800; color:#fff; margin-bottom:0.75rem;">DCF Sensitivity Controls</h3>
+          <p style="font-size:0.92rem; color:#8e8e99; line-height:1.6;">Adjust the cost of capital and terminal perpetual growth rate to simulate real-time fair value changes on Admiral Group plc [LSE: ADM.L].</p>
+
+          <div class="hv-range-group">
+            <div class="hv-range-header">
+              <span>Weighted Average Cost of Capital (WACC)</span>
+              <span id="hvWaccDisplay" class="hv-range-val">8.8%</span>
+            </div>
+            <input type="range" id="hvWaccSlider" class="hv-slider" min="6.5" max="13.0" step="0.1" value="8.8">
+            <div style="display:flex; justify-content:space-between; font-family:var(--hv-font-mono); font-size:0.68rem; color:#52525b;">
+              <span>6.5% LOW</span>
+              <span>13.0% HIGH</span>
+            </div>
+          </div>
+
+          <div class="hv-range-group">
+            <div class="hv-range-header">
+              <span>Terminal Perpetual Growth (g)</span>
+              <span id="hvGrowthDisplay" class="hv-range-val">2.5%</span>
+            </div>
+            <input type="range" id="hvGrowthSlider" class="hv-slider" min="1.0" max="4.5" step="0.1" value="2.5">
+            <div style="display:flex; justify-content:space-between; font-family:var(--hv-font-mono); font-size:0.68rem; color:#52525b;">
+              <span>1.0% CONSERVATIVE</span>
+              <span>4.5% AGGRESSIVE</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hv-output-box">
+          <div class="hv-output-kicker">● DYNAMIC FAIR VALUE PER SHARE</div>
+          <div id="hvPriceDisplay" class="hv-output-headline">£39.40</div>
+          <div id="hvUpsideBadge" class="hv-upside-badge green">+3.2% Implied Upside vs £38.18</div>
+
+          <div class="hv-out-stat-grid">
+            <div>
+              <div class="hv-stat-mono-lbl">ENTERPRISE VALUE</div>
+              <div id="hvEvDisplay" class="hv-stat-mono-val">£12.06B</div>
+            </div>
+            <div>
+              <div class="hv-stat-mono-lbl">EQUITY VALUE</div>
+              <div id="hvEqDisplay" class="hv-stat-mono-val">£11.88B</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Minimalist HAVU-Style Footer -->
+  <footer class="hv-footer">
+    <div class="hv-footer-top">
+      <div>
+        <img src="images/logo-dark-theme.png?v=3.0" alt="Valuation Studio" style="height:36px; margin-bottom:1rem;">
+        <p style="font-family:var(--hv-font-mono); font-size:0.75rem; color:#8e8e99; max-width:400px; line-height:1.6;">
+          An institutional equity valuation and quantitative financial modeling partner. Calibrated for Wall Street, global exchanges, and corporate finance.
+        </p>
+      </div>
+
+      <div style="display:flex; gap:3rem;">
+        <div>
+          <div style="font-family:var(--hv-font-mono); font-size:0.7rem; color:#52525b; text-transform:uppercase; margin-bottom:0.75rem;">PLATFORM</div>
+          <ul style="list-style:none; display:flex; flex-direction:column; gap:0.5rem; font-size:0.85rem;">
+            <li><a href="dashboard.html?v=3.0" style="color:#8e8e99; text-decoration:none;">Dashboard</a></li>
+            <li><a href="financials.html?v=3.0" style="color:#8e8e99; text-decoration:none;">3-Statement</a></li>
+            <li><a href="football-field.html?v=3.0" style="color:#8e8e99; text-decoration:none;">Football Field</a></li>
+            <li><a href="quant.html?v=3.0" style="color:#8e8e99; text-decoration:none;">Quant Lab</a></li>
+          </ul>
+        </div>
+        <div>
+          <div style="font-family:var(--hv-font-mono); font-size:0.7rem; color:#52525b; text-transform:uppercase; margin-bottom:0.75rem;">OFFICES</div>
+          <ul style="list-style:none; display:flex; flex-direction:column; gap:0.5rem; font-family:var(--hv-font-mono); font-size:0.78rem; color:#8e8e99;">
+            <li>London — Canary Wharf</li>
+            <li>New York — Financial District</li>
+            <li>Tokyo — Marunouchi</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="hv-footer-bottom">
+      <div>&copy; 2026 VALUATION STUDIO LLC. ALL RIGHTS RESERVED.</div>
+      <div>DISCLAIMER: FOR INSTITUTIONAL RESEARCH &amp; EDUCATIONAL PURPOSES. NOT DIRECT FINANCIAL ADVICE.</div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/api.js?v=2.1"></script>
+  <script src="js/app.js?v=2.1"></script>
+  <script src="js/havu-engine.js?v=3.0"></script>
 </body>
 </html>

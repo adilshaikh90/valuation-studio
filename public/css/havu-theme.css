@@ -1,0 +1,894 @@
+/* ==========================================================================
+   Valuation Studio — HAVU-Inspired Avant-Garde Minimalist Design System
+   Inspired by havu.cc: Deep Obsidian Black, Monospace Technical Metadata,
+   Interactive Dot-Matrix Canvas, Retro-Futuristic Pixel Glyphs, Pill CTAs,
+   and 144Hz Buttery-Smooth Micro-Interactions.
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+:root {
+  --hv-bg: #050507;
+  --hv-surface: #0c0d12;
+  --hv-surface-2: #14161f;
+  --hv-border: rgba(255, 255, 255, 0.09);
+  --hv-border-subtle: rgba(255, 255, 255, 0.05);
+  --hv-border-active: rgba(255, 255, 255, 0.35);
+  --hv-ink: #f4f4f5;
+  --hv-ink-muted: #8e8e99;
+  --hv-ink-dim: #52525b;
+  --hv-gold: #f59e0b;
+  --hv-gold-glow: rgba(245, 158, 11, 0.3);
+  --hv-green: #10b981;
+  --hv-cyan: #38bdf8;
+  --hv-font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --hv-font-mono: 'JetBrains Mono', monospace;
+}
+
+/* ── Global Reset & Body ────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: var(--hv-bg);
+  color: var(--hv-ink);
+}
+
+body.havu-body {
+  font-family: var(--hv-font-sans);
+  background-color: var(--hv-bg);
+  color: var(--hv-ink);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  position: relative;
+  cursor: default;
+}
+
+/* ── 144Hz Custom Smooth Cursor ────────────────────────────────────────── */
+.hv-cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 6px;
+  height: 6px;
+  background: #ffffff;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.2s ease, transform 0.08s ease-out;
+  will-change: transform;
+}
+
+.hv-cursor-follower {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 32px;
+  height: 32px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  transition: width 0.25s ease, height 0.25s ease, border-color 0.25s ease, background-color 0.25s ease;
+  will-change: transform;
+}
+
+.hv-cursor-active .hv-cursor-follower {
+  width: 54px;
+  height: 54px;
+  border-color: rgba(245, 158, 11, 0.7);
+  background: rgba(245, 158, 11, 0.08);
+}
+
+/* Hide custom cursor on touch devices */
+@media (hover: none) and (pointer: coarse) {
+  .hv-cursor-dot, .hv-cursor-follower { display: none !important; }
+}
+
+/* ── Top Header Navigation ─────────────────────────────────────────────── */
+.hv-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 3rem;
+  background: rgba(5, 5, 7, 0.85);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-bottom: 1px solid var(--hv-border-subtle);
+}
+
+.hv-logo-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  text-decoration: none;
+}
+
+.hv-logo-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.hv-logo-img {
+  height: 38px;
+  width: auto;
+  object-fit: contain;
+}
+
+.hv-kicker {
+  font-family: var(--hv-font-mono);
+  font-size: 0.65rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--hv-ink-muted);
+}
+
+.hv-nav-right {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.hv-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 1.75rem;
+  list-style: none;
+}
+
+.hv-nav-links a {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--hv-ink-muted);
+  text-decoration: none;
+  transition: color 0.2s ease;
+  letter-spacing: -0.01em;
+}
+
+.hv-nav-links a:hover {
+  color: #ffffff;
+}
+
+.hv-nav-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--hv-font-mono);
+  font-size: 0.7rem;
+  padding: 0.3rem 0.75rem;
+  border-radius: 9999px;
+  border: 1px solid var(--hv-border);
+  color: var(--hv-ink-muted);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.hv-pill-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #ffffff;
+  color: #050507;
+  padding: 0.55rem 1.4rem;
+  border-radius: 9999px;
+  font-size: 0.84rem;
+  font-weight: 700;
+  text-decoration: none;
+  border: 1px solid #ffffff;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 18px rgba(255, 255, 255, 0.12);
+}
+
+.hv-pill-cta:hover {
+  background: #f4f4f5;
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 6px 24px rgba(255, 255, 255, 0.25);
+}
+
+.hv-pill-cta-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: transparent;
+  color: #f4f4f5;
+  padding: 0.55rem 1.25rem;
+  border-radius: 9999px;
+  font-size: 0.84rem;
+  font-weight: 600;
+  text-decoration: none;
+  border: 1px solid var(--hv-border);
+  transition: all 0.2s ease;
+}
+
+.hv-pill-cta-ghost:hover {
+  border-color: rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* ── Hero Section (HAVU Layout) ────────────────────────────────────────── */
+.hv-hero {
+  position: relative;
+  padding: 4.5rem 3rem 5rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.hv-hero-metadata-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 2.5rem;
+  border-bottom: 1px solid var(--hv-border-subtle);
+  margin-bottom: 3.5rem;
+}
+
+.hv-meta-tag {
+  font-family: var(--hv-font-mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--hv-ink-muted);
+}
+
+.hv-live-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: var(--hv-green);
+  font-weight: 600;
+}
+
+.hv-live-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--hv-green);
+  border-radius: 50%;
+  box-shadow: 0 0 8px var(--hv-green);
+  animation: hvPulse 2s infinite ease-in-out;
+}
+
+@keyframes hvPulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(0.8); opacity: 0.4; }
+}
+
+/* ── Signature Dot-Matrix Canvas (HAVU "LESS IS MORE") ──────────────────── */
+.hv-matrix-display-container {
+  position: relative;
+  width: 100%;
+  height: 190px;
+  margin-bottom: 3rem;
+  border-radius: 12px;
+  background: radial-gradient(ellipse at center, rgba(12, 13, 18, 0.9) 0%, rgba(5, 5, 7, 1) 100%);
+  border: 1px solid var(--hv-border-subtle);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#hvDotMatrixCanvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: auto;
+}
+
+.hv-matrix-overlay-caption {
+  position: absolute;
+  bottom: 12px;
+  right: 18px;
+  font-family: var(--hv-font-mono);
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--hv-ink-dim);
+  pointer-events: none;
+}
+
+/* ── Hero Main Editorial Headline ──────────────────────────────────────── */
+.hv-hero-title {
+  font-size: clamp(2.4rem, 5.5vw, 5.2rem);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+  color: #ffffff;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.hv-hero-title span {
+  display: inline-block;
+}
+
+.hv-title-gold {
+  color: #ffffff;
+  position: relative;
+  background: linear-gradient(135deg, #ffffff 0%, #fde047 50%, #f59e0b 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Interactive Pixel Artifacts floating alongside the title */
+.hv-pixel-crew-container {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.25rem;
+  margin-left: 1.5rem;
+  vertical-align: middle;
+}
+
+.hv-pixel-glyph {
+  display: inline-block;
+  cursor: pointer;
+  filter: drop-shadow(0 2px 6px rgba(255, 255, 255, 0.2));
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.hv-pixel-glyph:hover {
+  transform: translateY(-6px) scale(1.2) rotate(4deg);
+}
+
+.hv-hero-subtext {
+  font-size: clamp(1.05rem, 1.6vw, 1.28rem);
+  color: var(--hv-ink-muted);
+  max-width: 780px;
+  line-height: 1.6;
+  margin-bottom: 2.75rem;
+}
+
+/* ── Pill Command Console & Search ─────────────────────────────────────── */
+.hv-console-row {
+  max-width: 720px;
+  margin-bottom: 3.5rem;
+}
+
+.hv-command-palette {
+  display: flex;
+  align-items: center;
+  background: var(--hv-surface);
+  border: 1px solid var(--hv-border);
+  border-radius: 9999px;
+  padding: 0.45rem 0.6rem 0.45rem 1.5rem;
+  transition: all 0.25s ease;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.hv-command-palette:focus-within {
+  border-color: #ffffff;
+  box-shadow: 0 12px 40px rgba(255, 255, 255, 0.08);
+}
+
+.hv-cmd-icon {
+  font-family: var(--hv-font-mono);
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--hv-gold);
+  margin-right: 0.85rem;
+}
+
+.hv-cmd-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: #ffffff;
+  font-family: var(--hv-font-sans);
+}
+
+.hv-cmd-input::placeholder {
+  color: var(--hv-ink-dim);
+}
+
+.hv-cmd-submit {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: #ffffff;
+  color: #050507;
+  border: none;
+  padding: 0.75rem 1.6rem;
+  border-radius: 9999px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.hv-cmd-submit:hover {
+  background: #f4f4f5;
+  transform: scale(1.03);
+}
+
+.hv-trending-strip {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-top: 1rem;
+  padding-left: 0.75rem;
+}
+
+.hv-trend-label {
+  font-family: var(--hv-font-mono);
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--hv-ink-dim);
+}
+
+.hv-trend-pill {
+  font-family: var(--hv-font-mono);
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: var(--hv-ink-muted);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--hv-border-subtle);
+  padding: 0.2rem 0.65rem;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.hv-trend-pill:hover {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* ── The HAVU Loop Diagram Section ("The Valuation Engine Loop") ───────── */
+.hv-loop-section {
+  padding: 5rem 3rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  border-top: 1px solid var(--hv-border-subtle);
+}
+
+.hv-section-title-row {
+  margin-bottom: 3.5rem;
+}
+
+.hv-section-num {
+  font-family: var(--hv-font-mono);
+  font-size: 0.75rem;
+  color: var(--hv-gold);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.hv-section-headline {
+  font-size: clamp(1.8rem, 3.5vw, 3rem);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  color: #ffffff;
+}
+
+.hv-loop-architecture-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr 1fr;
+  gap: 2rem;
+  align-items: center;
+}
+
+.hv-loop-card-column {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.hv-loop-step-box {
+  background: var(--hv-surface);
+  border: 1px solid var(--hv-border-subtle);
+  border-radius: 14px;
+  padding: 1.5rem;
+  transition: all 0.25s ease;
+}
+
+.hv-loop-step-box:hover {
+  border-color: var(--hv-border-active);
+  transform: translateY(-2px);
+}
+
+.hv-step-mono {
+  font-family: var(--hv-font-mono);
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--hv-gold);
+  margin-bottom: 0.35rem;
+}
+
+.hv-step-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 0.35rem;
+}
+
+.hv-step-desc {
+  font-size: 0.84rem;
+  color: var(--hv-ink-muted);
+  line-height: 1.5;
+}
+
+/* Center Loop Interactive Orbit */
+.hv-loop-orbit-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 2.5rem 1.5rem;
+}
+
+.hv-orbit-circle-wrap {
+  width: 340px;
+  height: 340px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hv-orbit-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1px dashed rgba(255, 255, 255, 0.2);
+  animation: hvSpinClockwise 35s linear infinite;
+}
+
+.hv-orbit-ring::after {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  background: #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #ffffff;
+}
+
+@keyframes hvSpinClockwise {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.hv-orbit-center-card {
+  width: 190px;
+  height: 190px;
+  border-radius: 50%;
+  background: #090a0f;
+  border: 1px solid var(--hv-border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 1.25rem;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.8), inset 0 0 20px rgba(245, 158, 11, 0.08);
+  z-index: 2;
+}
+
+.hv-orbit-hub-kicker {
+  font-family: var(--hv-font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  color: var(--hv-gold);
+  text-transform: uppercase;
+  margin-bottom: 0.25rem;
+}
+
+.hv-orbit-hub-title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1.2;
+}
+
+/* ── HAVU Monochrome Feature Grid ──────────────────────────────────────── */
+.hv-features-section {
+  padding: 6rem 3rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  border-top: 1px solid var(--hv-border-subtle);
+}
+
+.hv-grid-6 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.hv-module-card {
+  background: var(--hv-surface);
+  border: 1px solid var(--hv-border-subtle);
+  border-radius: 16px;
+  padding: 2.25rem 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 280px;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.hv-module-card:hover {
+  border-color: var(--hv-border-active);
+  background: var(--hv-surface-2);
+  transform: translateY(-4px);
+}
+
+.hv-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+}
+
+.hv-card-index {
+  font-family: var(--hv-font-mono);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--hv-ink-dim);
+}
+
+.hv-card-badge {
+  font-family: var(--hv-font-mono);
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 0.2rem 0.6rem;
+  border-radius: 9999px;
+  border: 1px solid var(--hv-border);
+  color: var(--hv-ink-muted);
+}
+
+.hv-card-title {
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+  margin-bottom: 0.65rem;
+}
+
+.hv-card-desc {
+  font-size: 0.88rem;
+  color: var(--hv-ink-muted);
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.hv-card-arrow-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--hv-font-mono);
+  font-size: 0.76rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #ffffff;
+  text-decoration: none;
+  transition: gap 0.2s ease, color 0.2s ease;
+}
+
+.hv-card-arrow-link:hover {
+  color: var(--hv-gold);
+  gap: 0.75rem;
+}
+
+/* ── Interactive 144Hz Live Simulator Section ──────────────────────────── */
+.hv-sandbox-section {
+  padding: 6rem 3rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  border-top: 1px solid var(--hv-border-subtle);
+}
+
+.hv-sandbox-panel {
+  background: #090a0f;
+  border: 1px solid var(--hv-border);
+  border-radius: 20px;
+  padding: 3rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3.5rem;
+  align-items: center;
+}
+
+.hv-range-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-top: 1.75rem;
+}
+
+.hv-range-header {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--hv-font-mono);
+  font-size: 0.82rem;
+  color: var(--hv-ink);
+}
+
+.hv-range-val {
+  font-weight: 700;
+  color: var(--hv-gold);
+}
+
+.hv-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 2px;
+  outline: none;
+}
+
+.hv-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #ffffff;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+  transition: transform 0.15s ease;
+}
+
+.hv-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.3);
+}
+
+.hv-output-box {
+  background: var(--hv-surface);
+  border: 1px solid var(--hv-border);
+  border-radius: 16px;
+  padding: 2.5rem;
+  text-align: center;
+}
+
+.hv-output-kicker {
+  font-family: var(--hv-font-mono);
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--hv-green);
+  margin-bottom: 0.5rem;
+}
+
+.hv-output-headline {
+  font-size: 3.6rem;
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+  margin-bottom: 0.5rem;
+}
+
+.hv-upside-badge {
+  display: inline-block;
+  font-family: var(--hv-font-mono);
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 0.35rem 0.9rem;
+  border-radius: 9999px;
+  margin-bottom: 2rem;
+}
+
+.hv-upside-badge.green {
+  background: rgba(16, 185, 129, 0.12);
+  color: var(--hv-green);
+  border: 1px solid rgba(16, 185, 129, 0.35);
+}
+
+.hv-upside-badge.red {
+  background: rgba(239, 68, 68, 0.12);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.35);
+}
+
+.hv-out-stat-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  border-top: 1px solid var(--hv-border-subtle);
+  padding-top: 1.5rem;
+}
+
+.hv-stat-mono-lbl {
+  font-family: var(--hv-font-mono);
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  color: var(--hv-ink-dim);
+  margin-bottom: 0.2rem;
+}
+
+.hv-stat-mono-val {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+/* ── Footer Section ────────────────────────────────────────────────────── */
+.hv-footer {
+  padding: 5rem 3rem 3.5rem;
+  border-top: 1px solid var(--hv-border-subtle);
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.hv-footer-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 3.5rem;
+}
+
+.hv-footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--hv-border-subtle);
+  padding-top: 2rem;
+  font-family: var(--hv-font-mono);
+  font-size: 0.72rem;
+  color: var(--hv-ink-dim);
+}
+
+/* ── Responsive Rules ──────────────────────────────────────────────────── */
+@media (max-width: 1100px) {
+  .hv-loop-architecture-grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+  .hv-grid-6 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .hv-sandbox-panel {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .hv-header {
+    padding: 1rem 1.5rem;
+  }
+  .hv-nav-links {
+    display: none;
+  }
+  .hv-hero {
+    padding: 3rem 1.5rem;
+  }
+  .hv-grid-6 {
+    grid-template-columns: 1fr;
+  }
+  .hv-footer-top {
+    flex-direction: column;
+    gap: 2rem;
+  }
+}

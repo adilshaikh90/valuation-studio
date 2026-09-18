@@ -62,14 +62,16 @@ async function loadNews(ticker) {
                 const publisher = item.publisher || item.source || 'Yahoo Finance';
                 
                 let dateStr = item.published_date || '';
-                if (!dateStr && rawDate) {
+                if (!dateStr && item.raw_date) {
                     try {
-                        const d = new Date(typeof rawDate === 'number' && rawDate < 1000000000000 ? rawDate * 1000 : rawDate);
+                        const raw = item.raw_date;
+                        const d = new Date(typeof raw === 'number' && raw < 1000000000000 ? raw * 1000 : raw);
                         dateStr = d.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' });
                     } catch(e) {
                         dateStr = '';
                     }
                 }
+
 
                 const summary = item.summary || item.text || '';
                 const thumb = item.thumbnail_url || item.thumbnail?.resolutions?.[0]?.url || item.image || '';
