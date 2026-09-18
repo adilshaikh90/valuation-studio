@@ -103,8 +103,8 @@ a:hover {
 }
 
 .sidebar-logo {
-  margin-bottom: 1.25rem;
-  padding: 0.5rem 0.25rem 0.25rem;
+  margin-bottom: 1.5rem;
+  padding: 0.25rem 0;
 }
 
 .sidebar-logo a {
@@ -125,11 +125,13 @@ a:hover {
 
 .sidebar-logo-img {
   width: 100%;
-  height: 54px;
-  max-width: 220px;
+  height: auto;
+  max-height: 70px;
+  max-width: 235px;
   object-fit: contain;
   display: block;
 }
+
 
 
 .sidebar-ticker-box {
