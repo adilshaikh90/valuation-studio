@@ -32,9 +32,20 @@ async function loadComps(ticker) {
         const priceEl = document.getElementById('sidebarPrice');
         if (priceEl) priceEl.textContent = companySym + app.fmt(companyPrice);
 
+        // ── Peer Universe Context ────────────────────────────
+        const badge = document.getElementById('peerSourceBadge');
+        if (badge && data.peer_source) {
+            badge.textContent = data.peer_source;
+        }
+        const subtitle = document.getElementById('compsSubtitle');
+        if (subtitle && (data.matched_industry || company.industry)) {
+            subtitle.textContent = `Industry: ${data.matched_industry || company.industry} (${data.matched_region || 'Global'}) — Institutional Peer Comps`;
+        }
+
         // ── Peer stats table & details ──────────────────────
         renderPeerTable(data.peer_data || []);
         renderPeerStats(data.peer_stats || {}, companySym);
+
 
         // ── Implied values ────────────────────────────────────
         renderImpliedValues(data.implied_values || {}, data.peer_stats || {}, companyPrice, companySym);

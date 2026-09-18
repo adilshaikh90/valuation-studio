@@ -26,22 +26,47 @@ async function loadPerformance(ticker) {
         const company = await api.getCompany(ticker);
         const sym = company.currency_symbol || '$';
 
+        const bm = data.benchmark || { name: 'S&P 500', symbol: '^GSPC', full_name: 'S&P 500 Index', country: 'United States' };
+        const rel = data.relative_metrics || {};
+        const bStats = data.benchmark_stats || {};
+
+        // ── Update Benchmark Badges and Labels ───────────────
+        const badge = document.getElementById('benchmarkBadge');
+        if (badge) {
+            badge.innerHTML = `🏛️ Benchmark: <strong>${bm.name}</strong> (${bm.market || bm.country})`;
+        }
+        const subtitle = document.getElementById('perfSubtitle');
+        if (subtitle) {
+            subtitle.textContent = `Performance against primary sovereign benchmark: ${bm.full_name || bm.name}`;
+        }
+        const chartHeader = document.getElementById('perfChartHeader');
+        if (chartHeader) {
+            chartHeader.childNodes[0].nodeValue = `Price Performance vs ${bm.name} (Normalised to 100) `;
+        }
+        const bLabel = document.getElementById('benchReturnLabel');
+        if (bLabel) bLabel.textContent = `${bm.name} Return (5Y)`;
+        const betaLabel = document.getElementById('perfBetaLabel');
+        if (betaLabel) betaLabel.textContent = `Beta vs ${bm.name}`;
+
         // ── Stats ────────────────────────────────────────────
         const stats = data.stats || {};
         setText('totalReturn',  pctStr(stats.total_return));
         setText('cagr',         pctStr(stats.annualized_return ?? stats.cagr));
-        setText('maxDrawdown',  pctStr(stats.max_drawdown));
+        setText('benchReturn',  pctStr(rel.benchmark_total_return ?? bStats.total_return));
+        setText('perfBeta',     rel.beta_vs_benchmark != null ? app.fmt(rel.beta_vs_benchmark, 2) : (company.beta ? app.fmt(company.beta, 2) : '–'));
+        setText('perfAlpha',    rel.alpha_vs_benchmark != null ? pctStr(rel.alpha_vs_benchmark) : '–');
+        setText('perfCorr',     rel.correlation != null ? app.fmt(rel.correlation, 2) : '–');
         setText('volatility',   pctStr(stats.volatility));
-        setText('sharpeRatio',  stats.sharpe_ratio != null ? app.fmt(stats.sharpe_ratio) : (stats.sharpe != null ? app.fmt(stats.sharpe) : '–'));
-        setText('sortinoRatio', stats.sortino_ratio != null ? app.fmt(stats.sortino_ratio) : '–');
-        setText('var95',        stats.var_95 != null ? pctStr(stats.var_95) : '–');
+        setText('sharpeRatio',  stats.sharpe_ratio != null ? app.fmt(stats.sharpe_ratio, 2) : (stats.sharpe != null ? app.fmt(stats.sharpe, 2) : '–'));
 
         colorEl('totalReturn', stats.total_return);
         colorEl('cagr',        stats.annualized_return ?? stats.cagr);
+        colorEl('benchReturn', rel.benchmark_total_return ?? bStats.total_return);
+        colorEl('perfAlpha',   rel.alpha_vs_benchmark);
 
         // ── Price Chart ─────────────────────────────────────
         if (data.dates?.length) {
-            renderPerfChart(data.dates, data.prices, data.benchmark_prices || [], ticker, sym);
+            renderPerfChart(data.dates, data.prices, data.benchmark_prices || [], ticker, sym, bm.name);
         }
 
         // ── Monthly Returns Heatmap ──────────────────────────
@@ -68,7 +93,7 @@ async function loadPerformance(ticker) {
     }
 }
 
-function renderPerfChart(dates, prices, benchmark, ticker, sym) {
+function renderPerfChart(dates, prices, benchmark, ticker, sym, benchName = 'Benchmark') {
     const ctx = document.getElementById('perfChart')?.getContext('2d');
     if (!ctx) return;
     app.destroyChart('perf');
@@ -89,7 +114,7 @@ function renderPerfChart(dates, prices, benchmark, ticker, sym) {
 
     if (bNorm.length) {
         datasets.push({
-            label: 'S&P 500',
+            label: benchName,
             data: bNorm,
             borderColor: '#3b82f6',
             borderWidth: 1.5,
@@ -99,6 +124,7 @@ function renderPerfChart(dates, prices, benchmark, ticker, sym) {
             tension: 0.1,
         });
     }
+
 
     app.saveChart('perf', new Chart(ctx, {
         type: 'line',

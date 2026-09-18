@@ -22,25 +22,13 @@ def calculate_trading_comps(ticker: str, data_fetcher, custom_peers: Optional[Li
     ticker = ticker.upper()
     info = data_fetcher.get_info(ticker)
     
-    # 1. Determine Peer Universe
-    peers = []
-    if custom_peers and len(custom_peers) > 0:
-        peers = [p.strip().upper() for p in custom_peers if p.strip().upper() != ticker]
-    
-    if not peers:
-        # Try data fetcher get_peers
-        try:
-            fetched_peers = data_fetcher.get_peers(ticker)
-            if fetched_peers:
-                peers = [p for p in fetched_peers if p != ticker]
-        except Exception:
-            peers = []
-            
-    if not peers:
-        # Fallback to sector/industry peers
-        sector = info.get('sector', 'Technology')
-        peers = DEFAULT_SECTOR_PEERS.get(sector, ['MSFT', 'GOOGL', 'META', 'NVDA'])
-        peers = [p for p in peers if p != ticker][:6]
+    # 1. Determine Institutional Peer Universe
+    from api.valuation.peers import get_institutional_peers
+    peer_meta = get_institutional_peers(ticker, data_fetcher=data_fetcher, info=info, custom_peers=custom_peers)
+    peers = peer_meta.get('peers', [])
+    peer_source = peer_meta.get('peer_source', 'Curated Peer Universe')
+    matched_industry = peer_meta.get('industry') or info.get('industry', 'Industry')
+    matched_region = peer_meta.get('region', 'GLOBAL')
 
     # Target company metrics
     target_price = float(info.get('current_price', 0) or info.get('currentPrice', 0) or 0)
@@ -281,5 +269,9 @@ def calculate_trading_comps(ticker: str, data_fetcher, custom_peers: Optional[Li
         'implied_values': implied_values,
         'regression_results': regression_results,
         'premium_discount': {},
-        'currency': info.get('currency', 'USD')
+        'currency': info.get('currency', 'USD'),
+        'peer_source': peer_source,
+        'matched_industry': matched_industry,
+        'matched_region': matched_region,
     }
+

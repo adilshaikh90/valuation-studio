@@ -49,10 +49,13 @@ def calculate_wacc(ticker: str, data_fetcher, peers: list = None, use_peer_beta:
         tax_provision = latest_is.get('Tax Provision', 0.0)
         
     # 4. Tax Rate
+    is_uk = ticker.upper().endswith('.L') or 'united kingdom' in str(info.get('country', '')).lower()
+    default_tax = 0.25 if is_uk else 0.21
     if pre_tax_income > 0 and tax_provision > 0:
         tax_rate = tax_provision / pre_tax_income
     else:
-        tax_rate = 0.21 # Default marginal tax rate (e.g. US)
+        tax_rate = default_tax
+
         
     # 5. Cost of Debt
     if total_debt > 0 and interest_expense > 0:

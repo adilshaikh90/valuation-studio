@@ -777,12 +777,20 @@ def generate_financial_model(ticker: str, data_fetcher, valuation_data: dict = N
     ws_wacc['A1'].font = WH_TITLE; ws_wacc['A1'].fill = IB_NAVY
     ws_wacc['A1'].alignment = Alignment(horizontal='center', vertical='center')
 
+    from api.performance.benchmark import get_benchmark_for_ticker
+    bm_info = get_benchmark_for_ticker(ticker, info)
+    bm_name = bm_info.get('name', 'S&P 500')
+    rf_label = 'U.K. 10-Year Benchmark Gilt Yield' if bm_info.get('country') == 'United Kingdom' else (
+        'Eurozone 10-Year Benchmark Bund Yield' if bm_info.get('country') in ['Germany', 'France', 'Netherlands', 'Italy', 'Spain'] else 'U.S. 10-Year Benchmark Treasury Yield'
+    )
+
     wacc_details = [
         ('CAPITAL ASSET PRICING MODEL (COST OF EQUITY)', [], True, False, False, True),
-        ('Risk-Free Rate (Rf)', rf_val, _fmt_pct(2), 'U.S. 10-Year Benchmark Treasury Yield'),
-        ('Market Beta (β)', beta, '0.00', 'Regression vs S&P 500 Index (5-Year Monthly)'),
+        ('Risk-Free Rate (Rf)', rf_val, _fmt_pct(2), rf_label),
+        ('Market Beta (β)', beta, '0.00', f'Regression vs {bm_name} Index (5-Year Monthly)'),
         ('Equity Risk Premium (ERP)', erp_val, _fmt_pct(2), 'Damodaran Global Market Risk Premium'),
         ('Calculated Cost of Equity (Ke = Rf + β * ERP)', rf_val + beta * erp_val, _fmt_pct(2), 'CAPM Hurdle Rate for Common Equity', True),
+
         
         ('COST OF DEBT CAPITAL (Kd)', [], True, False, False, True),
         ('Pre-Tax Cost of Debt', 0.048, _fmt_pct(2), 'Effective Interest Rate on Outstanding Borrowings'),

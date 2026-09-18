@@ -311,21 +311,18 @@ class CompanyDataFetcher:
             return [{"error": str(e)}]
 
     def get_peers(self, ticker: str) -> List[str]:
-        """Fetches a list of peer tickers."""
-        cache_key = f"peers_{ticker}"
+        """Fetches an institutional, business-model and geography aligned list of peer tickers."""
+        cache_key = f"peers_{ticker.upper()}"
         cached = self._get_from_cache(cache_key)
         if cached: return cached
 
         try:
-            t = yf.Ticker(ticker)
-            industry = t.info.get('industry')
-            
-            # Simple heuristic since yfinance lacks a direct peers method natively exposed easily
-            peers = []
-            if industry == 'Consumer Electronics':
-                peers = ['MSFT', 'GOOGL', 'META'] if ticker == 'AAPL' else ['AAPL', 'MSFT', 'GOOGL']
-            
+            from api.valuation.peers import get_institutional_peers
+            info = self.get_company_info(ticker)
+            res = get_institutional_peers(ticker, data_fetcher=self, info=info)
+            peers = res.get('peers', [])
             self._set_cache(cache_key, peers)
             return peers
         except Exception:
             return []
+

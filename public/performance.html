@@ -46,25 +46,44 @@
   </aside>
 
   <main class="main-content">
-    <div class="page-header">
-      <h1 class="page-title">Performance</h1>
-      <p class="page-subtitle">Historical price performance and risk metrics</p>
+    <div class="page-header flex justify-between align-center">
+      <div>
+        <h1 class="page-title">Performance Analysis</h1>
+        <p class="page-subtitle" id="perfSubtitle">Sovereign market benchmark comparison and risk metrics</p>
+      </div>
+      <div id="benchmarkBadgeContainer">
+        <span id="benchmarkBadge" style="background: rgba(59, 130, 246, 0.15); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.35); padding: 5px 12px; border-radius: 6px; font-size: 0.82rem; font-weight: 600; letter-spacing: 0.02em;">
+          Benchmark: Resolving...
+        </span>
+      </div>
     </div>
 
     <!-- Stats Grid -->
     <section class="section">
       <div class="grid grid-4">
         <div class="stat-card">
-          <div class="stat-label">Total Return</div>
+          <div class="stat-label">Total Return (5Y)</div>
           <div class="stat-value" id="totalReturn">—</div>
         </div>
         <div class="stat-card">
-          <div class="stat-label">CAGR</div>
+          <div class="stat-label">CAGR (Stock)</div>
           <div class="stat-value" id="cagr">—</div>
         </div>
         <div class="stat-card">
-          <div class="stat-label">Max Drawdown</div>
-          <div class="stat-value text-red" id="maxDrawdown">—</div>
+          <div class="stat-label" id="benchReturnLabel">Benchmark Return</div>
+          <div class="stat-value" id="benchReturn">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label" id="perfBetaLabel">Beta vs Benchmark</div>
+          <div class="stat-value text-accent" id="perfBeta">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Jensen's Alpha (Ann.)</div>
+          <div class="stat-value" id="perfAlpha">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Correlation (ρ)</div>
+          <div class="stat-value" id="perfCorr">—</div>
         </div>
         <div class="stat-card">
           <div class="stat-label">Volatility (Ann.)</div>
@@ -74,26 +93,14 @@
           <div class="stat-label">Sharpe Ratio</div>
           <div class="stat-value" id="sharpeRatio">—</div>
         </div>
-        <div class="stat-card">
-          <div class="stat-label">Sortino Ratio</div>
-          <div class="stat-value" id="sortinoRatio">—</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">VaR (95%)</div>
-          <div class="stat-value text-red" id="var95">—</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">Beta</div>
-          <div class="stat-value" id="perfBeta">—</div>
-        </div>
       </div>
     </section>
 
     <!-- Price Chart -->
     <section class="section">
       <div class="card">
-        <div class="card-header">
-          Price Performance vs S&amp;P 500 (Normalised to 100)
+        <div class="card-header" id="perfChartHeader">
+          Price Performance vs Benchmark (Normalised to 100)
           <div class="time-filters">
             <button class="time-filter-btn active" data-period="5y">5Y</button>
             <button class="time-filter-btn" data-period="3y">3Y</button>
@@ -105,6 +112,7 @@
         </div>
       </div>
     </section>
+
 
     <!-- Monthly Returns Heatmap -->
     <section class="section">

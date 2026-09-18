@@ -46,6 +46,16 @@ def _calculate_stats(series: pd.Series, risk_free_rate: float = 0.04) -> dict:
 @router.get("/{ticker}")
 def get_performance(ticker: str, user: User = Depends(get_current_user)):
     try:
+        from ..company.data_fetcher import CompanyDataFetcher
+        from .benchmark import get_benchmark_for_ticker, calculate_relative_metrics
+
+        fetcher = CompanyDataFetcher()
+        company_info = fetcher.get_company_info(ticker.upper())
+
+        # Resolve sovereign/national primary market benchmark
+        benchmark_meta = get_benchmark_for_ticker(ticker.upper(), company_info)
+        bench_symbol = benchmark_meta["symbol"]
+
         end_date = datetime.today()
         start_date = end_date - timedelta(days=5 * 365)
 
@@ -64,8 +74,8 @@ def get_performance(ticker: str, user: User = Depends(get_current_user)):
 
         close_series = close_col.dropna()
 
-        # Fetch benchmark data (S&P 500)
-        bench_df = yf.download("^GSPC", start=start_date, end=end_date, progress=False)
+        # Fetch local benchmark data (e.g. ^FTSE for UK, ^GDAXI for DE, ^GSPC for US)
+        bench_df = yf.download(bench_symbol, start=start_date, end=end_date, progress=False)
         if not bench_df.empty:
             if isinstance(bench_df.columns, pd.MultiIndex):
                 bench_close = bench_df["Close"]
@@ -79,6 +89,9 @@ def get_performance(ticker: str, user: User = Depends(get_current_user)):
 
         ticker_stats = _calculate_stats(close_series)
         bench_stats = _calculate_stats(bench_series)
+
+        # Compute institutional relative risk and CAPM metrics vs local benchmark
+        rel_metrics = calculate_relative_metrics(close_series, bench_series)
 
         # Monthly returns for heatmap
         monthly = close_series.resample("ME").last()
@@ -98,6 +111,9 @@ def get_performance(ticker: str, user: User = Depends(get_current_user)):
         low_52 = float(last_year_data.min()) if not last_year_data.empty else float(close_series.min())
 
         return {
+            "ticker": ticker.upper(),
+            "benchmark": benchmark_meta,
+            "relative_metrics": rel_metrics,
             "dates": [d.strftime("%Y-%m-%d") for d in close_series.index],
             "prices": [round(float(p), 2) for p in close_series.values],
             "benchmark_dates": [d.strftime("%Y-%m-%d") for d in bench_series.index] if not bench_series.empty else [],
@@ -112,3 +128,4 @@ def get_performance(ticker: str, user: User = Depends(get_current_user)):
         raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+

@@ -49,7 +49,7 @@
     <div class="page-header flex justify-between align-center">
       <div>
         <h1 class="page-title">Trading Comparables</h1>
-        <p class="page-subtitle">Relative valuation analysis using industry peer multiples and margins</p>
+        <p class="page-subtitle" id="compsSubtitle">Relative valuation analysis using industry peer multiples and margins</p>
       </div>
       <div class="flex gap-2">
         <input type="text" id="addPeerInput" placeholder="Add custom peer (e.g. NVDA)..." style="width: 220px; padding: 0.5rem 0.75rem; background: var(--surface-2); border: 1px solid var(--border-color); border-radius: var(--radius-md); color: var(--text-primary); font-size: 0.85rem;">
@@ -60,8 +60,14 @@
     <!-- Peer Comparison Table -->
     <section class="section">
       <div class="card">
-        <div class="card-header">Comparable Companies Universe</div>
+        <div class="card-header flex justify-between align-center">
+          <span>Comparable Companies Universe</span>
+          <span id="peerSourceBadge" style="font-size: 0.78rem; font-weight: 600; color: #f59e0b; background: rgba(245, 158, 11, 0.12); padding: 3px 8px; border-radius: 4px; border: 1px solid rgba(245, 158, 11, 0.25);">
+            Direct Industry Alignment
+          </span>
+        </div>
         <div class="table-scroll">
+
           <table class="data-table" id="compsTable">
             <thead>
               <tr>
