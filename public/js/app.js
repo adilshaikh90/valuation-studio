@@ -21,10 +21,38 @@ class App {
 
         await this.checkAuth();
         this.setupEventListeners();
+        this._initLandingAuthUI();
     }
 
     isAuthenticated() {
-        return !!api.token;
+        const token = (typeof api !== 'undefined' && api && api.token) || localStorage.getItem('vs_token');
+        return !!token && token !== 'null' && token !== 'undefined';
+    }
+
+    logout() {
+        try {
+            if (typeof api !== 'undefined' && api && api.clearToken) {
+                api.clearToken();
+            }
+        } catch (e) {
+            console.error('Error in api.clearToken:', e);
+        }
+        try {
+            localStorage.removeItem('vs_token');
+            localStorage.removeItem('vs_user');
+            localStorage.removeItem('vs_ticker');
+            sessionStorage.clear();
+        } catch (e) {}
+
+        // Clear all cookies
+        try {
+            document.cookie.split(";").forEach(c => {
+                document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+            });
+        } catch (e) {}
+
+        // Immediate hard redirect to login page
+        window.location.replace('login.html');
     }
 
     async checkAuth() {
@@ -33,7 +61,9 @@ class App {
             || window.location.pathname === '/'
             || window.location.pathname.endsWith('index.html');
 
-        if (api.token) {
+        const token = (typeof api !== 'undefined' && api && api.token) || localStorage.getItem('vs_token');
+
+        if (token && token !== 'null' && token !== 'undefined') {
             try {
                 this.user = await api.getMe();
                 localStorage.setItem('vs_user', JSON.stringify(this.user));
@@ -58,7 +88,7 @@ class App {
                     if (sidebarNav && !document.getElementById('adminControlNavItem')) {
                         const adminLink = document.createElement('a');
                         adminLink.id = 'adminControlNavItem';
-                        adminLink.href = 'admin.html?v=2.1';
+                        adminLink.href = 'admin.html?v=3.0';
                         adminLink.className = 'sidebar-item' + (window.location.pathname.includes('admin') ? ' active' : '');
                         adminLink.style.cssText = 'color: #f59e0b; font-weight: 600; border: 1px solid rgba(245, 158, 11, 0.25); background: rgba(245, 158, 11, 0.06); margin-top: 0.6rem;';
                         adminLink.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Admin Control';
@@ -66,11 +96,18 @@ class App {
                     }
                 }
             } catch (err) {
-                api.clearToken();
-                if (!isAuthPage) window.location.href = 'login.html';
+                console.warn('Session verification failed, logging out:', err);
+                if (!isAuthPage) {
+                    this.logout();
+                    return;
+                } else {
+                    api.clearToken();
+                    localStorage.removeItem('vs_user');
+                }
             }
         } else if (!isAuthPage) {
-            window.location.href = 'login.html';
+            this.logout();
+            return;
         }
 
         // Initialize global cookie notice
@@ -116,6 +153,34 @@ class App {
         try { return JSON.parse(localStorage.getItem('vs_user') || '{}'); } catch { return {}; }
     }
 
+    _initLandingAuthUI() {
+        const isLanding = window.location.pathname === '/' || window.location.pathname.endsWith('index.html');
+        if (!isLanding) return;
+
+        const isAuth = this.isAuthenticated();
+        const launchBtn = document.querySelector('.hv-pill-cta');
+        const signInBtn = document.querySelector('.hv-pill-cta-ghost');
+
+        if (isAuth) {
+            if (launchBtn) {
+                launchBtn.href = 'dashboard.html';
+                launchBtn.innerHTML = 'Enter Studio <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>';
+            }
+            if (signInBtn) {
+                signInBtn.textContent = 'Sign Out';
+                signInBtn.href = '#';
+                signInBtn.onclick = (e) => {
+                    e.preventDefault();
+                    this.logout();
+                };
+            }
+        } else {
+            if (launchBtn) {
+                launchBtn.href = 'login.html';
+            }
+        }
+    }
+
     setupEventListeners() {
         // Global ticker search (landing page)
         const searchForm = document.getElementById('global-search');
@@ -124,8 +189,8 @@ class App {
                 e.preventDefault();
                 const input = searchForm.querySelector('input');
                 if (input && input.value.trim()) {
-                    this.setTicker(input.value.trim());
-                    window.location.href = api.token ? 'dashboard.html' : 'login.html';
+                    this.setTicker(input.value.trim().toUpperCase());
+                    window.location.href = this.isAuthenticated() ? 'dashboard.html' : 'login.html';
                 }
             });
         }
@@ -148,16 +213,16 @@ class App {
             });
         }
 
-        // Logout
-        const logoutBtn = document.getElementById('logout-btn');
-        if (logoutBtn) {
-            logoutBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                api.clearToken();
-                localStorage.removeItem('vs_user');
-                window.location.href = 'index.html';
-            });
-        }
+        // Universal Logout handler
+        document.querySelectorAll('.btn-ghost, button, a').forEach(el => {
+            if (el.textContent.trim().toLowerCase() === 'logout' || el.id === 'logout-btn' || el.id === 'logoutBtn') {
+                el.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    this.logout();
+                });
+            }
+        });
     }
 
     setTicker(ticker) {
@@ -329,5 +394,29 @@ class App {
 }
 
 const app = new App();
+window.app = app;
+window.logout = () => app.logout();
+
+// Global click event capturer for any logout trigger
+document.addEventListener('click', (e) => {
+    const btn = e.target.closest('button, a');
+    if (btn && (btn.id === 'logoutBtn' || btn.id === 'logout-btn' || btn.textContent.trim().toLowerCase() === 'logout' || btn.getAttribute('onclick')?.includes('logout'))) {
+        e.preventDefault();
+        e.stopPropagation();
+        if (window.app && typeof window.app.logout === 'function') {
+            window.app.logout();
+        } else {
+            try {
+                localStorage.removeItem('vs_token');
+                localStorage.removeItem('vs_user');
+                localStorage.removeItem('vs_ticker');
+                sessionStorage.clear();
+            } catch (err) {}
+            window.location.replace('login.html');
+        }
+        return false;
+    }
+}, true);
+
 document.addEventListener('DOMContentLoaded', () => app.init());
 

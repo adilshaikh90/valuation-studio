@@ -13,6 +13,21 @@
   <link rel="stylesheet" href="css/components.css?v=3.0">
   <link rel="stylesheet" href="css/havu-theme.css?v=3.0">
   <link rel="stylesheet" href="css/dashboard-havu.css?v=3.0">
+  <!-- Strict Authentication Gate -->
+  <script>
+    (function() {
+      var t = localStorage.getItem('vs_token');
+      if (!t || t === 'null' || t === 'undefined') {
+        window.location.replace('login.html');
+      }
+    })();
+    window.addEventListener('pageshow', function(e) {
+      var t = localStorage.getItem('vs_token');
+      if (!t || t === 'null' || t === 'undefined') {
+        window.location.replace('login.html');
+      }
+    });
+  </script>
 </head>
 <body class="havu-body">
 <div class="layout-with-sidebar">

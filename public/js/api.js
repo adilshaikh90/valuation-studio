@@ -20,7 +20,12 @@ class ApiClient {
 
     clearToken() {
         this.token = null;
-        localStorage.removeItem('vs_token');
+        try {
+            localStorage.removeItem('vs_token');
+            localStorage.removeItem('vs_user');
+            localStorage.removeItem('vs_ticker');
+            sessionStorage.clear();
+        } catch (e) {}
     }
 
     getHeaders() {
@@ -45,7 +50,7 @@ class ApiClient {
 
             if (response.status === 401) {
                 this.clearToken();
-                window.location.href = '/login.html';
+                window.location.replace('login.html');
                 throw new Error('Unauthorized');
             }
 
@@ -128,3 +133,4 @@ class ApiClient {
 }
 
 const api = new ApiClient();
+window.api = api;

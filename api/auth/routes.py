@@ -70,3 +70,8 @@ def login(user: UserLogin, db: Session = Depends(get_db)):
 def get_me(current_user: User = Depends(get_current_user)):
     """Returns the profile of the currently authenticated user."""
     return current_user
+
+@router.post("/logout")
+def logout():
+    """Logs out the user."""
+    return {"message": "Logged out successfully"}
