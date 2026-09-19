@@ -1,5 +1,5 @@
 """
-Institutional-Grade Financial Model & Valuation Generator (Wall Street / JP Morgan Standard).
+Institutional-Grade Financial Model & Valuation Generator.
 Generates an 8-sheet dynamic Excel model with complete 3-statement financials (4Y History + 5Y Forecast),
 formula-linked DCF valuation, sensitivity matrices, WACC build-up, and trading comps.
 """
@@ -13,7 +13,7 @@ import pandas as pd
 import numpy as np
 from typing import Optional, List, Dict, Any
 
-# ── Color Palette (Classic Wall Street Investment Banking) ────────────────────
+# ── Color Palette (Classic Institutional Banking) ────────────────────
 IB_NAVY       = PatternFill(start_color='1B365D', end_color='1B365D', fill_type='solid') # Primary header
 IB_SLATE      = PatternFill(start_color='2C3E50', end_color='2C3E50', fill_type='solid') # Secondary header
 IB_ACCENT     = PatternFill(start_color='004080', end_color='004080', fill_type='solid') # Section bar
@@ -225,7 +225,7 @@ def generate_financial_model(ticker: str, data_fetcher, valuation_data: dict = N
     cff_h = _m(_get_hist_row(cf_df, ['Financing Cash Flow']))
     fcf_h = [cfo + cx for cfo, cx in zip(cfo_h, capex_h)]
 
-    # ── Forecasting Logic (Wall Street CAGR + Linear Convergence) ─────────────
+    # ── Forecasting Logic (Historical CAGR + Linear Convergence) ─────────────
     # Historical Revenue Growth
     base_rev = rev_h[-1] if rev_h[-1] > 0 else (market_cap / 1e6 * 0.3)
     cagr = 0.08
@@ -376,7 +376,7 @@ def generate_financial_model(ticker: str, data_fetcher, valuation_data: dict = N
         ('Market Capitalization', f'${market_cap/1e9:,.2f}B' if market_cap else 'N/A'),
         ('Implied Enterprise Value', f'${(market_cap/1e9 + latest_net_debt/1e3):,.2f}B'),
         ('Valuation Date', datetime.now().strftime('%B %d, %Y')),
-        ('Model Status', 'Final Investment Committee Review'),
+        ('Model Status', 'Automated Valuation Model — Research & Educational'),
     ]
 
     r = start_r + 2
@@ -414,6 +414,28 @@ def generate_financial_model(ticker: str, data_fetcher, valuation_data: dict = N
         c2.font = ITEM_ITALIC; c2.border = BORDER_GRID
         ws_cov.row_dimensions[r].height = 20
         r += 1
+
+    r += 1
+    ws_cov.merge_cells(f'B{r}:C{r}')
+    h_disc = ws_cov[f'B{r}']
+    h_disc.value = 'Regulatory & Compliance Disclaimer'
+    h_disc.font = WH_HEADER; h_disc.fill = IB_SLATE
+    h_disc.alignment = Alignment(horizontal='left', vertical='center', indent=1)
+    ws_cov.row_dimensions[r].height = 24
+    r += 1
+
+    ws_cov.merge_cells(f'B{r}:C{r}')
+    c_disc = ws_cov[f'B{r}']
+    c_disc.value = (
+        'DISCLAIMER: This automated financial model and its calculations are provided strictly for educational '
+        'and research purposes. It does not constitute investment, financial, legal, tax, or accounting advice. '
+        'All projections and intrinsic valuation outputs are mathematical estimates based on public historical data '
+        'and user-specified assumptions. Past performance and quantitative estimates do not guarantee future results.'
+    )
+    c_disc.font = ITEM_ITALIC
+    c_disc.border = BORDER_GRID
+    c_disc.alignment = Alignment(horizontal='left', vertical='center', wrap_text=True)
+    ws_cov.row_dimensions[r].height = 50
 
     # ══════════════════════════════════════════════════════════════════════════
     # SHEET 2: VALUATION SUMMARY (EXECUTIVE DASHBOARD)
