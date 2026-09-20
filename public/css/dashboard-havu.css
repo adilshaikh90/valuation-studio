@@ -406,3 +406,268 @@
   font-weight: 600;
   border-left: 2px solid #ffffff;
 }
+
+/* ── Mobile Responsive Overrides for HAVU Dashboard ────────────────────── */
+@media (max-width: 768px) {
+  /* Prevent horizontal layout shifts and overflows */
+  body, html {
+    overflow-x: hidden !important;
+    width: 100% !important;
+    position: relative !important;
+  }
+
+  .layout-with-sidebar {
+    width: 100% !important;
+    max-width: 100vw !important;
+    overflow-x: hidden !important;
+  }
+
+  .main-content {
+    padding: 0.85rem 0.75rem !important;
+    padding-bottom: 95px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    overflow-x: hidden !important;
+  }
+
+  /* Technical metadata bar: compact row */
+  .hv-dash-meta-bar {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding-bottom: 0.75rem !important;
+    margin-bottom: 1.25rem !important;
+  }
+
+  .hv-dash-meta-text {
+    font-size: 0.68rem !important;
+    letter-spacing: 0.12em !important;
+  }
+
+  .hv-dash-live-badge {
+    font-size: 0.68rem !important;
+  }
+
+  /* Company header: stack vertically so title and price never collide */
+  .page-header-bar {
+    margin-bottom: 1.25rem !important;
+  }
+
+  .company-header {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 0.75rem !important;
+  }
+
+  .company-title {
+    width: 100% !important;
+  }
+
+  .company-name {
+    font-size: clamp(1.4rem, 6vw, 1.85rem) !important;
+    line-height: 1.2 !important;
+    letter-spacing: -0.02em !important;
+    margin-bottom: 0.5rem !important;
+    word-break: break-word !important;
+  }
+
+  .company-meta {
+    gap: 0.4rem !important;
+  }
+
+  .company-meta .badge {
+    font-size: 0.7rem !important;
+    padding: 0.2rem 0.6rem !important;
+  }
+
+  /* Price Block: Full width with clean horizontal alignment */
+  .price-block {
+    text-align: left !important;
+    align-items: baseline !important;
+    width: 100% !important;
+    padding-top: 0.5rem !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.06) !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+  }
+
+  .price-large {
+    font-size: 1.85rem !important;
+    line-height: 1 !important;
+  }
+
+  .price-change {
+    font-size: 0.8rem !important;
+    padding: 0.2rem 0.55rem !important;
+  }
+
+  /* 52-Week Range Bar: Compact responsive grid */
+  .range-bar-wrapper {
+    grid-template-columns: 65px 1fr 65px !important;
+    gap: 0.6rem !important;
+    padding: 0.5rem 0 !important;
+  }
+
+  .range-label {
+    font-size: 0.72rem !important;
+  }
+
+  .range-track {
+    height: 7px !important;
+  }
+
+  .range-fill::after {
+    width: 13px !important;
+    height: 13px !important;
+    top: -3px !important;
+    right: -4px !important;
+  }
+
+  /* Strengths & Risks: Stack into single full-width column */
+  .strengths-risks-grid {
+    grid-template-columns: 1fr !important;
+    gap: 0.85rem !important;
+    margin-bottom: 1rem !important;
+  }
+
+  .strengths-box, .risks-box {
+    padding: 1rem !important;
+  }
+
+  .sr-item {
+    font-size: 0.82rem !important;
+    line-height: 1.4 !important;
+  }
+
+  .ai-summary-text {
+    font-size: 0.9rem !important;
+    line-height: 1.55 !important;
+    margin-bottom: 1rem !important;
+  }
+
+  /* Analysis Modules Grid: 1 column on phone */
+  .quick-links {
+    grid-template-columns: 1fr !important;
+    gap: 0.75rem !important;
+  }
+
+  .quick-link-item {
+    min-height: auto !important;
+    padding: 1rem 1rem !important;
+  }
+
+  .quick-link-title {
+    font-size: 1rem !important;
+  }
+
+  .quick-link-desc {
+    font-size: 0.78rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  /* Cards global padding reduction */
+  .card, .ai-summary-card, .chart-card {
+    padding: 1rem 0.85rem !important;
+    margin-bottom: 1rem !important;
+    border-radius: 12px !important;
+  }
+
+  /* Force all grid columns to 1fr on mobile */
+  .grid-2, .grid-3, .grid-4,
+  .grid.grid-2, .grid.grid-3, .grid.grid-4 {
+    grid-template-columns: 1fr !important;
+    gap: 0.85rem !important;
+  }
+
+  /* Override hardcoded span styles in HTML */
+  [style*="grid-column: span"],
+  [style*="grid-column:span"] {
+    grid-column: span 1 !important;
+    width: 100% !important;
+  }
+
+  /* Responsive Page Headers & Inputs */
+  .page-header,
+  .page-header.flex {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 0.75rem !important;
+  }
+
+  .page-header > div {
+    width: 100% !important;
+  }
+
+  .page-header .flex {
+    flex-direction: column !important;
+    width: 100% !important;
+    align-items: stretch !important;
+    gap: 0.5rem !important;
+  }
+
+  .page-header input,
+  .fin-filter-box,
+  #addPeerInput,
+  .page-header .btn {
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Horizontal touch scrolling for all tables and data wrappers */
+  .table-scroll,
+  .table-responsive,
+  .fin-table-wrapper {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    border-radius: 8px !important;
+  }
+
+  .data-table,
+  .fin-table {
+    min-width: 580px !important;
+  }
+
+  /* Tabs horizontal touch scrolling */
+  .tabs, .tab-group {
+    display: flex !important;
+    overflow-x: auto !important;
+    white-space: nowrap !important;
+    -webkit-overflow-scrolling: touch !important;
+    padding-bottom: 6px !important;
+    gap: 0.4rem !important;
+    width: 100% !important;
+    scrollbar-width: none !important;
+  }
+
+  .tabs::-webkit-scrollbar,
+  .tab-group::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  .tab-btn,
+  .tab-group .tab-btn,
+  .tabs .tab {
+    flex-shrink: 0 !important;
+    padding: 0.45rem 0.85rem !important;
+    font-size: 0.8rem !important;
+  }
+
+  /* Charts container */
+  .chart-wrapper {
+    height: 250px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* Form controls */
+  .form-group input,
+  .form-group select {
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+}
+

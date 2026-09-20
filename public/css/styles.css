@@ -325,20 +325,20 @@ nav.nav {
   .mobile-bottom-nav {
     display: flex !important;
     position: fixed !important;
-    bottom: 12px !important;
-    left: 14px !important;
-    right: 14px !important;
-    height: 60px !important;
-    background: rgba(14, 16, 23, 0.94) !important;
+    bottom: calc(10px + env(safe-area-inset-bottom, 0px)) !important;
+    left: 10px !important;
+    right: 10px !important;
+    height: 58px !important;
+    background: rgba(14, 16, 23, 0.95) !important;
     backdrop-filter: blur(20px) !important;
     -webkit-backdrop-filter: blur(20px) !important;
     border: 1px solid rgba(255, 255, 255, 0.12) !important;
-    border-radius: 20px !important;
-    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.7) !important;
+    border-radius: 18px !important;
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.8) !important;
     z-index: 950 !important;
     align-items: center !important;
     justify-content: space-around !important;
-    padding: 0 4px !important;
+    padding: 0 3px !important;
   }
 
   .mobile-bottom-nav-item {
@@ -349,19 +349,30 @@ nav.nav {
     gap: 2px !important;
     color: var(--text-secondary) !important;
     text-decoration: none !important;
-    font-size: 0.65rem !important;
+    font-size: 0.64rem !important;
     font-weight: 600 !important;
-    padding: 6px 10px !important;
-    border-radius: 12px !important;
+    padding: 5px 4px !important;
+    border-radius: 10px !important;
     transition: all 0.18s ease !important;
     flex: 1 !important;
+    min-width: 0 !important;
     text-align: center !important;
   }
 
+  .mobile-bottom-nav-item span {
+    font-size: 0.62rem !important;
+    white-space: nowrap !important;
+    text-overflow: ellipsis !important;
+    overflow: hidden !important;
+    max-width: 100% !important;
+    line-height: 1.1 !important;
+  }
+
   .mobile-bottom-nav-item svg {
-    width: 20px !important;
-    height: 20px !important;
+    width: 18px !important;
+    height: 18px !important;
     stroke: currentColor !important;
+    flex-shrink: 0 !important;
   }
 
   .mobile-bottom-nav-item.active {
@@ -374,7 +385,7 @@ nav.nav {
   }
 
   .main-content {
-    padding-bottom: 90px !important;
+    padding-bottom: calc(90px + env(safe-area-inset-bottom, 0px)) !important;
   }
 }
 

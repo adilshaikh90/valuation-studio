@@ -772,19 +772,69 @@
 
 @media (max-width: 600px) {
   .export-hero-card {
-    padding: 1.25rem;
+    padding: 1rem 0.85rem !important;
+  }
+  .export-hero-top {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 0.75rem !important;
+  }
+  .export-hero-title-group h2 {
+    font-size: 1.35rem !important;
+  }
+  .export-hero-meta {
+    font-size: 0.8rem !important;
+    gap: 0.4rem !important;
+  }
+  .sheet-cards-grid {
+    grid-template-columns: 1fr !important;
+    gap: 0.75rem !important;
+  }
+  .sheet-card {
+    padding: 0.85rem 0.85rem !important;
+    gap: 0.75rem !important;
+  }
+  .sheet-icon-wrapper {
+    width: 38px !important;
+    height: 38px !important;
+  }
+  .sheet-icon-wrapper svg {
+    width: 18px !important;
+    height: 18px !important;
+  }
+  .sheet-name {
+    font-size: 0.88rem !important;
+  }
+  .sheet-desc {
+    font-size: 0.76rem !important;
+    margin-bottom: 0.45rem !important;
   }
   .spec-cards-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr !important;
+    gap: 0.65rem !important;
   }
   .export-quick-metrics {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 0.5rem !important;
+  }
+  .export-metric-item {
+    padding: 0.6rem 0.75rem !important;
+  }
+  .export-metric-val {
+    font-size: 0.95rem !important;
+  }
+  .download-action-card {
+    padding: 1.15rem 0.9rem !important;
   }
   .download-buttons-row {
-    flex-direction: column;
+    flex-direction: column !important;
+    width: 100% !important;
   }
   .download-cta-btn, .download-secondary-btn {
-    width: 100%;
-    min-width: 0;
+    width: 100% !important;
+    min-width: 0 !important;
+    padding: 0.85rem 1rem !important;
+    font-size: 0.95rem !important;
   }
 }
+

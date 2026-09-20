@@ -190,18 +190,7 @@ class App {
         const ticker = this.getTicker() || '-';
         const currentPage = window.location.pathname.split('/').pop() || 'dashboard.html';
 
-        // 1. Ensure "Home / Landing" link exists in the sidebar navigation
-        const sidebarNav = sidebar.querySelector('.sidebar-nav');
-        if (sidebarNav && !sidebarNav.querySelector('a[href*="index.html"]')) {
-            const homeLink = document.createElement('a');
-            homeLink.href = 'index.html';
-            homeLink.className = 'sidebar-item';
-            homeLink.style.cssText = 'color: #38bdf8; font-weight: 600; margin-bottom: 0.25rem;';
-            homeLink.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> Home / Landing';
-            sidebarNav.insertBefore(homeLink, sidebarNav.firstChild);
-        }
-
-        // 2. Add Mobile Close Button at top of sidebar drawer
+        // 1. Add Mobile Close Button at top of sidebar drawer
         if (!sidebar.querySelector('.sidebar-mobile-close-row')) {
             const closeRow = document.createElement('div');
             closeRow.className = 'sidebar-mobile-close-row';
@@ -222,7 +211,7 @@ class App {
             }
         }
 
-        // 3. Insert Top Mobile Header Bar
+        // 2. Insert Top Mobile Header Bar
         const mobileBar = document.createElement('div');
         mobileBar.className = 'mobile-header-bar';
         mobileBar.innerHTML = `
@@ -234,7 +223,7 @@ class App {
                         <line x1="3" y1="18" x2="21" y2="18"></line>
                     </svg>
                 </button>
-                <a href="index.html" class="mobile-brand-title" style="text-decoration:none;">VALUATION STUDIO</a>
+                <span class="mobile-brand-title">VALUATION STUDIO</span>
             </div>
             <div class="mobile-header-right">
                 <span class="mobile-ticker-pill" id="mobileTickerPill">${ticker}</span>
@@ -255,7 +244,7 @@ class App {
             });
         }
 
-        // 5. Connect Toggle Button
+        // 5. Connect Toggle Button and Ticker Pill
         const toggleBtn = document.getElementById('mobileNavToggle');
         if (toggleBtn) {
             toggleBtn.addEventListener('click', () => {
@@ -266,6 +255,28 @@ class App {
                 }
             });
         }
+
+        const tickerPill = document.getElementById('mobileTickerPill');
+        if (tickerPill) {
+            tickerPill.style.cursor = 'pointer';
+            tickerPill.title = 'Tap to change ticker';
+            tickerPill.addEventListener('click', () => {
+                sidebar.classList.add('mobile-open');
+                if (backdrop) backdrop.classList.add('active');
+                const searchInput = document.getElementById('navTickerInput');
+                if (searchInput) {
+                    setTimeout(() => searchInput.focus(), 300);
+                }
+            });
+        }
+
+        // Close mobile drawer when clicking navigation items
+        sidebar.querySelectorAll('.sidebar-item').forEach(item => {
+            item.addEventListener('click', () => {
+                sidebar.classList.remove('mobile-open');
+                if (backdrop) backdrop.classList.remove('active');
+            });
+        });
 
         // 6. Insert Floating Mobile Bottom App Bar
         if (!document.querySelector('.mobile-bottom-nav')) {
