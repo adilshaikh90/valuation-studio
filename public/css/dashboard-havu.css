@@ -396,15 +396,27 @@
 }
 
 .sidebar-item:hover {
-  background: rgba(255, 255, 255, 0.05);
-  color: #ffffff;
+  background: rgba(16, 185, 129, 0.08) !important;
+  color: #10b981 !important;
+}
+
+.sidebar-item:hover svg {
+  stroke: #10b981 !important;
+  opacity: 1 !important;
 }
 
 .sidebar-item.active {
-  background: rgba(255, 255, 255, 0.08);
-  color: #ffffff;
-  font-weight: 600;
-  border-left: 2px solid #ffffff;
+  background: rgba(16, 185, 129, 0.14) !important;
+  color: #10b981 !important;
+  font-weight: 600 !important;
+  border-left: 3px solid #10b981 !important;
+  box-shadow: 0 0 16px rgba(16, 185, 129, 0.12) !important;
+}
+
+.sidebar-item.active svg {
+  stroke: #10b981 !important;
+  color: #10b981 !important;
+  opacity: 1 !important;
 }
 
 /* ── Mobile Responsive Overrides for HAVU Dashboard ────────────────────── */

@@ -50,47 +50,10 @@ body.havu-body {
   cursor: default;
 }
 
-/* ── 144Hz Custom Smooth Cursor ────────────────────────────────────────── */
-.hv-cursor-dot {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 6px;
-  height: 6px;
-  background: #ffffff;
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 9999;
-  transform: translate(-50%, -50%);
-  transition: opacity 0.2s ease, transform 0.08s ease-out;
-  will-change: transform;
-}
-
+/* ── Standard Cursor (Custom follower disabled) ─────────────────────────── */
+.hv-cursor-dot,
 .hv-cursor-follower {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 32px;
-  height: 32px;
-  border: 1px solid rgba(255, 255, 255, 0.35);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 9998;
-  transform: translate(-50%, -50%);
-  transition: width 0.25s ease, height 0.25s ease, border-color 0.25s ease, background-color 0.25s ease;
-  will-change: transform;
-}
-
-.hv-cursor-active .hv-cursor-follower {
-  width: 54px;
-  height: 54px;
-  border-color: rgba(245, 158, 11, 0.7);
-  background: rgba(245, 158, 11, 0.08);
-}
-
-/* Hide custom cursor on touch devices */
-@media (hover: none) and (pointer: coarse) {
-  .hv-cursor-dot, .hv-cursor-follower { display: none !important; }
+  display: none !important;
 }
 
 /* ── Top Header Navigation ─────────────────────────────────────────────── */

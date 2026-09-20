@@ -191,28 +191,7 @@ class App {
         const ticker = this.getTicker() || '-';
         const currentPage = window.location.pathname.split('/').pop() || 'dashboard.html';
 
-        // 1. Add Mobile Close Button at top of sidebar drawer
-        if (!sidebar.querySelector('.sidebar-mobile-close-row')) {
-            const closeRow = document.createElement('div');
-            closeRow.className = 'sidebar-mobile-close-row';
-            closeRow.style.cssText = 'display:flex; justify-content:space-between; align-items:center; margin-bottom:0.75rem; padding-bottom:0.5rem; border-bottom:1px solid rgba(255,255,255,0.08);';
-            closeRow.innerHTML = `
-                <span style="font-size:0.75rem; font-weight:700; color:#8e8e99; letter-spacing:0.08em; text-transform:uppercase;">Navigation Menu</span>
-                <button id="sidebarDrawerCloseBtn" aria-label="Close menu" style="background:none; border:none; color:#f4f4f5; font-size:1.2rem; cursor:pointer; padding:4px 8px; border-radius:6px;">✕</button>
-            `;
-            sidebar.insertBefore(closeRow, sidebar.firstChild);
-
-            const drawerClose = closeRow.querySelector('#sidebarDrawerCloseBtn');
-            if (drawerClose) {
-                drawerClose.addEventListener('click', () => {
-                    sidebar.classList.remove('mobile-open');
-                    const bd = document.getElementById('mobileNavBackdrop');
-                    if (bd) bd.classList.remove('active');
-                });
-            }
-        }
-
-        // 2. Insert Top Mobile Header Bar
+        // 1. Insert Top Mobile Header Bar
         const mobileBar = document.createElement('div');
         mobileBar.className = 'mobile-header-bar';
         mobileBar.innerHTML = `

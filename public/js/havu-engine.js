@@ -8,7 +8,7 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-  initHavuCursor();
+  // Native cursor restored per user preference
   initDotMatrixCanvas();
   initPixelGlyphs();
   initHavuSandbox();
@@ -16,47 +16,9 @@ document.addEventListener('DOMContentLoaded', () => {
   initLandingMobileNav();
 });
 
-// ── 1. 144Hz Custom Smooth Magnetic Cursor ──────────────────────────────────
+// ── 1. Custom Smooth Magnetic Cursor (Disabled for standard OS cursor) ────────
 function initHavuCursor() {
-  const dot = document.createElement('div');
-  dot.className = 'hv-cursor-dot';
-  const follower = document.createElement('div');
-  follower.className = 'hv-cursor-follower';
-  document.body.appendChild(dot);
-  document.body.appendChild(follower);
-
-  let mouseX = window.innerWidth / 2;
-  let mouseY = window.innerHeight / 2;
-  let followerX = mouseX;
-  let followerY = mouseY;
-
-  window.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-    dot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
-  });
-
-  // Smooth lerp loop running at native display refresh rate (144Hz/120Hz/60Hz)
-  function renderCursor() {
-    followerX += (mouseX - followerX) * 0.18;
-    followerY += (mouseY - followerY) * 0.18;
-    follower.style.transform = `translate3d(${followerX}px, ${followerY}px, 0)`;
-    requestAnimationFrame(renderCursor);
-  }
-  requestAnimationFrame(renderCursor);
-
-  // Expand follower on interactive elements
-  const interactives = 'a, button, input, select, textarea, .hv-pixel-glyph, .hv-trend-pill, .hv-module-card, .stat-card, .quick-link-item, .sidebar-item, .tab-btn, .badge';
-  document.addEventListener('mouseover', (e) => {
-    if (e.target.closest(interactives)) {
-      document.body.classList.add('hv-cursor-active');
-    }
-  });
-  document.addEventListener('mouseout', (e) => {
-    if (e.target.closest(interactives)) {
-      document.body.classList.remove('hv-cursor-active');
-    }
-  });
+  // Disabled per user preference - standard OS cursor is restored
 }
 
 // ── 2. Interactive Dot-Matrix / LED Grid Canvas ─────────────────────────────

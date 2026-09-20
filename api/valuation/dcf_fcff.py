@@ -252,7 +252,16 @@ def calculate_dcf_fcff(
         total_debt  = st_d + lt_d
         net_debt    = total_debt - cash
         equity_value_gordon = enterprise_value_gordon - net_debt
-        equity_value_exit   = enterprise_value_exit - net_debt
+        bridge = {
+            "total_debt": total_debt,
+            "cash": cash,
+            "minority_interest": 0.0,
+            "preferred_equity": 0.0,
+            "equity_investments": 0.0,
+            "net_debt": net_debt,
+            "equity_value_adjustment": -net_debt,
+            "shares_outstanding": shares,
+        }
         shares_diluted = shares
 
     # Shares in same unit as FCF (both in base currency units - yfinance uses actual $)
@@ -299,6 +308,7 @@ def calculate_dcf_fcff(
         "terminal_value_exit":          round(terminal_value_exit, 0),
         "tv_as_pct_of_ev":              round(tv_pct * 100, 1),
         "wacc_components":              {**wacc_data, "wacc": round(wacc, 4)},
+        "bridge":                       bridge,
         "assumptions": {
             "terminal_growth":   terminal_growth,
             "projection_years":  projection_years,

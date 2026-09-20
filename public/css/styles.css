@@ -132,9 +132,9 @@ a:hover {
 
 .sidebar-logo-img {
   width: 100%;
+  max-width: 100%;
   height: auto;
-  max-height: 82px;
-  max-width: 236px;
+  max-height: 54px;
   object-fit: contain;
   display: block;
 }
@@ -227,15 +227,30 @@ nav.nav {
   opacity: 0.75;
 }
 
-.sidebar-item:hover, .sidebar-item.active {
-  background-color: var(--surface-2);
-  color: var(--text-primary);
+.sidebar-item:hover {
+  background-color: rgba(16, 185, 129, 0.08);
+  color: #10b981;
   text-decoration: none;
+}
+
+.sidebar-item:hover svg {
+  stroke: #10b981;
+  opacity: 1;
+}
+
+.sidebar-item.active {
+  background-color: rgba(16, 185, 129, 0.14);
+  color: #10b981;
+  font-weight: 600;
+  text-decoration: none;
+  border-left: 3px solid #10b981;
+  box-shadow: 0 0 16px rgba(16, 185, 129, 0.12);
 }
 
 .sidebar-item.active svg {
   opacity: 1;
-  stroke: var(--accent);
+  stroke: #10b981;
+  color: #10b981;
 }
 
 .sidebar-footer {
