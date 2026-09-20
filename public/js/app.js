@@ -23,6 +23,7 @@ class App {
         this.setupEventListeners();
         this._initLandingAuthUI();
         this._initMobileNav();
+        this._initLegalDisclaimer();
     }
 
     isAuthenticated() {
@@ -516,6 +517,26 @@ class App {
             localStorage.setItem('vs_cookie_consent', 'accepted');
             banner.remove();
         });
+    }
+
+    _initLegalDisclaimer() {
+        const isLanding = window.location.pathname === '/' || window.location.pathname.endsWith('index.html');
+        if (isLanding) return;
+
+        const mainContent = document.querySelector('.main-content');
+        if (!mainContent) return;
+
+        if (document.querySelector('.studio-legal-footer')) return;
+
+        const footer = document.createElement('footer');
+        footer.className = 'studio-legal-footer';
+        footer.innerHTML = `
+            <div class="studio-legal-badge">Compliance &amp; Legal Notice</div>
+            <p class="studio-legal-text">
+                Valuation Studio is an independent financial modeling and educational quantitative research platform. All intrinsic valuations, DCF schedules, financial metrics, and algorithmic outputs are generated for educational and informational analysis only. Valuation Studio is not an investment advisor, broker-dealer, or registered financial institution, and does not provide financial, investment, legal, tax, or accounting advice. Nothing on this platform constitutes a recommendation or solicitation to buy, sell, or hold any security. Past performance and quantitative estimates do not guarantee future results.
+            </p>
+        `;
+        mainContent.appendChild(footer);
     }
 
     // ── Chart helpers ────────────────────────────────────

@@ -399,7 +399,7 @@ def generate_financial_model(ticker: str, data_fetcher, valuation_data: dict = N
     r += 1
 
     sheets_index = [
-        ('1. Executive Summary', 'Consensus valuation, target price range, key multiples & WACC summary'),
+        ('1. Executive Summary', 'Consensus valuation, intrinsic value range, key multiples & WACC summary'),
         ('2. Income Statement', '4-Year Historical + 5-Year Forecast Revenue, OpEx, EBITDA, EBIT & Net Income'),
         ('3. Balance Sheet', 'Complete Assets, Liabilities & Stockholders Equity with balance verification'),
         ('4. Cash Flow Statement', 'Cash from Operations, CapEx, FCF, Debt Paydown & Cash Bridge'),
