@@ -366,12 +366,13 @@ def generate_financial_model(ticker: str, data_fetcher, valuation_data: dict = N
     c.alignment = Alignment(horizontal='left', vertical='center', indent=1)
     ws_cov.row_dimensions[start_r].height = 36
 
+    clean_curr_sym = curr_fmt.split("#")[0].replace('"', '')
     cov_details = [
         ('Company Name', name),
         ('Ticker Symbol', ticker),
         ('GICS Sector', sector),
         ('Industry', industry),
-        ('Model Reporting Currency', f'{curr} ({curr_fmt.split("#")[0].replace("\"", "")})'),
+        ('Model Reporting Currency', f'{curr} ({clean_curr_sym})'),
         ('Current Market Price', f'{price:,.2f} {curr}'),
         ('Market Capitalization', f'${market_cap/1e9:,.2f}B' if market_cap else 'N/A'),
         ('Implied Enterprise Value', f'${(market_cap/1e9 + latest_net_debt/1e3):,.2f}B'),
