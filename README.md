@@ -62,6 +62,28 @@ if user:
 "
 ```
 
+## Deploy to Render (100% Free)
+
+### Method A: Blueprint (Automatic)
+1. Push this repository to your GitHub.
+2. Go to [dashboard.render.com](https://dashboard.render.com) → Click **New +** → **Blueprint**.
+3. Select your repository. Render will auto-detect [`render.yaml`](file:///c:/Users/adils/Downloads/valuation-studio/render.yaml) and configure the service.
+4. Click **Apply**.
+
+### Method B: Manual Web Service
+1. Go to [dashboard.render.com](https://dashboard.render.com) → Click **New +** → **Web Service**.
+2. Connect your GitHub repository.
+3. Configure the following settings:
+   - **Root Directory:** *(Leave blank)*
+   - **Runtime:** `Python 3`
+   - **Build Command:** `pip install -r requirements.txt`
+   - **Start Command:** `uvicorn main:app --host 0.0.0.0 --port $PORT`
+   - **Instance Type:** `Free`
+4. In **Environment Variables**, add:
+   - `PYTHON_VERSION` = `3.11.9`
+   - `SECRET_KEY` = `any-random-secret-string`
+5. Click **Create Web Service**.
+
 ## Deploy to Railway
 
 1. Push to GitHub
@@ -71,6 +93,7 @@ if user:
 5. Railway auto-detects the `Procfile` and deploys
 
 **Cost:** Free with GitHub Education ($5/month credit).
+
 
 ## Project Structure
 
