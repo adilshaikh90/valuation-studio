@@ -1,5 +1,5 @@
 """
-LBO — Leveraged Buyout model with real financial data.
+LBO - Leveraged Buyout model with real financial data.
 Uses actual EBITDA from income statement, real cost of debt from WACC builder.
 """
 import pandas as pd

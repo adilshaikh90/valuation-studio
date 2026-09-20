@@ -1,4 +1,4 @@
-/* news.js — company news feed */
+/* news.js - company news feed */
 document.addEventListener('DOMContentLoaded', async () => {
     if (!app.isAuthenticated()) { window.location.href = 'login.html'; return; }
 

@@ -1,4 +1,4 @@
-/* lbo-nav.js — LBO analysis and NAV calculation */
+/* lbo-nav.js - LBO analysis and NAV calculation */
 document.addEventListener('DOMContentLoaded', async () => {
     if (!app.isAuthenticated()) { window.location.href = 'login.html'; return; }
 

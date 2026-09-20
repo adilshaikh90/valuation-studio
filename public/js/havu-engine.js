@@ -1,5 +1,5 @@
 /**
- * Valuation Studio — HAVU 144Hz Interactive Physics Engine
+ * Valuation Studio - HAVU 144Hz Interactive Physics Engine
  * Featuring:
  * 1. Interactive Dot-Matrix / LED Canvas with spring physics and cursor ripples.
  * 2. 144Hz Hardware-accelerated smooth custom magnetic cursor.
@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initPixelGlyphs();
   initHavuSandbox();
   initTrendingChips();
+  initLandingMobileNav();
 });
 
 // ── 1. 144Hz Custom Smooth Magnetic Cursor ──────────────────────────────────
@@ -303,3 +304,21 @@ function initTrendingChips() {
     });
   });
 }
+
+// ── 6. Mobile Navigation Drawer for Landing Page ────────────────────────────
+function initLandingMobileNav() {
+  const btn = document.getElementById('landingMenuBtn');
+  const drawer = document.getElementById('landingMobileDrawer');
+  if (!btn || !drawer) return;
+
+  btn.addEventListener('click', () => {
+    drawer.classList.toggle('open');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!btn.contains(e.target) && !drawer.contains(e.target)) {
+      drawer.classList.remove('open');
+    }
+  });
+}
+

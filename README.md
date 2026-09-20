@@ -2,7 +2,7 @@
 
 **Institutional-grade financial valuation. For everyone.**
 
-DCF, DDM, APV, LBO, NAV, Trading Comps, Monte Carlo, Regression Multiples — enter any public ticker and get a complete IB-level analysis in seconds. Download a full Excel financial model with live formulas.
+DCF, DDM, APV, LBO, NAV, Trading Comps, Monte Carlo, Regression Multiples - enter any public ticker and get a complete IB-level analysis in seconds. Download a full Excel financial model with live formulas.
 
 ---
 

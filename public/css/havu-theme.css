@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Valuation Studio — HAVU-Inspired Avant-Garde Minimalist Design System
+   Valuation Studio - HAVU-Inspired Avant-Garde Minimalist Design System
    Inspired by havu.cc: Deep Obsidian Black, Monospace Technical Metadata,
    Interactive Dot-Matrix Canvas, Retro-Futuristic Pixel Glyphs, Pill CTAs,
    and 144Hz Buttery-Smooth Micro-Interactions.
@@ -876,19 +876,165 @@ body.havu-body {
 
 @media (max-width: 768px) {
   .hv-header {
-    padding: 1rem 1.5rem;
+    padding: 0.85rem 1rem !important;
+    position: sticky !important;
+    top: 0 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
   }
+
+  .hv-kicker {
+    display: none !important;
+  }
+
+  .hv-logo-img {
+    height: 30px !important;
+  }
+
   .hv-nav-links {
-    display: none;
+    display: none !important;
   }
+
+  .hv-nav-right {
+    gap: 0.5rem !important;
+  }
+
+  .hv-pill-cta-ghost {
+    padding: 0.35rem 0.75rem !important;
+    font-size: 0.75rem !important;
+  }
+
+  .hv-pill-cta {
+    padding: 0.35rem 0.85rem !important;
+    font-size: 0.75rem !important;
+  }
+
   .hv-hero {
-    padding: 3rem 1.5rem;
+    padding: 2rem 1rem !important;
   }
+
+  .hv-matrix-display-container {
+    height: 100px !important;
+    margin-bottom: 1.5rem !important;
+  }
+
+  #hvDotMatrixCanvas {
+    pointer-events: none !important;
+  }
+
+  .hv-matrix-overlay-caption {
+    font-size: 0.55rem !important;
+    bottom: 6px !important;
+    right: 10px !important;
+  }
+
+  .hv-hero-title {
+    font-size: 1.85rem !important;
+    line-height: 1.15 !important;
+    margin-bottom: 1.25rem !important;
+    letter-spacing: -0.02em !important;
+  }
+
+  .hv-pixel-crew-container {
+    display: none !important;
+  }
+
+  .hv-hero-subtext {
+    font-size: 0.92rem !important;
+    margin-bottom: 1.5rem !important;
+    line-height: 1.5 !important;
+  }
+
+  .hv-console-row {
+    margin-bottom: 2rem !important;
+  }
+
+  .hv-command-palette {
+    padding: 0.35rem 0.5rem 0.35rem 1rem !important;
+  }
+
+  .hv-cmd-input {
+    font-size: 0.88rem !important;
+  }
+
+  .hv-cmd-submit {
+    padding: 0.45rem 0.9rem !important;
+    font-size: 0.78rem !important;
+  }
+
+  .hv-loop-architecture-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1.5rem !important;
+  }
+
   .hv-grid-6 {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
   }
+
+  .hv-sandbox-panel {
+    grid-template-columns: 1fr !important;
+    gap: 1.5rem !important;
+  }
+
+  .hv-footer {
+    padding: 3rem 1rem 2rem !important;
+  }
+
   .hv-footer-top {
-    flex-direction: column;
-    gap: 2rem;
+    flex-direction: column !important;
+    gap: 1.5rem !important;
   }
+
+  .hv-footer-bottom {
+    flex-direction: column !important;
+    gap: 0.75rem !important;
+    text-align: center !important;
+  }
+
+  .hv-mobile-menu-btn {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hv-mobile-drawer {
+    position: sticky !important;
+    top: 50px !important;
+    left: 0 !important;
+    right: 0 !important;
+    background: rgba(9, 10, 15, 0.98) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+    padding: 1.25rem 1.5rem !important;
+    z-index: 999 !important;
+  }
+
+  .hv-mobile-drawer.open {
+    display: block !important;
+    animation: fadeInLandingDrawer 0.2s ease;
+  }
+
+  .hv-mobile-drawer-links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+
+  .hv-mobile-drawer-links a {
+    color: #f4f4f5;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-decoration: none;
+    display: block;
+    padding: 0.35rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+}
+
+@keyframes fadeInLandingDrawer {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
 }

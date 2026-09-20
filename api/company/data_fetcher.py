@@ -79,7 +79,7 @@ class CompanyDataFetcher:
         }
         res: Dict[str, Any] = {}
 
-        # 1. Chart API (v8) — highly reliable on cloud IPs
+        # 1. Chart API (v8) - highly reliable on cloud IPs
         try:
             url = f"https://query1.finance.yahoo.com/v8/finance/chart/{ticker}?interval=1d&range=5d"
             req = urllib.request.Request(url, headers=headers)
@@ -103,7 +103,7 @@ class CompanyDataFetcher:
         except Exception:
             pass
 
-        # 2. Search API (v1) — gives company name, sector, industry
+        # 2. Search API (v1) - gives company name, sector, industry
         try:
             search_url = f"https://query2.finance.yahoo.com/v1/finance/search?q={ticker}"
             req2 = urllib.request.Request(search_url, headers=headers)
@@ -219,7 +219,7 @@ class CompanyDataFetcher:
         return 1.0
 
     def get_info(self, ticker: str) -> Dict[str, Any]:
-        """Alias for get_company_info — used by valuation modules."""
+        """Alias for get_company_info - used by valuation modules."""
         return self.get_company_info(ticker)
 
     def get_company_info(self, ticker: str) -> Dict[str, Any]:
@@ -320,7 +320,7 @@ class CompanyDataFetcher:
             return {"error": str(e)}
 
     # ------------------------------------------------------------------
-    # Raw DataFrame accessors — used by valuation & quant modules
+    # Raw DataFrame accessors - used by valuation & quant modules
     # ------------------------------------------------------------------
     def get_income_stmt(self, ticker: str) -> pd.DataFrame:
         """Returns the income statement as a raw pandas DataFrame (columns = years, rows = line items)."""

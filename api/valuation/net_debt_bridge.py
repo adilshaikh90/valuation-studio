@@ -1,5 +1,5 @@
 """
-Net Debt Bridge — converts Enterprise Value to Equity Value.
+Net Debt Bridge - converts Enterprise Value to Equity Value.
 Uses real balance sheet data from yfinance via data_fetcher DataFrames.
 """
 import pandas as pd

@@ -1,4 +1,4 @@
-# Valuation Studio — Railway Deployment Config
+# Valuation Studio - Railway Deployment Config
 [build]
 builder = "NIXPACKS"
 

@@ -1,4 +1,4 @@
-/* comps.js — trading comps, implied values, regression chart */
+/* comps.js - trading comps, implied values, regression chart */
 let peersList = [];
 let companySym = '$';
 let companyPrice = 0;
@@ -39,7 +39,7 @@ async function loadComps(ticker) {
         }
         const subtitle = document.getElementById('compsSubtitle');
         if (subtitle && (data.matched_industry || company.industry)) {
-            subtitle.textContent = `Industry: ${data.matched_industry || company.industry} (${data.matched_region || 'Global'}) — Institutional Peer Comps`;
+            subtitle.textContent = `Industry: ${data.matched_industry || company.industry} (${data.matched_region || 'Global'}) - Institutional Peer Comps`;
         }
 
         // ── Peer stats table & details ──────────────────────

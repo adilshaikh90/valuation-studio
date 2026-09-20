@@ -1,5 +1,5 @@
 """
-DDM — Dividend Discount Model with Gordon Growth, Two-Stage, and H-Model variants.
+DDM - Dividend Discount Model with Gordon Growth, Two-Stage, and H-Model variants.
 Uses real dividend history from yfinance.
 """
 import numpy as np
@@ -9,7 +9,7 @@ from typing import Dict, Any, Optional
 
 def calculate_ddm(ticker: str, data_fetcher, cost_of_equity: Optional[float] = None) -> Dict[str, Any]:
     """
-    Dividend Discount Model — 3 variants.
+    Dividend Discount Model - 3 variants.
     Returns {'applicable': False} if company doesn't pay dividends.
     """
     info            = data_fetcher.get_info(ticker)

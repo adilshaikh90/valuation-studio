@@ -1,5 +1,5 @@
 """
-APV — Adjusted Present Value.
+APV - Adjusted Present Value.
 Uses real financial data: FCF from income/cashflow, tax shields from actual interest expense.
 """
 import pandas as pd

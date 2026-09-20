@@ -1,4 +1,4 @@
-/* dashboard.js — uses api.getCompany() and api.getSummary() */
+/* dashboard.js - uses api.getCompany() and api.getSummary() */
 document.addEventListener('DOMContentLoaded', async () => {
     if (!app.isAuthenticated()) { window.location.href = 'login.html'; return; }
 

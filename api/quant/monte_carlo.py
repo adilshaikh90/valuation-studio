@@ -1,5 +1,5 @@
 """
-Monte Carlo — Bootstrapped simulation resampling from real historical financials.
+Monte Carlo - Bootstrapped simulation resampling from real historical financials.
 10,000 iterations, bootstrapping revenue growth, EBITDA margins, and CapEx ratios.
 """
 import numpy as np
@@ -52,7 +52,7 @@ def run_monte_carlo(ticker: str, data_fetcher, iterations: int = 10000) -> Dict[
         base = market_cap * 0.25 if market_cap > 0 else 1e9
         rev_arr = np.array([base * (0.9 ** i) for i in range(4, -1, -1)])
 
-    # EBITDA history — try direct, or compute EBIT + D&A
+    # EBITDA history - try direct, or compute EBIT + D&A
     ebitda_arr = _safe_series(income_df, ['EBITDA', 'Ebitda'])
     if len(ebitda_arr) < 2:
         ebit_arr = _safe_series(income_df, ['EBIT', 'Operating Income', 'OperatingIncome'])
@@ -176,7 +176,7 @@ def run_monte_carlo(ticker: str, data_fetcher, iterations: int = 10000) -> Dict[
     # ── Statistics ────────────────────────────────────────────────────────────
     valid = sim_prices[sim_prices > 0]
     if len(valid) < iterations * 0.5:
-        # Too many zeros — simulation probably bad, return market-based estimate
+        # Too many zeros - simulation probably bad, return market-based estimate
         mean_val   = current_price
         std_val    = current_price * 0.20
         percentile_vals = np.percentile([current_price * x for x in

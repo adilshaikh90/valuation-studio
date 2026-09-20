@@ -1,5 +1,5 @@
 """
-News routes — recent news for a given ticker via yfinance.
+News routes - recent news for a given ticker via yfinance.
 Handles the new yfinance news structure (nested under 'content').
 """
 from fastapi import APIRouter, Depends, HTTPException
@@ -15,7 +15,7 @@ _data_fetcher = CompanyDataFetcher()
 
 
 def _parse_news_item(item: dict) -> dict | None:
-    """Parse a single yfinance news item — handles both old and new API structure."""
+    """Parse a single yfinance news item - handles both old and new API structure."""
     if not isinstance(item, dict):
         return None
 

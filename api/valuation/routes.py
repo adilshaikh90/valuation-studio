@@ -1,5 +1,5 @@
 """
-Valuation routes — exposes DCF, DDM, APV, Comps, NAV, LBO, and Football Field endpoints.
+Valuation routes - exposes DCF, DDM, APV, Comps, NAV, LBO, and Football Field endpoints.
 """
 from fastapi import APIRouter, Depends, Query, HTTPException
 from typing import Optional, List

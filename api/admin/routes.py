@@ -1,5 +1,5 @@
 """
-Admin routes — user management and analytics dashboard (admin-only).
+Admin routes - user management and analytics dashboard (admin-only).
 """
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
@@ -142,7 +142,7 @@ def get_analytics(
     total_users = db.query(func.count(User.id)).scalar()
     total_searches = db.query(func.count(SearchLog.id)).scalar()
 
-    # Searches by day — last 30 days
+    # Searches by day - last 30 days
     thirty_days_ago = datetime.utcnow() - timedelta(days=30)
     searches_by_day_raw = (
         db.query(
@@ -200,7 +200,7 @@ def get_analytics(
     )
     searches_by_country = [{"country": r.country, "count": r.count} for r in searches_by_country_raw]
 
-    # New users by day — last 30 days
+    # New users by day - last 30 days
     new_users_raw = (
         db.query(
             func.date(User.created_at).label("date"),

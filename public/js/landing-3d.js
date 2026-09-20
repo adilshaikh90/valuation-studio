@@ -1,5 +1,5 @@
 /**
- * Valuation Studio — Interactive 3D & Particle Engine
+ * Valuation Studio - Interactive 3D & Particle Engine
  * 60fps 3D canvas projection, interactive gyroscope tilt physics,
  * spotlight specular highlights, and real-time valuation simulation.
  */

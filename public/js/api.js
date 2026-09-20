@@ -1,5 +1,5 @@
 /**
- * Valuation Studio — API Client
+ * Valuation Studio - API Client
  * Handles all communication with the FastAPI backend.
  */
 const API_BASE = window.location.origin + '/api';

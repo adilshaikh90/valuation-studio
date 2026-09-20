@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link rel='icon' type='image/png' href='images/favicon-192.png'>
-  <link rel='shortcut icon' href='favicon.ico'>
+  <link rel="icon" type="image/png" href="images/favicon-192.png">
+  <link rel="shortcut icon" href="favicon.ico">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Export Financial Model | Valuation Studio</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css?v=3.0">
-  <link rel="stylesheet" href="css/components.css?v=3.0">
-  <link rel="stylesheet" href="css/havu-theme.css?v=3.0">
-  <link rel="stylesheet" href="css/dashboard-havu.css?v=3.0">
+  <link rel="stylesheet" href="css/styles.css?v=3.1">
+  <link rel="stylesheet" href="css/components.css?v=3.1">
+  <link rel="stylesheet" href="css/havu-theme.css?v=3.1">
+  <link rel="stylesheet" href="css/dashboard-havu.css?v=3.1">
   <!-- Strict Authentication Gate -->
   <script>
     (function() {
@@ -34,13 +34,13 @@
 
   <aside class="sidebar">
     <div class="sidebar-logo">
-      <a href="dashboard.html?v=3.0">
-        <img src="images/logo-dark-theme.png?v=3.0" alt="Valuation Studio" class="sidebar-logo-img">
+      <a href="dashboard.html?v=3.1">
+        <img src="images/logo-dark-theme.png?v=3.1" alt="Valuation Studio" class="sidebar-logo-img">
       </a>
     </div>
     <div class="sidebar-ticker-box">
       <div class="sidebar-ticker-row">
-        <span id="sidebarTicker" class="sidebar-ticker-symbol">—</span>
+        <span id="sidebarTicker" class="sidebar-ticker-symbol">-</span>
         <span id="sidebarPrice" class="sidebar-ticker-price"></span>
       </div>
       <div class="sidebar-search">
@@ -49,16 +49,17 @@
       </div>
     </div>
     <nav class="sidebar-nav">
-      <a href="dashboard.html?v=3.0" class="sidebar-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg> Overview</a>
-      <a href="financials.html?v=3.0" class="sidebar-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Financial Statements</a>
-      <a href="football-field.html?v=3.0" class="sidebar-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg> Football Field</a>
-      <a href="valuation.html?v=3.0" class="sidebar-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> Valuation</a>
-      <a href="comps.html?v=3.0" class="sidebar-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/></svg> Trading Comps</a>
-      <a href="lbo-nav.html?v=3.0" class="sidebar-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/></svg> LBO &amp; NAV</a>
-      <a href="quant.html?v=3.0" class="sidebar-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg> Quant Lab</a>
-      <a href="performance.html?v=3.0" class="sidebar-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg> Performance</a>
-      <a href="news.html?v=3.0" class="sidebar-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 0-2 2Z"/></svg> News</a>
-      <a href="download.html?v=3.0" class="sidebar-item active"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Export Model</a>
+      <a href="index.html" class="sidebar-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> Home / Landing</a>
+      <a href="dashboard.html?v=3.1" class="sidebar-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg> Overview</a>
+      <a href="financials.html?v=3.1" class="sidebar-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Financial Statements</a>
+      <a href="football-field.html?v=3.1" class="sidebar-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg> Football Field</a>
+      <a href="valuation.html?v=3.1" class="sidebar-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> Valuation</a>
+      <a href="comps.html?v=3.1" class="sidebar-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/></svg> Trading Comps</a>
+      <a href="lbo-nav.html?v=3.1" class="sidebar-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/></svg> LBO &amp; NAV</a>
+      <a href="quant.html?v=3.1" class="sidebar-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg> Quant Lab</a>
+      <a href="performance.html?v=3.1" class="sidebar-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg> Performance</a>
+      <a href="news.html?v=3.1" class="sidebar-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 0-2 2Z"/></svg> News</a>
+      <a href="download.html?v=3.1" class="sidebar-item active"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Export Model</a>
     </nav>
     <div class="sidebar-footer">
       <span id="sidebarUserEmail" class="sidebar-user-email"></span>
@@ -69,68 +70,316 @@
   <main class="main-content">
     <!-- Header Meta Bar -->
     <div class="hv-dash-meta-bar">
-      <div class="hv-dash-meta-text">VALUATION STUDIO</div>
+      <div class="hv-dash-meta-text">VALUATION STUDIO • INSTITUTIONAL EXPORT SUITE</div>
     </div>
 
     <div class="page-header">
-      <h1 class="page-title">Export Financial Model</h1>
-      <p class="page-subtitle">Download an institutional-grade, fully editable Excel model complete with formulas and your brand logo</p>
+      <div>
+        <h1 class="page-title">Export Financial Model</h1>
+        <p class="page-subtitle">Download an institutional-grade, fully dynamic Excel workbook complete with live formulas, dynamic schedules, and vector branding</p>
+      </div>
     </div>
 
-    <section class="section">
-      <div class="card max-w-3xl">
-        <div class="flex items-center justify-between border-b border-border pb-4 mb-4">
-          <div>
-            <h2 class="text-gold" id="downloadTitle">Valuation Model</h2>
-            <p class="text-secondary mt-1">
-              <span id="downloadCompanyName">—</span> • <span id="downloadSector">—</span> • <span id="downloadPrice">—</span> (<span id="downloadCurrency">USD</span>)
-            </p>
-          </div>
-          <div class="badge badge-green">Ready to Export</div>
-        </div>
+    <div class="export-container">
 
-        <div class="grid grid-2 gap-4 my-4">
-          <div>
-            <h3 class="text-primary font-semibold mb-2">Included Sheets:</h3>
-            <ul class="flex flex-col gap-2 text-secondary text-sm">
-              <li class="flex items-center gap-2"><span>📄</span> Cover &amp; Company Overview (with Logo)</li>
-              <li class="flex items-center gap-2"><span>📊</span> Executive Valuation Summary</li>
-              <li class="flex items-center gap-2"><span>📑</span> Income Statement (5 Years)</li>
-              <li class="flex items-center gap-2"><span>📑</span> Balance Sheet (5 Years)</li>
-              <li class="flex items-center gap-2"><span>📑</span> Cash Flow Statement (5 Years)</li>
-              <li class="flex items-center gap-2"><span>📐</span> WACC &amp; Cost of Capital Breakdown</li>
-              <li class="flex items-center gap-2"><span>📈</span> DCF Model with 5-Year Forecast</li>
-              <li class="flex items-center gap-2"><span>🎯</span> 9x9 Sensitivity Matrix</li>
-            </ul>
+      <!-- Hero Status Card -->
+      <div class="export-hero-card">
+        <div class="export-hero-top">
+          <div class="export-hero-title-group">
+            <h2 id="downloadTitle">Valuation Model</h2>
+            <div class="export-hero-meta">
+              <span id="downloadCompanyName" style="font-weight:600;color:#f4f4f5;">-</span>
+              <span>•</span>
+              <span id="downloadSector" class="badge badge-gray">-</span>
+              <span>•</span>
+              <span id="downloadPrice" style="font-family:var(--font-mono);font-weight:700;color:#ffffff;">-</span>
+              <span style="font-size:0.8rem;color:var(--text-muted);">(<span id="downloadCurrency">USD</span>)</span>
+            </div>
           </div>
-          <div>
-            <h3 class="text-primary font-semibold mb-2">Model Features:</h3>
-            <ul class="flex flex-col gap-2 text-secondary text-sm">
-              <li class="flex items-center gap-2"><span>✅</span> Live Excel formulas (no hardcoded totals)</li>
-              <li class="flex items-center gap-2"><span>✅</span> Official Valuation Studio Logo embedded</li>
-              <li class="flex items-center gap-2"><span>✅</span> Formatted for print, PDF export, and presentations</li>
-              <li class="flex items-center gap-2"><span>✅</span> Compatible with Microsoft Excel &amp; Google Sheets</li>
-            </ul>
+          <div class="export-status-pill">
+            <span class="pulse-dot"></span>
+            <span>Live Model Ready</span>
           </div>
         </div>
 
-        <div class="mt-6 pt-4 border-t border-border">
-          <button id="downloadBtn" class="btn btn-primary btn-large w-full" style="font-size: 1.05rem; padding: 14px;">
-            ⬇ Download Excel Financial Model (.xlsx)
-          </button>
-          <p class="text-xs text-muted text-center mt-3">
-            Disclaimer: Generated automatically for research and educational purposes. Not investment advice.
-          </p>
+        <div class="export-quick-metrics">
+          <div class="export-metric-item">
+            <div class="export-metric-label">Model Engine</div>
+            <div class="export-metric-val" style="font-size:1rem;color:#38bdf8;">DCF &amp; Multiples</div>
+          </div>
+          <div class="export-metric-item">
+            <div class="export-metric-label">Total Worksheets</div>
+            <div class="export-metric-val">8 Sheets</div>
+          </div>
+          <div class="export-metric-item">
+            <div class="export-metric-label">Formula Integrity</div>
+            <div class="export-metric-val" style="color:#10b981;">100% Live</div>
+          </div>
+          <div class="export-metric-item">
+            <div class="export-metric-label">Output Standard</div>
+            <div class="export-metric-val" style="color:#f59e0b;">Wall Street IB</div>
+          </div>
         </div>
       </div>
-    </section>
 
+      <!-- Included Sheets Section (Replacing Generic Emojis with High-End Animated Cards) -->
+      <div>
+        <div class="export-section-heading">
+          <h3>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+            Included Model Worksheets
+          </h3>
+          <span style="font-size:0.8rem;color:var(--text-muted);font-family:var(--font-mono);">8 TABS • ZERO STATIC NUMBERS</span>
+        </div>
+
+        <div class="sheet-cards-grid">
+
+          <!-- Sheet 1: Cover & Overview -->
+          <div class="sheet-card">
+            <div class="sheet-icon-wrapper sheet-icon-blue">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 12 15 16 10"/></svg>
+            </div>
+            <div class="sheet-content">
+              <div class="sheet-header-row">
+                <span class="sheet-name">Cover &amp; Executive Profile</span>
+                <span class="sheet-tab-badge">TAB 01</span>
+              </div>
+              <p class="sheet-desc">Corporate metadata, live market capitalization, 52-week pricing bounds, and embedded vector brand crest.</p>
+              <div class="sheet-footer-badges">
+                <span class="sheet-formula-tag">fx: INDEX()</span>
+                <span class="sheet-spec-tag">Vector Brand</span>
+                <span class="sheet-spec-tag">Print Cover</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sheet 2: Executive Valuation Summary -->
+          <div class="sheet-card">
+            <div class="sheet-icon-wrapper sheet-icon-gold">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+            </div>
+            <div class="sheet-content">
+              <div class="sheet-header-row">
+                <span class="sheet-name">Executive Valuation Summary</span>
+                <span class="sheet-tab-badge">TAB 02</span>
+              </div>
+              <p class="sheet-desc">Consensus price target bridge comparing Gordon Growth, Exit Multiple, and Trading Comps implied valuations.</p>
+              <div class="sheet-footer-badges">
+                <span class="sheet-formula-tag">fx: AVERAGE()</span>
+                <span class="sheet-formula-tag">fx: MEDIAN()</span>
+                <span class="sheet-spec-tag">Consensus Bridge</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sheet 3: Income Statement -->
+          <div class="sheet-card">
+            <div class="sheet-icon-wrapper sheet-icon-green">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            </div>
+            <div class="sheet-content">
+              <div class="sheet-header-row">
+                <span class="sheet-name">Income Statement (5 Years)</span>
+                <span class="sheet-tab-badge">TAB 03</span>
+              </div>
+              <p class="sheet-desc">5-year GAAP Operations schedule: Revenue build, Gross Margin, Operating Expenses, EBITDA, EBIT, and Net Income.</p>
+              <div class="sheet-footer-badges">
+                <span class="sheet-formula-tag">fx: SUM()</span>
+                <span class="sheet-formula-tag">fx: CAGR</span>
+                <span class="sheet-spec-tag">Margin Drivers</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sheet 4: Balance Sheet -->
+          <div class="sheet-card">
+            <div class="sheet-icon-wrapper sheet-icon-indigo">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+            </div>
+            <div class="sheet-content">
+              <div class="sheet-header-row">
+                <span class="sheet-name">Balance Sheet (5 Years)</span>
+                <span class="sheet-tab-badge">TAB 04</span>
+              </div>
+              <p class="sheet-desc">Assets, Liabilities &amp; Stockholders' Equity schedule with working capital analysis and debt structure balance.</p>
+              <div class="sheet-footer-badges">
+                <span class="sheet-formula-tag">fx: CHECK_BAL()</span>
+                <span class="sheet-spec-tag">Working Capital</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sheet 5: Cash Flow Statement -->
+          <div class="sheet-card">
+            <div class="sheet-icon-wrapper sheet-icon-emerald">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            </div>
+            <div class="sheet-content">
+              <div class="sheet-header-row">
+                <span class="sheet-name">Cash Flow Statement (5 Years)</span>
+                <span class="sheet-tab-badge">TAB 05</span>
+              </div>
+              <p class="sheet-desc">Operating, Investing, and Financing flows, CapEx reinvestment bridges, and Free Cash Flow to Firm (FCFF) calculation.</p>
+              <div class="sheet-footer-badges">
+                <span class="sheet-formula-tag">fx: FCF_BRIDGE</span>
+                <span class="sheet-spec-tag">Reinvestment</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sheet 6: WACC & CAPM -->
+          <div class="sheet-card">
+            <div class="sheet-icon-wrapper sheet-icon-amber">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M16.2 7.8l-2 6.3-6.4 2.1 2-6.3z"/></svg>
+            </div>
+            <div class="sheet-content">
+              <div class="sheet-header-row">
+                <span class="sheet-name">WACC &amp; Cost of Capital</span>
+                <span class="sheet-tab-badge">TAB 06</span>
+              </div>
+              <p class="sheet-desc">CAPM Cost of Equity (Beta, ERP, 10Y Treasury Risk-Free Rate), effective cost of debt, and capital structure weights.</p>
+              <div class="sheet-footer-badges">
+                <span class="sheet-formula-tag">fx: WACC()</span>
+                <span class="sheet-formula-tag">fx: CAPM_Ke</span>
+                <span class="sheet-spec-tag">Tax Shield</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sheet 7: DCF Model with 5Y Forecast -->
+          <div class="sheet-card">
+            <div class="sheet-icon-wrapper sheet-icon-sky">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+            </div>
+            <div class="sheet-content">
+              <div class="sheet-header-row">
+                <span class="sheet-name">DCF 5-Year Forecast &amp; Valuation</span>
+                <span class="sheet-tab-badge">TAB 07</span>
+              </div>
+              <p class="sheet-desc">Discounted Cash Flow model: Projected unlevered FCFs, mid-year discount convention, terminal value, and equity value per share.</p>
+              <div class="sheet-footer-badges">
+                <span class="sheet-formula-tag">fx: XNPV()</span>
+                <span class="sheet-formula-tag">fx: MID_YEAR()</span>
+                <span class="sheet-spec-tag">Enterprise Value</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sheet 8: 9x9 Sensitivity Matrix -->
+          <div class="sheet-card">
+            <div class="sheet-icon-wrapper sheet-icon-purple">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/></svg>
+            </div>
+            <div class="sheet-content">
+              <div class="sheet-header-row">
+                <span class="sheet-name">9x9 Sensitivity Matrix</span>
+                <span class="sheet-tab-badge">TAB 08</span>
+              </div>
+              <p class="sheet-desc">Two-way sensitivity table analyzing Implied Share Price across 81 permutations of WACC vs. Terminal Growth Rate.</p>
+              <div class="sheet-footer-badges">
+                <span class="sheet-formula-tag">fx: TABLE()</span>
+                <span class="sheet-spec-tag">Heatmap Formatting</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Institutional Standards Strip (Replacing generic checkmark emoji list) -->
+      <div>
+        <div class="export-section-heading">
+          <h3>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            Institutional Model Standards
+          </h3>
+        </div>
+
+        <div class="spec-cards-grid">
+          <div class="spec-card">
+            <div class="spec-card-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <div class="spec-card-title">100% Dynamic Formulas</div>
+            <p class="spec-card-desc">Zero hardcoded totals or static values. Every sum and ratio recalculates dynamically.</p>
+          </div>
+
+          <div class="spec-card">
+            <div class="spec-card-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            </div>
+            <div class="spec-card-title">Embedded Vector Brand</div>
+            <p class="spec-card-desc">High-resolution 300 DPI corporate insignia embedded into title sheet headers.</p>
+          </div>
+
+          <div class="spec-card">
+            <div class="spec-card-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+            </div>
+            <div class="spec-card-title">Print &amp; PDF Formatted</div>
+            <p class="spec-card-desc">Landscape A4 print breaks calibrated for executive pitchdecks and boardroom reviews.</p>
+          </div>
+
+          <div class="spec-card">
+            <div class="spec-card-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/><path d="M12 8v8"/></svg>
+            </div>
+            <div class="spec-card-title">Cross-Platform Ready</div>
+            <p class="spec-card-desc">Fully compatible with Microsoft Excel 2016-365, LibreOffice, and Google Sheets.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action & Download Center with Animated Shimmer & Progress Bar -->
+      <div class="download-action-card">
+        <div class="download-buttons-row">
+          <button id="downloadBtn" class="download-cta-btn" aria-label="Download Excel Model">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            <span>Download Excel Financial Model (.xlsx)</span>
+          </button>
+          <button id="copySummaryBtn" class="download-secondary-btn" aria-label="Copy Valuation Summary">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            <span>Copy Live Summary</span>
+          </button>
+        </div>
+
+        <!-- Animated Progress Console -->
+        <div id="downloadProgressContainer" class="download-progress-container">
+          <div class="progress-track">
+            <div id="progressBarFill" class="progress-bar-fill"></div>
+          </div>
+          <div class="progress-steps-list">
+            <div id="step1" class="progress-step-item active">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/></svg>
+              <span>[1/4] Extracting historical SEC filings &amp; financial statements...</span>
+            </div>
+            <div id="step2" class="progress-step-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/></svg>
+              <span>[2/4] Compiling 5-year dynamic DCF &amp; WACC schedules...</span>
+            </div>
+            <div id="step3" class="progress-step-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/></svg>
+              <span>[3/4] Embedding corporate vector identity &amp; color palettes...</span>
+            </div>
+            <div id="step4" class="progress-step-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/></svg>
+              <span>[4/4] Finalizing encrypted .xlsx workbook...</span>
+            </div>
+          </div>
+        </div>
+
+        <p style="font-size:0.75rem;color:var(--text-muted);text-align:center;margin:0;">
+          Notice: Generated automatically for financial analysis and educational modeling. Not professional investment advice.
+        </p>
+      </div>
+
+    </div>
   </main>
 </div>
 
-<script src="js/api.js?v=3.0"></script>
-<script src="js/app.js?v=3.0"></script>
-<script src="js/havu-engine.js?v=3.0"></script>
-<script src="js/download.js?v=3.0"></script>
+<script src="js/api.js?v=3.1"></script>
+<script src="js/app.js?v=3.1"></script>
+<script src="js/havu-engine.js?v=3.1"></script>
+<script src="js/download.js?v=3.1"></script>
 </body>
 </html>

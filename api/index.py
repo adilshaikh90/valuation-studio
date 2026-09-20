@@ -1,5 +1,5 @@
 """
-Valuation Studio — Main FastAPI Application Entry Point.
+Valuation Studio - Main FastAPI Application Entry Point.
 Registers all route modules, sets up middleware, database, and static file serving.
 """
 from fastapi import FastAPI
@@ -29,7 +29,7 @@ app = FastAPI(
     version="1.0.0",
 )
 
-# CORS — allow all origins for development; tighten in production
+# CORS - allow all origins for development; tighten in production
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -60,7 +60,7 @@ app.include_router(excel_routes.router)
 app.include_router(summary_routes.router)
 
 # ---------------------------------------------------------------------------
-# Static files — serve the frontend
+# Static files - serve the frontend
 # ---------------------------------------------------------------------------
 PUBLIC_DIR = Path(__file__).resolve().parent.parent / "public"
 
@@ -83,7 +83,7 @@ async def serve_favicon():
 
 
 # ---------------------------------------------------------------------------
-# HTML page routes — serve frontend pages (with anti-cache headers)
+# HTML page routes - serve frontend pages (with anti-cache headers)
 # ---------------------------------------------------------------------------
 NO_CACHE_HEADERS = {
     "Cache-Control": "no-cache, no-store, must-revalidate, max-age=0",

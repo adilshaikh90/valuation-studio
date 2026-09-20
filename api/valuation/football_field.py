@@ -1,5 +1,5 @@
 """
-Football Field — aggregates all valuation models for a side-by-side comparison chart.
+Football Field - aggregates all valuation models for a side-by-side comparison chart.
 Uses P10/P90 from sensitivity tables for DCF ranges, P25/P75 for comps.
 """
 from typing import Dict, Any, List, Optional

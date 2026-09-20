@@ -1,4 +1,4 @@
-/* performance.js — stock price history, stats, returns heatmap */
+/* performance.js - stock price history, stats, returns heatmap */
 document.addEventListener('DOMContentLoaded', async () => {
     if (!app.isAuthenticated()) { window.location.href = 'login.html'; return; }
 

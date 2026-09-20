@@ -1,4 +1,4 @@
-/* football-field.js — all valuation models side-by-side */
+/* football-field.js - all valuation models side-by-side */
 document.addEventListener('DOMContentLoaded', async () => {
     if (!app.isAuthenticated()) { window.location.href = 'login.html'; return; }
 

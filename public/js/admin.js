@@ -1,4 +1,4 @@
-/* admin.js — comprehensive admin dashboard with user controls & audit trail */
+/* admin.js - comprehensive admin dashboard with user controls & audit trail */
 let allUsers = [];
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -47,7 +47,7 @@ async function loadAdminData() {
         setText('searchesToday', todayEntry?.count ?? 0);
 
         const topTicker = analytics.top_tickers?.[0];
-        setText('topTicker', topTicker ? topTicker.ticker : '—');
+        setText('topTicker', topTicker ? topTicker.ticker : '-');
         setText('topTickerCount', topTicker ? `${topTicker.count} requests` : 'No searches recorded');
 
         // Charts
@@ -94,7 +94,7 @@ function renderUsersTable(users) {
     const currentAdmin = app.getUser();
 
     tbody.innerHTML = users.map(u => {
-        const created = u.created_at ? new Date(u.created_at).toLocaleDateString() : '—';
+        const created = u.created_at ? new Date(u.created_at).toLocaleDateString() : '-';
         const lastLogin = u.last_login ? new Date(u.last_login).toLocaleDateString() : 'Never';
         const isActive = u.is_active !== false;
         const isAdmin = u.role === 'admin';
@@ -143,15 +143,15 @@ function renderAuditLogs(logs) {
     }
 
     tbody.innerHTML = logs.map(l => {
-        const time = l.timestamp ? new Date(l.timestamp).toLocaleString() : '—';
+        const time = l.timestamp ? new Date(l.timestamp).toLocaleString() : '-';
         return `
             <tr>
                 <td class="text-muted text-sm">${time}</td>
                 <td style="font-weight:500;">${l.user_email || 'Anonymous'}</td>
-                <td><span class="badge" style="font-weight:700;color:var(--text-primary);background:var(--surface-3);">${l.ticker || '—'}</span></td>
-                <td>${l.company || '—'}</td>
+                <td><span class="badge" style="font-weight:700;color:var(--text-primary);background:var(--surface-3);">${l.ticker || '-'}</span></td>
+                <td>${l.company || '-'}</td>
                 <td><span style="color:#f59e0b;font-weight:600;">${l.currency || 'USD'}</span></td>
-                <td class="text-muted">${l.country || '—'}</td>
+                <td class="text-muted">${l.country || '-'}</td>
             </tr>
         `;
     }).join('');
@@ -248,5 +248,5 @@ function renderTopTickersChart(data) {
 
 function setText(id, val) { 
     const e = document.getElementById(id); 
-    if (e) e.textContent = val ?? '—'; 
+    if (e) e.textContent = val ?? '-'; 
 }

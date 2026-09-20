@@ -187,6 +187,42 @@ class App {
         const sidebar = document.querySelector('.sidebar');
         if (!sidebar) return;
 
+        const ticker = this.getTicker() || '-';
+        const currentPage = window.location.pathname.split('/').pop() || 'dashboard.html';
+
+        // 1. Ensure "Home / Landing" link exists in the sidebar navigation
+        const sidebarNav = sidebar.querySelector('.sidebar-nav');
+        if (sidebarNav && !sidebarNav.querySelector('a[href*="index.html"]')) {
+            const homeLink = document.createElement('a');
+            homeLink.href = 'index.html';
+            homeLink.className = 'sidebar-item';
+            homeLink.style.cssText = 'color: #38bdf8; font-weight: 600; margin-bottom: 0.25rem;';
+            homeLink.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> Home / Landing';
+            sidebarNav.insertBefore(homeLink, sidebarNav.firstChild);
+        }
+
+        // 2. Add Mobile Close Button at top of sidebar drawer
+        if (!sidebar.querySelector('.sidebar-mobile-close-row')) {
+            const closeRow = document.createElement('div');
+            closeRow.className = 'sidebar-mobile-close-row';
+            closeRow.style.cssText = 'display:flex; justify-content:space-between; align-items:center; margin-bottom:0.75rem; padding-bottom:0.5rem; border-bottom:1px solid rgba(255,255,255,0.08);';
+            closeRow.innerHTML = `
+                <span style="font-size:0.75rem; font-weight:700; color:#8e8e99; letter-spacing:0.08em; text-transform:uppercase;">Navigation Menu</span>
+                <button id="sidebarDrawerCloseBtn" aria-label="Close menu" style="background:none; border:none; color:#f4f4f5; font-size:1.2rem; cursor:pointer; padding:4px 8px; border-radius:6px;">✕</button>
+            `;
+            sidebar.insertBefore(closeRow, sidebar.firstChild);
+
+            const drawerClose = closeRow.querySelector('#sidebarDrawerCloseBtn');
+            if (drawerClose) {
+                drawerClose.addEventListener('click', () => {
+                    sidebar.classList.remove('mobile-open');
+                    const bd = document.getElementById('mobileNavBackdrop');
+                    if (bd) bd.classList.remove('active');
+                });
+            }
+        }
+
+        // 3. Insert Top Mobile Header Bar
         const mobileBar = document.createElement('div');
         mobileBar.className = 'mobile-header-bar';
         mobileBar.innerHTML = `
@@ -198,19 +234,72 @@ class App {
                         <line x1="3" y1="18" x2="21" y2="18"></line>
                     </svg>
                 </button>
-                <span class="mobile-brand-title">VALUATION STUDIO</span>
+                <a href="index.html" class="mobile-brand-title" style="text-decoration:none;">VALUATION STUDIO</a>
             </div>
             <div class="mobile-header-right">
-                <span class="mobile-ticker-pill" id="mobileTickerPill">${this.getTicker() || '—'}</span>
+                <span class="mobile-ticker-pill" id="mobileTickerPill">${ticker}</span>
             </div>
         `;
         sidebar.parentElement.insertBefore(mobileBar, sidebar);
 
+        // 4. Create Dark Blur Backdrop Overlay
+        let backdrop = document.getElementById('mobileNavBackdrop');
+        if (!backdrop) {
+            backdrop = document.createElement('div');
+            backdrop.id = 'mobileNavBackdrop';
+            backdrop.className = 'mobile-nav-backdrop';
+            document.body.appendChild(backdrop);
+            backdrop.addEventListener('click', () => {
+                sidebar.classList.remove('mobile-open');
+                backdrop.classList.remove('active');
+            });
+        }
+
+        // 5. Connect Toggle Button
         const toggleBtn = document.getElementById('mobileNavToggle');
         if (toggleBtn) {
             toggleBtn.addEventListener('click', () => {
-                sidebar.classList.toggle('mobile-open');
+                const isOpen = sidebar.classList.toggle('mobile-open');
+                if (backdrop) {
+                    if (isOpen) backdrop.classList.add('active');
+                    else backdrop.classList.remove('active');
+                }
             });
+        }
+
+        // 6. Insert Floating Mobile Bottom App Bar
+        if (!document.querySelector('.mobile-bottom-nav')) {
+            const bottomNav = document.createElement('nav');
+            bottomNav.className = 'mobile-bottom-nav';
+            const isOverview = currentPage.includes('dashboard');
+            const isFin = currentPage.includes('financials');
+            const isVal = currentPage.includes('valuation');
+            const isComps = currentPage.includes('comps');
+            const isExport = currentPage.includes('download');
+
+            bottomNav.innerHTML = `
+                <a href="dashboard.html?v=3.1" class="mobile-bottom-nav-item ${isOverview ? 'active' : ''}">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                    <span>Overview</span>
+                </a>
+                <a href="financials.html?v=3.1" class="mobile-bottom-nav-item ${isFin ? 'active' : ''}">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/></svg>
+                    <span>Financials</span>
+                </a>
+                <a href="valuation.html?v=3.1" class="mobile-bottom-nav-item ${isVal ? 'active' : ''}">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                    <span>Valuation</span>
+                </a>
+                <a href="comps.html?v=3.1" class="mobile-bottom-nav-item ${isComps ? 'active' : ''}">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/></svg>
+                    <span>Comps</span>
+                </a>
+                <a href="download.html?v=3.1" class="mobile-bottom-nav-item ${isExport ? 'active' : ''}">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    <span>Export</span>
+                </a>
+            `;
+            document.body.appendChild(bottomNav);
         }
     }
 
@@ -394,7 +483,7 @@ class App {
         banner.innerHTML = `
             <div style="width: 100%; max-width: 1200px; display: flex; justify-content: space-between; align-items: center; gap: 2rem; flex-wrap: wrap;">
                 <div style="color: #cbd5e1; font-size: 0.88rem; line-height: 1.45; flex: 1; min-width: 280px;">
-                    <strong style="color: #ffffff; font-weight: 600;">Cookie &amp; Analytics Notice</strong> — We use Google Analytics to understand how the tool is used. No personal financial data is included in analytics events. You can opt out at any time. <a href="#" id="cookieGlobalPrivacyLink" style="color: #94a3b8; text-decoration: underline; margin-left: 0.35rem;">Privacy Policy</a>
+                    <strong style="color: #ffffff; font-weight: 600;">Cookie &amp; Analytics Notice</strong> - We use Google Analytics to understand how the tool is used. No personal financial data is included in analytics events. You can opt out at any time. <a href="#" id="cookieGlobalPrivacyLink" style="color: #94a3b8; text-decoration: underline; margin-left: 0.35rem;">Privacy Policy</a>
                 </div>
                 <div style="display: flex; gap: 0.75rem; align-items: center;">
                     <button type="button" id="cookieGlobalDecline" style="background: rgba(30, 41, 59, 0.85); border: 1px solid rgba(255, 255, 255, 0.15); color: #e2e8f0; border-radius: 6px; padding: 0.55rem 1.25rem; font-size: 0.88rem; font-weight: 500; cursor: pointer; transition: all 0.2s;">Decline</button>

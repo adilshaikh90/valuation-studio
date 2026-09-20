@@ -1,5 +1,5 @@
 """
-Summary routes — plain English valuation summary for a company.
+Summary routes - plain English valuation summary for a company.
 """
 from fastapi import APIRouter, Depends, HTTPException
 

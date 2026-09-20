@@ -1,4 +1,4 @@
-/* quant.js — Monte Carlo, Sensitivity, Tornado, Scenarios */
+/* quant.js - Monte Carlo, Sensitivity, Tornado, Scenarios */
 let companySym = '$';
 let companyPrice = 0;
 let scenariosData = [];

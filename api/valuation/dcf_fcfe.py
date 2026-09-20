@@ -1,5 +1,5 @@
 """
-DCF FCFE — Discounted Cash Flow using Free Cash Flow to Equity.
+DCF FCFE - Discounted Cash Flow using Free Cash Flow to Equity.
 Uses real financial data from yfinance via data_fetcher.
 """
 import pandas as pd

@@ -1,5 +1,5 @@
 /**
- * Valuation Studio — 3-Statement Financial Model
+ * Valuation Studio - 3-Statement Financial Model
  * Institutional Income Statement, Balance Sheet, Cash Flow, and Key Ratios.
  */
 
@@ -141,7 +141,7 @@ async function loadFinancialStatements(ticker) {
     // Update Header Badges
     const subtitle = document.getElementById('finSubtitle');
     if (subtitle) {
-      subtitle.textContent = `${company.name || ticker} [${ticker}] — 5-Year Consolidated Statements (${curr})`;
+      subtitle.textContent = `${company.name || ticker} [${ticker}] - 5-Year Consolidated Statements (${curr})`;
     }
 
     const tagText = `All figures in Millions ${curr} (${sym}M), except per-share data`;
@@ -199,8 +199,8 @@ function getVal(row, keys, def = 0) {
 }
 
 function fmtM(val, decimals = 1, showDash = true) {
-  if (val === null || val === undefined || isNaN(val)) return showDash ? '—' : '0.0';
-  if (val === 0 && showDash) return '—';
+  if (val === null || val === undefined || isNaN(val)) return showDash ? '-' : '0.0';
+  if (val === 0 && showDash) return '-';
   const m = val / 1e6;
   const isNeg = m < 0;
   const str = Math.abs(m).toLocaleString(undefined, {
@@ -211,14 +211,14 @@ function fmtM(val, decimals = 1, showDash = true) {
 }
 
 function fmtEPS(val, sym = '$') {
-  if (val === null || val === undefined || isNaN(val) || val === 0) return '—';
+  if (val === null || val === undefined || isNaN(val) || val === 0) return '-';
   const isNeg = val < 0;
   const str = Math.abs(val).toFixed(2);
   return isNeg ? `(${sym}${str})` : `${sym}${str}`;
 }
 
 function fmtPct(val, decimals = 1) {
-  if (val === null || val === undefined || isNaN(val) || !isFinite(val)) return '—';
+  if (val === null || val === undefined || isNaN(val) || !isFinite(val)) return '-';
   const isNeg = val < 0;
   const pct = (val * 100).toFixed(decimals);
   const cls = isNeg ? 'text-red' : (val > 0 ? 'text-green' : '');
@@ -226,12 +226,12 @@ function fmtPct(val, decimals = 1) {
 }
 
 function fmtMargin(val, decimals = 1) {
-  if (val === null || val === undefined || isNaN(val) || !isFinite(val)) return '—';
+  if (val === null || val === undefined || isNaN(val) || !isFinite(val)) return '-';
   return (val * 100).toFixed(decimals) + '%';
 }
 
 function fmtMult(val, decimals = 2) {
-  if (val === null || val === undefined || isNaN(val) || !isFinite(val)) return '—';
+  if (val === null || val === undefined || isNaN(val) || !isFinite(val)) return '-';
   return val.toFixed(decimals) + 'x';
 }
 
@@ -323,7 +323,7 @@ function renderIncomeStatement(records, colYears, sym) {
     isSubtotal: true,
     extraVal: fmtPct(calcYoY(rev[lastIdx], rev[prevIdx]))
   });
-  html += rowHTML('YoY Revenue Growth', rev.map((v, i) => i === 0 ? '—' : fmtPct(calcYoY(v, rev[i - 1]))), {
+  html += rowHTML('YoY Revenue Growth', rev.map((v, i) => i === 0 ? '-' : fmtPct(calcYoY(v, rev[i - 1]))), {
     indent: 1
   });
   html += rowHTML('Cost of Goods Sold / Policy Claims', cogs.map(v => fmtM(-Math.abs(v))), {
@@ -335,7 +335,7 @@ function renderIncomeStatement(records, colYears, sym) {
     isSubtotal: true,
     extraVal: fmtPct(calcYoY(gp[lastIdx], gp[prevIdx]))
   });
-  html += rowHTML('Gross Margin %', gp.map((v, i) => rev[i] ? fmtMargin(v / rev[i]) : '—'), {
+  html += rowHTML('Gross Margin %', gp.map((v, i) => rev[i] ? fmtMargin(v / rev[i]) : '-'), {
     indent: 1
   });
 
@@ -361,14 +361,14 @@ function renderIncomeStatement(records, colYears, sym) {
     isSubtotal: true,
     extraVal: fmtPct(calcYoY(ebit[lastIdx], ebit[prevIdx]))
   });
-  html += rowHTML('Operating Margin %', ebit.map((v, i) => rev[i] ? fmtMargin(v / rev[i]) : '—'), { indent: 1 });
+  html += rowHTML('Operating Margin %', ebit.map((v, i) => rev[i] ? fmtMargin(v / rev[i]) : '-'), { indent: 1 });
   html += rowHTML('Depreciation &amp; Amortization', da.map(v => fmtM(v)), { indent: 1 });
   html += rowHTML('EBITDA', ebitda.map(v => fmtM(v)), {
     bold: true,
     isSubtotal: true,
     extraVal: fmtPct(calcYoY(ebitda[lastIdx], ebitda[prevIdx]))
   });
-  html += rowHTML('EBITDA Margin %', ebitda.map((v, i) => rev[i] ? fmtMargin(v / rev[i]) : '—'), { indent: 1 });
+  html += rowHTML('EBITDA Margin %', ebitda.map((v, i) => rev[i] ? fmtMargin(v / rev[i]) : '-'), { indent: 1 });
 
   // 4. NON-OPERATING & TAX
   html += rowHTML('NON-OPERATING ITEMS &amp; PRE-TAX', [], { isSection: true });
@@ -382,7 +382,7 @@ function renderIncomeStatement(records, colYears, sym) {
     extraVal: fmtPct(calcYoY(ebt[lastIdx], ebt[prevIdx]))
   });
   html += rowHTML('Income Tax Provision', tax.map(v => fmtM(-Math.abs(v))), { indent: 1 });
-  html += rowHTML('Effective Tax Rate %', tax.map((v, i) => ebt[i] > 0 ? fmtMargin(v / ebt[i]) : '—'), { indent: 1 });
+  html += rowHTML('Effective Tax Rate %', tax.map((v, i) => ebt[i] > 0 ? fmtMargin(v / ebt[i]) : '-'), { indent: 1 });
 
   // 5. NET INCOME & EPS
   html += rowHTML('NET INCOME &amp; PER SHARE', [], { isSection: true });
@@ -390,12 +390,12 @@ function renderIncomeStatement(records, colYears, sym) {
     isTotal: true,
     extraVal: fmtPct(calcYoY(ni[lastIdx], ni[prevIdx]))
   });
-  html += rowHTML('Net Profit Margin %', ni.map((v, i) => rev[i] ? fmtMargin(v / rev[i]) : '—'), { indent: 1 });
+  html += rowHTML('Net Profit Margin %', ni.map((v, i) => rev[i] ? fmtMargin(v / rev[i]) : '-'), { indent: 1 });
   html += rowHTML('Diluted Earnings Per Share (EPS)', eps.map(v => fmtEPS(v, sym)), {
     bold: true,
     extraVal: fmtPct(calcYoY(eps[lastIdx], eps[prevIdx]))
   });
-  html += rowHTML('Weighted Diluted Shares (M)', shares.map(v => v ? (v / 1e6).toFixed(1) : '—'), { indent: 1 });
+  html += rowHTML('Weighted Diluted Shares (M)', shares.map(v => v ? (v / 1e6).toFixed(1) : '-'), { indent: 1 });
 
   tbody.innerHTML = html;
 }
@@ -601,7 +601,7 @@ function renderCashFlow(records, colYears, sym) {
     isTotal: true,
     extraVal: fmtPct(calcYoY(fcf[lastIdx], fcf[prevIdx]))
   });
-  html += rowHTML('FCF Conversion % (FCF / CFO)', fcf.map((f, i) => cfo[i] ? fmtMargin(f / cfo[i]) : '—'), { indent: 1 });
+  html += rowHTML('FCF Conversion % (FCF / CFO)', fcf.map((f, i) => cfo[i] ? fmtMargin(f / cfo[i]) : '-'), { indent: 1 });
 
   tbody.innerHTML = html;
 }
@@ -638,58 +638,58 @@ function renderKeyRatios(isRecords, bsRecords, cfRecords, colYears, sym) {
 
   // 1. PROFITABILITY
   html += rowHTML('PROFITABILITY MULTIPLES', [], { isSection: true });
-  html += rowHTML('Gross Profit Margin %', gp.map((v, i) => rev[i] ? fmtMargin(v / rev[i]) : '—'), {
+  html += rowHTML('Gross Profit Margin %', gp.map((v, i) => rev[i] ? fmtMargin(v / rev[i]) : '-'), {
     bold: true,
-    extraVal: rev[lastIdx] ? fmtMargin(gp[lastIdx] / rev[lastIdx]) : '—'
+    extraVal: rev[lastIdx] ? fmtMargin(gp[lastIdx] / rev[lastIdx]) : '-'
   });
-  html += rowHTML('Operating (EBIT) Margin %', ebit.map((v, i) => rev[i] ? fmtMargin(v / rev[i]) : '—'), {
+  html += rowHTML('Operating (EBIT) Margin %', ebit.map((v, i) => rev[i] ? fmtMargin(v / rev[i]) : '-'), {
     bold: true,
-    extraVal: rev[lastIdx] ? fmtMargin(ebit[lastIdx] / rev[lastIdx]) : '—'
+    extraVal: rev[lastIdx] ? fmtMargin(ebit[lastIdx] / rev[lastIdx]) : '-'
   });
-  html += rowHTML('EBITDA Margin %', ebitda.map((v, i) => rev[i] ? fmtMargin(v / rev[i]) : '—'), {
+  html += rowHTML('EBITDA Margin %', ebitda.map((v, i) => rev[i] ? fmtMargin(v / rev[i]) : '-'), {
     bold: true,
-    extraVal: rev[lastIdx] ? fmtMargin(ebitda[lastIdx] / rev[lastIdx]) : '—'
+    extraVal: rev[lastIdx] ? fmtMargin(ebitda[lastIdx] / rev[lastIdx]) : '-'
   });
-  html += rowHTML('Net Profit Margin %', ni.map((v, i) => rev[i] ? fmtMargin(v / rev[i]) : '—'), {
+  html += rowHTML('Net Profit Margin %', ni.map((v, i) => rev[i] ? fmtMargin(v / rev[i]) : '-'), {
     bold: true,
-    extraVal: rev[lastIdx] ? fmtMargin(ni[lastIdx] / rev[lastIdx]) : '—'
+    extraVal: rev[lastIdx] ? fmtMargin(ni[lastIdx] / rev[lastIdx]) : '-'
   });
-  html += rowHTML('Return on Equity (ROE %)', ni.map((v, i) => equity[i] ? fmtMargin(v / equity[i]) : '—'), {
+  html += rowHTML('Return on Equity (ROE %)', ni.map((v, i) => equity[i] ? fmtMargin(v / equity[i]) : '-'), {
     bold: true,
-    extraVal: equity[lastIdx] ? fmtMargin(ni[lastIdx] / equity[lastIdx]) : '—'
+    extraVal: equity[lastIdx] ? fmtMargin(ni[lastIdx] / equity[lastIdx]) : '-'
   });
-  html += rowHTML('Return on Assets (ROA %)', ni.map((v, i) => totalAssets[i] ? fmtMargin(v / totalAssets[i]) : '—'), {
+  html += rowHTML('Return on Assets (ROA %)', ni.map((v, i) => totalAssets[i] ? fmtMargin(v / totalAssets[i]) : '-'), {
     indent: 1,
-    extraVal: totalAssets[lastIdx] ? fmtMargin(ni[lastIdx] / totalAssets[lastIdx]) : '—'
+    extraVal: totalAssets[lastIdx] ? fmtMargin(ni[lastIdx] / totalAssets[lastIdx]) : '-'
   });
 
   // 2. LIQUIDITY
   html += rowHTML('LIQUIDITY &amp; SOLVENCY', [], { isSection: true });
-  html += rowHTML('Current Ratio (CA / CL)', totalCa.map((ca, i) => totalCl[i] ? fmtMult(ca / totalCl[i]) : '—'), {
+  html += rowHTML('Current Ratio (CA / CL)', totalCa.map((ca, i) => totalCl[i] ? fmtMult(ca / totalCl[i]) : '-'), {
     bold: true,
-    extraVal: totalCl[lastIdx] ? fmtMult(totalCa[lastIdx] / totalCl[lastIdx]) : '—'
+    extraVal: totalCl[lastIdx] ? fmtMult(totalCa[lastIdx] / totalCl[lastIdx]) : '-'
   });
-  html += rowHTML('Quick Ratio ((Cash + AR) / CL)', cash.map((c, i) => totalCl[i] ? fmtMult((c + (ar[i] || 0)) / totalCl[i]) : '—'), {
+  html += rowHTML('Quick Ratio ((Cash + AR) / CL)', cash.map((c, i) => totalCl[i] ? fmtMult((c + (ar[i] || 0)) / totalCl[i]) : '-'), {
     indent: 1,
-    extraVal: totalCl[lastIdx] ? fmtMult(((cash[lastIdx] || 0) + (ar[lastIdx] || 0)) / totalCl[lastIdx]) : '—'
+    extraVal: totalCl[lastIdx] ? fmtMult(((cash[lastIdx] || 0) + (ar[lastIdx] || 0)) / totalCl[lastIdx]) : '-'
   });
-  html += rowHTML('Cash Ratio (Cash / CL)', cash.map((c, i) => totalCl[i] ? fmtMult(c / totalCl[i]) : '—'), {
+  html += rowHTML('Cash Ratio (Cash / CL)', cash.map((c, i) => totalCl[i] ? fmtMult(c / totalCl[i]) : '-'), {
     indent: 1
   });
 
   // 3. LEVERAGE
   html += rowHTML('LEVERAGE &amp; COVERAGE', [], { isSection: true });
-  html += rowHTML('Debt-to-Equity Ratio', totalDebt.map((d, i) => equity[i] ? fmtMult(d / equity[i]) : '—'), {
+  html += rowHTML('Debt-to-Equity Ratio', totalDebt.map((d, i) => equity[i] ? fmtMult(d / equity[i]) : '-'), {
     bold: true,
-    extraVal: equity[lastIdx] ? fmtMult(totalDebt[lastIdx] / equity[lastIdx]) : '—'
+    extraVal: equity[lastIdx] ? fmtMult(totalDebt[lastIdx] / equity[lastIdx]) : '-'
   });
-  html += rowHTML('Net Debt / EBITDA', netDebt.map((nd, i) => ebitda[i] && ebitda[i] > 0 ? fmtMult(nd / ebitda[i]) : '—'), {
+  html += rowHTML('Net Debt / EBITDA', netDebt.map((nd, i) => ebitda[i] && ebitda[i] > 0 ? fmtMult(nd / ebitda[i]) : '-'), {
     bold: true,
-    extraVal: ebitda[lastIdx] && ebitda[lastIdx] > 0 ? fmtMult(netDebt[lastIdx] / ebitda[lastIdx]) : '—'
+    extraVal: ebitda[lastIdx] && ebitda[lastIdx] > 0 ? fmtMult(netDebt[lastIdx] / ebitda[lastIdx]) : '-'
   });
-  html += rowHTML('Interest Coverage (EBIT / Interest)', ebit.map((eb, i) => intExp[i] && intExp[i] > 0 ? fmtMult(eb / intExp[i]) : '—'), {
+  html += rowHTML('Interest Coverage (EBIT / Interest)', ebit.map((eb, i) => intExp[i] && intExp[i] > 0 ? fmtMult(eb / intExp[i]) : '-'), {
     indent: 1,
-    extraVal: intExp[lastIdx] && intExp[lastIdx] > 0 ? fmtMult(ebit[lastIdx] / intExp[lastIdx]) : '—'
+    extraVal: intExp[lastIdx] && intExp[lastIdx] > 0 ? fmtMult(ebit[lastIdx] / intExp[lastIdx]) : '-'
   });
 
   // 4. DUPONT DECOMPOSITION

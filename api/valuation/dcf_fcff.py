@@ -1,5 +1,5 @@
 """
-DCF FCFF — Discounted Cash Flow using Free Cash Flow to Firm.
+DCF FCFF - Discounted Cash Flow using Free Cash Flow to Firm.
 Uses real financial statements from yfinance via data_fetcher.
 """
 import numpy as np
@@ -255,7 +255,7 @@ def calculate_dcf_fcff(
         equity_value_exit   = enterprise_value_exit - net_debt
         shares_diluted = shares
 
-    # Shares in same unit as FCF (both in base currency units — yfinance uses actual $)
+    # Shares in same unit as FCF (both in base currency units - yfinance uses actual $)
     shares_diluted = max(shares_diluted, 1)
     scale = data_fetcher.get_price_scale_to_financials(ticker) if hasattr(data_fetcher, 'get_price_scale_to_financials') else 1.0
     value_per_share_gordon = (equity_value_gordon / shares_diluted) * scale

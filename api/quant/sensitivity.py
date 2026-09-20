@@ -1,5 +1,5 @@
 """
-Sensitivity — 2D sensitivity tables: WACC vs Terminal Growth, WACC vs Exit Multiple.
+Sensitivity - 2D sensitivity tables: WACC vs Terminal Growth, WACC vs Exit Multiple.
 Uses real WACC, FCF, and net debt from financial statements.
 """
 import numpy as np

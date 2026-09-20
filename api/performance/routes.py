@@ -1,5 +1,5 @@
 """
-Performance routes — 5-year price history, stats, benchmark comparison.
+Performance routes - 5-year price history, stats, benchmark comparison.
 """
 from fastapi import APIRouter, Depends, HTTPException
 import yfinance as yf

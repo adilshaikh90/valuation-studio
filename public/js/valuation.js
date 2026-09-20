@@ -1,4 +1,4 @@
-/* valuation.js — tabs: DCF FCFF, DCF FCFE, DDM, APV */
+/* valuation.js - tabs: DCF FCFF, DCF FCFE, DDM, APV */
 document.addEventListener('DOMContentLoaded', async () => {
     if (!app.isAuthenticated()) { window.location.href = 'login.html'; return; }
 
@@ -77,7 +77,7 @@ async function loadValuation(ticker) {
         if (ddmRes.status === 'fulfilled') {
             const d = ddmRes.value;
             if (d.applicable === false) {
-                setText('ddmNotice', d.reason || 'DDM not applicable — company does not pay dividends.');
+                setText('ddmNotice', d.reason || 'DDM not applicable - company does not pay dividends.');
                 showEl('ddmNoticeBox');
                 hideEl('ddmResults');
             } else {

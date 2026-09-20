@@ -139,7 +139,7 @@ a:hover {
   display: block;
 }
 
-/* Legacy navigation suppression — guarantee old navbar is never visible */
+/* Legacy navigation suppression - guarantee old navbar is never visible */
 nav.nav {
   display: none !important;
 }
@@ -269,34 +269,113 @@ nav.nav {
   display: none;
 }
 
-@media (max-width: 768px) {
-  .layout-with-sidebar {
-    flex-direction: column;
-    width: 100%;
-    min-width: 0;
-  }
-  .sidebar {
-    display: none !important;
-    width: 100% !important;
-    min-width: 100% !important;
-    height: auto !important;
-    max-height: 85vh !important;
-    position: static !important;
-    border-right: none !important;
-    border-bottom: 1px solid var(--border-color) !important;
-    padding: 1rem !important;
-    z-index: 999 !important;
-    overflow-y: auto !important;
-  }
-  .sidebar.mobile-open {
-    display: flex !important;
-    animation: fadeInNav 0.2s ease-in-out;
-  }
+/* Off-Canvas Slide-In Drawer for Mobile */
+.mobile-nav-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 9998;
 }
 
-@keyframes fadeInNav {
-  from { opacity: 0; transform: translateY(-4px); }
-  to { opacity: 1; transform: translateY(0); }
+.mobile-bottom-nav {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .layout-with-sidebar {
+    flex-direction: column !important;
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+  
+  .sidebar {
+    display: flex !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    bottom: 0 !important;
+    width: 290px !important;
+    max-width: 84vw !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+    background: #090a0f !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.12) !important;
+    border-bottom: none !important;
+    z-index: 9999 !important;
+    transform: translateX(-105%) !important;
+    transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    box-shadow: none !important;
+    padding: 1.25rem 1rem !important;
+    overflow-y: auto !important;
+  }
+  
+  .sidebar.mobile-open {
+    transform: translateX(0) !important;
+    box-shadow: 20px 0 50px rgba(0, 0, 0, 0.85) !important;
+  }
+
+  .mobile-nav-backdrop.active {
+    display: block !important;
+  }
+
+  /* Sleek Floating Bottom Navigation Bar */
+  .mobile-bottom-nav {
+    display: flex !important;
+    position: fixed !important;
+    bottom: 12px !important;
+    left: 14px !important;
+    right: 14px !important;
+    height: 60px !important;
+    background: rgba(14, 16, 23, 0.94) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    border-radius: 20px !important;
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.7) !important;
+    z-index: 950 !important;
+    align-items: center !important;
+    justify-content: space-around !important;
+    padding: 0 4px !important;
+  }
+
+  .mobile-bottom-nav-item {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 2px !important;
+    color: var(--text-secondary) !important;
+    text-decoration: none !important;
+    font-size: 0.65rem !important;
+    font-weight: 600 !important;
+    padding: 6px 10px !important;
+    border-radius: 12px !important;
+    transition: all 0.18s ease !important;
+    flex: 1 !important;
+    text-align: center !important;
+  }
+
+  .mobile-bottom-nav-item svg {
+    width: 20px !important;
+    height: 20px !important;
+    stroke: currentColor !important;
+  }
+
+  .mobile-bottom-nav-item.active {
+    color: #ffffff !important;
+    background: rgba(255, 255, 255, 0.08) !important;
+  }
+
+  .mobile-bottom-nav-item.active svg {
+    stroke: #38bdf8 !important;
+  }
+
+  .main-content {
+    padding-bottom: 90px !important;
+  }
 }
 
 /* Cards */

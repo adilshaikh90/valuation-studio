@@ -360,7 +360,7 @@ def generate_financial_model(ticker: str, data_fetcher, valuation_data: dict = N
     start_r = 6
     ws_cov.merge_cells(f'B{start_r}:C{start_r}')
     c = ws_cov[f'B{start_r}']
-    c.value = f'{name} ({ticker}) — Institutional Valuation Model'
+    c.value = f'{name} ({ticker}) - Institutional Valuation Model'
     c.font = Font(name='Calibri', size=16, bold=True, color='FFFFFF')
     c.fill = IB_NAVY
     c.alignment = Alignment(horizontal='left', vertical='center', indent=1)
@@ -377,7 +377,7 @@ def generate_financial_model(ticker: str, data_fetcher, valuation_data: dict = N
         ('Market Capitalization', f'${market_cap/1e9:,.2f}B' if market_cap else 'N/A'),
         ('Implied Enterprise Value', f'${(market_cap/1e9 + latest_net_debt/1e3):,.2f}B'),
         ('Valuation Date', datetime.now().strftime('%B %d, %Y')),
-        ('Model Status', 'Automated Valuation Model — Research & Educational'),
+        ('Model Status', 'Automated Valuation Model - Research & Educational'),
     ]
 
     r = start_r + 2
@@ -445,14 +445,14 @@ def generate_financial_model(ticker: str, data_fetcher, valuation_data: dict = N
     _setup_sheet(ws_sum, 'Summary', '1B365D')
     
     ws_sum.merge_cells('A1:E1')
-    ws_sum['A1'] = f'{ticker} — Executive Valuation Summary & Consensus Target'
+    ws_sum['A1'] = f'{ticker} - Executive Valuation Summary & Consensus Target'
     ws_sum['A1'].font = WH_TITLE; ws_sum['A1'].fill = IB_NAVY
     ws_sum['A1'].alignment = Alignment(horizontal='center', vertical='center')
 
     sum_rows = [
         ('Market Benchmark', price, curr_dec, False),
-        ('DCF — Gordon Growth Target', price_gordon, curr_dec, True),
-        ('DCF — Exit Multiple Target', price_exit, curr_dec, True),
+        ('DCF - Gordon Growth Target', price_gordon, curr_dec, True),
+        ('DCF - Exit Multiple Target', price_exit, curr_dec, True),
         ('Implied Upside (Gordon Growth)', (price_gordon / price - 1) if price else 0, _fmt_pct(), False),
         ('Implied Upside (Exit Multiple)', (price_exit / price - 1) if price else 0, _fmt_pct(), False),
         ('', None, None, False),
@@ -498,7 +498,7 @@ def generate_financial_model(ticker: str, data_fetcher, valuation_data: dict = N
     _setup_sheet(ws_is, 'Income Statement', '10B981')
 
     ws_is.merge_cells('A1:J1')
-    ws_is['A1'] = f'{name} ({ticker}) — Consolidated Statement of Operations ({curr} in Millions)'
+    ws_is['A1'] = f'{name} ({ticker}) - Consolidated Statement of Operations ({curr} in Millions)'
     ws_is['A1'].font = WH_TITLE; ws_is['A1'].fill = IB_NAVY
     ws_is['A1'].alignment = Alignment(horizontal='center', vertical='center')
 
@@ -561,7 +561,7 @@ def generate_financial_model(ticker: str, data_fetcher, valuation_data: dict = N
     _setup_sheet(ws_bs, 'Balance Sheet', '3B82F6')
 
     ws_bs.merge_cells('A1:J1')
-    ws_bs['A1'] = f'{name} ({ticker}) — Consolidated Balance Sheet ({curr} in Millions)'
+    ws_bs['A1'] = f'{name} ({ticker}) - Consolidated Balance Sheet ({curr} in Millions)'
     ws_bs['A1'].font = WH_TITLE; ws_bs['A1'].fill = IB_NAVY
     ws_bs['A1'].alignment = Alignment(horizontal='center', vertical='center')
 
@@ -622,7 +622,7 @@ def generate_financial_model(ticker: str, data_fetcher, valuation_data: dict = N
     _setup_sheet(ws_cf, 'Cash Flow', '8B5CF6')
 
     ws_cf.merge_cells('A1:J1')
-    ws_cf['A1'] = f'{name} ({ticker}) — Statement of Cash Flows ({curr} in Millions)'
+    ws_cf['A1'] = f'{name} ({ticker}) - Statement of Cash Flows ({curr} in Millions)'
     ws_cf['A1'].font = WH_TITLE; ws_cf['A1'].fill = IB_NAVY
     ws_cf['A1'].alignment = Alignment(horizontal='center', vertical='center')
 
@@ -673,7 +673,7 @@ def generate_financial_model(ticker: str, data_fetcher, valuation_data: dict = N
     _setup_sheet(ws_dcf, 'DCF Valuation', 'F59E0B')
 
     ws_dcf.merge_cells('A1:G1')
-    ws_dcf['A1'] = f'{name} ({ticker}) — Discounted Cash Flow Valuation Model'
+    ws_dcf['A1'] = f'{name} ({ticker}) - Discounted Cash Flow Valuation Model'
     ws_dcf['A1'].font = WH_TITLE; ws_dcf['A1'].fill = IB_NAVY
     ws_dcf['A1'].alignment = Alignment(horizontal='center', vertical='center')
 
@@ -796,7 +796,7 @@ def generate_financial_model(ticker: str, data_fetcher, valuation_data: dict = N
     _setup_sheet(ws_wacc, 'WACC Build-Up', 'F59E0B')
 
     ws_wacc.merge_cells('A1:D1')
-    ws_wacc['A1'] = f'{name} ({ticker}) — Weighted Average Cost of Capital (WACC) Analysis'
+    ws_wacc['A1'] = f'{name} ({ticker}) - Weighted Average Cost of Capital (WACC) Analysis'
     ws_wacc['A1'].font = WH_TITLE; ws_wacc['A1'].fill = IB_NAVY
     ws_wacc['A1'].alignment = Alignment(horizontal='center', vertical='center')
 
@@ -869,7 +869,7 @@ def generate_financial_model(ticker: str, data_fetcher, valuation_data: dict = N
     _setup_sheet(ws_comp, 'Trading Comps', '2563EB', col_a_width=25)
 
     ws_comp.merge_cells('A1:K1')
-    ws_comp['A1'] = f'{name} ({ticker}) — Comparable Company Analysis (Trading Multiples)'
+    ws_comp['A1'] = f'{name} ({ticker}) - Comparable Company Analysis (Trading Multiples)'
     ws_comp['A1'].font = WH_TITLE; ws_comp['A1'].fill = IB_NAVY
     ws_comp['A1'].alignment = Alignment(horizontal='center', vertical='center')
 

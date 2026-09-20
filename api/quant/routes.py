@@ -1,5 +1,5 @@
 """
-Quant routes — Monte Carlo, Sensitivity, Tornado, Scenarios, Regression.
+Quant routes - Monte Carlo, Sensitivity, Tornado, Scenarios, Regression.
 """
 from fastapi import APIRouter, Depends, HTTPException
 from typing import Optional, List
