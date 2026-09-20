@@ -264,18 +264,39 @@ nav.nav {
   padding: 0.4rem;
 }
 
-@media (max-width: 767px) {
-  .layout-with-sidebar {
+/* Mobile Header Bar (Desktop hidden) */
+.mobile-header-bar {
+  display: none;
+}
 
+@media (max-width: 768px) {
+  .layout-with-sidebar {
     flex-direction: column;
+    width: 100%;
+    min-width: 0;
   }
   .sidebar {
-    width: 100%;
-    height: auto;
-    position: relative;
-    border-right: none;
-    border-bottom: 1px solid var(--border-color);
+    display: none !important;
+    width: 100% !important;
+    min-width: 100% !important;
+    height: auto !important;
+    max-height: 85vh !important;
+    position: static !important;
+    border-right: none !important;
+    border-bottom: 1px solid var(--border-color) !important;
+    padding: 1rem !important;
+    z-index: 999 !important;
+    overflow-y: auto !important;
   }
+  .sidebar.mobile-open {
+    display: flex !important;
+    animation: fadeInNav 0.2s ease-in-out;
+  }
+}
+
+@keyframes fadeInNav {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 /* Cards */
@@ -369,8 +390,12 @@ label {
 }
 
 /* Tables */
-.table-responsive {
+.table-responsive,
+.table-scroll,
+.fin-table-wrapper {
+  width: 100%;
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .data-table {
@@ -513,6 +538,18 @@ label {
   color: var(--text-primary);
 }
 
+/* Tab Content */
+.tab-content {
+  display: none !important;
+}
+
+.tab-content.active,
+.tab-content[style*="display: block"],
+.tab-content[style*="display:block"] {
+  display: block !important;
+}
+
+
 /* Chart Wrapper */
 .chart-wrapper {
   position: relative;
@@ -573,4 +610,197 @@ label {
 }
 ::-webkit-scrollbar-thumb:hover {
   background: var(--border-light);
+}
+
+/* ==========================================================================
+   Comprehensive Mobile & Tablet Responsiveness System
+   ========================================================================== */
+
+/* Mobile Header Bar Styles */
+.mobile-header-bar {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  /* Sticky top navigation bar on mobile */
+  .mobile-header-bar {
+    display: flex !important;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--surface-1);
+    border-bottom: 1px solid var(--border-color);
+    padding: 0.75rem 1rem;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .mobile-header-left {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .mobile-nav-toggle {
+    background: transparent;
+    border: none;
+    color: var(--text-primary);
+    cursor: pointer;
+    padding: 0.35rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-md);
+    transition: background-color 0.2s;
+  }
+
+  .mobile-nav-toggle:active {
+    background-color: var(--surface-3);
+  }
+
+  .mobile-brand-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: var(--text-primary);
+  }
+
+  .mobile-header-right {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .mobile-ticker-pill {
+    font-family: var(--font-mono, monospace);
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--blue);
+    background: rgba(56, 189, 248, 0.1);
+    border: 1px solid rgba(56, 189, 248, 0.25);
+    padding: 0.2rem 0.6rem;
+    border-radius: var(--radius-full);
+  }
+
+  /* Main layout adjustments */
+  .layout-with-sidebar {
+    flex-direction: column !important;
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .main-content {
+    padding: 1rem 0.75rem !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    overflow-x: hidden !important;
+  }
+
+  .hv-dash-meta-bar {
+    display: none !important;
+  }
+
+  /* Page headers */
+  .page-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 0.5rem !important;
+    margin-bottom: 1.25rem !important;
+  }
+
+  .page-title {
+    font-size: 1.4rem !important;
+  }
+
+  .page-subtitle {
+    font-size: 0.85rem !important;
+  }
+
+  /* Horizontal touch scrolling for all tables */
+  .table-responsive,
+  .table-scroll,
+  .fin-table-wrapper,
+  .overflow-x-auto,
+  div[style*="overflow-x: auto"],
+  div[style*="overflow-x:auto"] {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    margin-bottom: 1rem !important;
+    border-radius: var(--radius-md) !important;
+  }
+
+  .fin-table,
+  .data-table,
+  #compsTable,
+  #footballFieldTable,
+  #isTable,
+  #bsTable,
+  #cfTable,
+  #ratiosTable,
+  #scenariosTable,
+  #weightedScenariosTable {
+    min-width: 620px !important;
+  }
+
+  /* Card and grid layouts collapse to single column */
+  .grid-2, .grid-3, .grid-4 {
+    grid-template-columns: 1fr !important;
+    gap: 0.85rem !important;
+  }
+
+  .stat-card {
+    padding: 1rem !important;
+  }
+
+  .stat-value {
+    font-size: 1.35rem !important;
+  }
+
+  /* Tabs horizontal touch scrolling */
+  .tabs, .tab-group {
+    display: flex !important;
+    overflow-x: auto !important;
+    white-space: nowrap !important;
+    -webkit-overflow-scrolling: touch !important;
+    padding-bottom: 6px !important;
+    gap: 0.4rem !important;
+    width: 100% !important;
+  }
+
+  .tabs .tab-btn,
+  .tab-group .tab-btn,
+  .tabs .tab {
+    flex-shrink: 0 !important;
+    padding: 0.4rem 0.85rem !important;
+    font-size: 0.8rem !important;
+  }
+
+  /* Responsive action and filter bars */
+  .fin-controls,
+  .controls-bar,
+  .actions-bar,
+  .calc-header-actions {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 0.5rem !important;
+  }
+
+  .fin-search-box input {
+    width: 100% !important;
+  }
+
+  /* Charts */
+  .chart-wrapper {
+    height: 270px !important;
+    width: 100% !important;
+  }
+
+  /* Football field and quant containers */
+  .monte-carlo-summary {
+    grid-template-columns: 1fr !important;
+  }
 }

@@ -81,7 +81,7 @@ function renderPeerTable(peers) {
         tr.innerHTML = `
             <td><strong>${p.ticker || 'N/A'}</strong></td>
             <td>${p.company_name || p.ticker || 'N/A'}</td>
-            <td>${p.market_cap ? companySym + app.fmt(p.market_cap) : 'N/A'}</td>
+            <td>${p.market_cap ? companySym + app.fmtLarge(p.market_cap) : 'N/A'}</td>
             <td>${p.ev_ebitda != null ? app.fmt(p.ev_ebitda) + 'x' : 'N/A'}</td>
             <td>${p.ev_ebit != null ? app.fmt(p.ev_ebit) + 'x' : 'N/A'}</td>
             <td>${p.p_e != null ? app.fmt(p.p_e) + 'x' : 'N/A'}</td>

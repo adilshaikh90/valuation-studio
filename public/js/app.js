@@ -22,6 +22,7 @@ class App {
         await this.checkAuth();
         this.setupEventListeners();
         this._initLandingAuthUI();
+        this._initMobileNav();
     }
 
     isAuthenticated() {
@@ -178,6 +179,38 @@ class App {
             if (launchBtn) {
                 launchBtn.href = 'login.html';
             }
+        }
+    }
+
+    _initMobileNav() {
+        if (document.querySelector('.mobile-header-bar')) return;
+        const sidebar = document.querySelector('.sidebar');
+        if (!sidebar) return;
+
+        const mobileBar = document.createElement('div');
+        mobileBar.className = 'mobile-header-bar';
+        mobileBar.innerHTML = `
+            <div class="mobile-header-left">
+                <button class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Toggle Navigation">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
+                <span class="mobile-brand-title">VALUATION STUDIO</span>
+            </div>
+            <div class="mobile-header-right">
+                <span class="mobile-ticker-pill" id="mobileTickerPill">${this.getTicker() || '—'}</span>
+            </div>
+        `;
+        sidebar.parentElement.insertBefore(mobileBar, sidebar);
+
+        const toggleBtn = document.getElementById('mobileNavToggle');
+        if (toggleBtn) {
+            toggleBtn.addEventListener('click', () => {
+                sidebar.classList.toggle('mobile-open');
+            });
         }
     }
 

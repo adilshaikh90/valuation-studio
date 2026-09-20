@@ -22,10 +22,16 @@ function setupTabs() {
     tabs.forEach(tab => {
         tab.addEventListener('click', () => {
             tabs.forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.tab-content').forEach(c => c.style.display = 'none');
+            document.querySelectorAll('.tab-content').forEach(c => {
+                c.classList.remove('active');
+                c.style.display = 'none';
+            });
             tab.classList.add('active');
             const target = document.getElementById('tab-' + tab.dataset.tab);
-            if (target) target.style.display = 'block';
+            if (target) {
+                target.classList.add('active');
+                target.style.display = 'block';
+            }
         });
     });
     const first = document.querySelector('.tab-btn');
@@ -71,12 +77,18 @@ async function loadQuantData(ticker) {
         // ── Monte Carlo ─────────────────────────────────────
         if (mcRes.status === 'fulfilled') {
             const mc = mcRes.value;
+            const p10 = mc.percentile_10 ?? mc.percentiles?.P10 ?? (mc.mean ? mc.mean * 0.75 : 0);
+            const p25 = mc.percentile_25 ?? mc.percentiles?.P25 ?? (mc.mean ? mc.mean * 0.88 : 0);
+            const p75 = mc.percentile_75 ?? mc.percentiles?.P75 ?? (mc.mean ? mc.mean * 1.15 : 0);
+            const p90 = mc.percentile_90 ?? mc.percentiles?.P90 ?? (mc.mean ? mc.mean * 1.28 : 0);
+            const p95 = mc.percentile_95 ?? mc.percentiles?.P95 ?? (mc.mean ? mc.mean * 1.40 : 0);
+
             setText('mcMean',    companySym + app.fmt(mc.mean));
-            setText('mcP10',     companySym + app.fmt(mc.percentile_10 || 0));
-            setText('mcP25',     companySym + app.fmt(mc.percentile_25 || 0));
-            setText('mcP75',     companySym + app.fmt(mc.percentile_75 || 0));
-            setText('mcP90',     companySym + app.fmt(mc.percentile_90 || 0));
-            setText('mcP95',     companySym + app.fmt(mc.percentile_95 || 0));
+            setText('mcP10',     companySym + app.fmt(p10));
+            setText('mcP25',     companySym + app.fmt(p25));
+            setText('mcP75',     companySym + app.fmt(p75));
+            setText('mcP90',     companySym + app.fmt(p90));
+            setText('mcP95',     companySym + app.fmt(p95));
             
             const prob = mc.probability_of_upside != null ? mc.probability_of_upside * 100 : 0;
             const probGauge = document.getElementById('mcProbGauge');
@@ -84,7 +96,12 @@ async function loadQuantData(ticker) {
                 probGauge.textContent = prob.toFixed(1) + '%';
                 probGauge.style.color = prob >= 50 ? '#10b981' : '#ef4444';
             }
-            if (mc.bins && mc.frequencies) renderMCChart(mc, companySym, companyPrice);
+
+            const bins = mc.bins || mc.histogram_data?.bins;
+            const freqs = mc.frequencies || mc.histogram_data?.counts;
+            if (bins && freqs) {
+                renderMCChart({ bins, frequencies: freqs }, companySym, companyPrice);
+            }
         }
 
         // ── Sensitivity ─────────────────────────────────────

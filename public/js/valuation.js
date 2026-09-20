@@ -16,10 +16,16 @@ function setupTabs() {
     tabs.forEach(tab => {
         tab.addEventListener('click', () => {
             tabs.forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.tab-content').forEach(c => c.style.display = 'none');
+            document.querySelectorAll('.tab-content').forEach(c => {
+                c.classList.remove('active');
+                c.style.display = 'none';
+            });
             tab.classList.add('active');
             const target = document.getElementById('tab-' + tab.dataset.tab);
-            if (target) target.style.display = 'block';
+            if (target) {
+                target.classList.add('active');
+                target.style.display = 'block';
+            }
         });
     });
     // Show first tab

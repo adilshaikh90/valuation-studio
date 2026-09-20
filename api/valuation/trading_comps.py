@@ -145,26 +145,85 @@ def calculate_trading_comps(ticker: str, data_fetcher, custom_peers: Optional[Li
     rev_growth_list = []
     ebitda_margin_list = []
 
+    SECTOR_MULTIPLE_BENCHMARKS = {
+        'semiconductor': {'ev_ebitda': 24.8, 'pe': 28.5, 'pb': 7.2, 'ev_rev': 7.1, 'rev_growth': 0.165, 'ebitda_margin': 0.32},
+        'technology': {'ev_ebitda': 22.4, 'pe': 26.0, 'pb': 6.5, 'ev_rev': 5.8, 'rev_growth': 0.135, 'ebitda_margin': 0.27},
+        'financial': {'ev_ebitda': 11.2, 'pe': 13.0, 'pb': 1.35, 'ev_rev': 3.1, 'rev_growth': 0.055, 'ebitda_margin': 0.38},
+        'bank': {'ev_ebitda': 10.5, 'pe': 12.2, 'pb': 1.25, 'ev_rev': 2.8, 'rev_growth': 0.048, 'ebitda_margin': 0.35},
+        'healthcare': {'ev_ebitda': 15.6, 'pe': 21.5, 'pb': 4.3, 'ev_rev': 4.2, 'rev_growth': 0.082, 'ebitda_margin': 0.23},
+        'pharma': {'ev_ebitda': 14.8, 'pe': 19.8, 'pb': 4.0, 'ev_rev': 3.9, 'rev_growth': 0.075, 'ebitda_margin': 0.25},
+        'consumer': {'ev_ebitda': 16.2, 'pe': 22.4, 'pb': 4.8, 'ev_rev': 2.4, 'rev_growth': 0.068, 'ebitda_margin': 0.16},
+        'energy': {'ev_ebitda': 6.8, 'pe': 10.8, 'pb': 1.6, 'ev_rev': 1.5, 'rev_growth': 0.042, 'ebitda_margin': 0.26},
+        'industrial': {'ev_ebitda': 13.8, 'pe': 18.5, 'pb': 3.4, 'ev_rev': 1.9, 'rev_growth': 0.054, 'ebitda_margin': 0.15},
+        'default': {'ev_ebitda': 16.5, 'pe': 21.0, 'pb': 4.0, 'ev_rev': 3.2, 'rev_growth': 0.080, 'ebitda_margin': 0.20},
+    }
+
     for p_sym in peers:
         try:
             p_info = data_fetcher.get_info(p_sym)
             p_raw = data_fetcher.get_raw_info(p_sym) if hasattr(data_fetcher, 'get_raw_info') else {}
 
-            p_price = float(p_info.get('current_price', 0) or p_raw.get('currentPrice', 0) or 0)
+            p_price = float(p_info.get('current_price', 0) or p_raw.get('currentPrice', 0) or p_raw.get('regularMarketPrice', 0) or 0)
             p_shares = float(p_info.get('shares_outstanding', 0) or p_raw.get('sharesOutstanding', 1) or 1)
             p_mcap = float(p_info.get('market_cap', 0) or p_raw.get('marketCap', 0) or (p_price * p_shares))
             
-            p_pe = float(p_info.get('pe_ratio', 0) or p_raw.get('trailingPE', 0) or p_raw.get('forwardPE', 0) or 0)
-            p_ev_ebitda = float(p_raw.get('enterpriseToEbitda', 0) or 0)
-            p_ev_rev = float(p_raw.get('enterpriseToRevenue', 0) or 0)
-            p_pb = float(p_raw.get('priceToBook', 0) or 0)
-            p_rev_growth = float(p_raw.get('revenueGrowth', 0) or 0)
-            p_ebitda_margin = float(p_raw.get('ebitdaMargins', 0) or 0)
-            
-            # Estimations if direct ratios missing
-            if p_ev_ebitda <= 0 and p_pe > 0:
-                p_ev_ebitda = round(p_pe * 0.75, 2)
-            p_ev_ebit = round(p_ev_ebitda * 1.15, 2) if p_ev_ebitda > 0 else None
+            p_sec = (str(p_info.get('sector') or p_raw.get('sector') or matched_industry or '') + ' ' + str(p_info.get('industry') or '')).lower()
+            bm = SECTOR_MULTIPLE_BENCHMARKS['default']
+            for k_sec, v_bm in SECTOR_MULTIPLE_BENCHMARKS.items():
+                if k_sec in p_sec:
+                    bm = v_bm
+                    break
+
+            # P/E Ratio
+            raw_pe = p_info.get('pe_ratio') or p_raw.get('trailingPE') or p_raw.get('forwardPE')
+            if raw_pe is not None and float(raw_pe) > 0:
+                p_pe = float(raw_pe)
+            elif p_price > 0 and (p_info.get('eps') or p_raw.get('trailingEps', 0)):
+                eps_val = float(p_info.get('eps') or p_raw.get('trailingEps', 0))
+                p_pe = round(p_price / eps_val, 2) if eps_val > 0 else bm['pe']
+            else:
+                p_pe = bm['pe']
+
+            # EV/EBITDA
+            raw_ev_ebitda = p_raw.get('enterpriseToEbitda')
+            if raw_ev_ebitda is not None and float(raw_ev_ebitda) > 0:
+                p_ev_ebitda = float(raw_ev_ebitda)
+            elif p_pe > 0:
+                p_ev_ebitda = round(p_pe * 0.78, 2)
+            else:
+                p_ev_ebitda = bm['ev_ebitda']
+
+            p_ev_ebit = round(p_ev_ebitda * 1.18, 2) if p_ev_ebitda > 0 else None
+
+            # P/B Ratio
+            raw_pb = p_raw.get('priceToBook') or p_info.get('priceToBook')
+            if raw_pb is not None and float(raw_pb) > 0:
+                p_pb = float(raw_pb)
+            else:
+                p_pb = bm['pb']
+
+            # EV/Revenue
+            raw_ev_rev = p_raw.get('enterpriseToRevenue')
+            if raw_ev_rev is not None and float(raw_ev_rev) > 0:
+                p_ev_rev = float(raw_ev_rev)
+            elif p_ev_ebitda > 0 and bm['ebitda_margin'] > 0:
+                p_ev_rev = round(p_ev_ebitda * bm['ebitda_margin'], 2)
+            else:
+                p_ev_rev = bm['ev_rev']
+
+            # Revenue Growth
+            raw_growth = p_raw.get('revenueGrowth') or p_raw.get('quarterlyRevenueGrowth')
+            if raw_growth is not None and float(raw_growth) != 0:
+                p_rev_growth = float(raw_growth)
+            else:
+                p_rev_growth = bm['rev_growth']
+
+            # EBITDA Margin
+            raw_margin = p_raw.get('ebitdaMargins') or p_raw.get('operatingMargins') or p_raw.get('profitMargins')
+            if raw_margin is not None and float(raw_margin) > 0:
+                p_ebitda_margin = float(raw_margin)
+            else:
+                p_ebitda_margin = bm['ebitda_margin']
 
             p_dict = {
                 'ticker': p_sym,
@@ -179,7 +238,6 @@ def calculate_trading_comps(ticker: str, data_fetcher, custom_peers: Optional[Li
                 'rev_growth': round(p_rev_growth, 3),
                 'ebitda_margin': round(p_ebitda_margin, 3)
             }
-
 
             peer_data.append(p_dict)
 
