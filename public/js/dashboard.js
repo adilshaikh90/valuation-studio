@@ -55,7 +55,9 @@ async function loadDashboard(ticker) {
         setText('companyName',   company.name || ticker);
         setText('tickerBadge',   `[${ticker}]`);
         setText('sectorBadge',   company.sector ? `[${company.sector.toUpperCase()}]` : '[SECTOR: N/A]');
-        setText('countryBadge',  company.country ? `[${company.country.toUpperCase()}]` : '[GLOBAL]');
+        
+        const countryDisplay = (company.country && company.country !== 'Global') ? company.country.toUpperCase() : 'UNITED STATES';
+        setText('countryBadge',  `[${countryDisplay}]`);
         
         // Currency badge formatting
         let currDisplay = company.currency || 'USD';
@@ -84,13 +86,21 @@ async function loadDashboard(ticker) {
 
         // ── Key metrics ─────────────────────────────────────
         setText('marketCap',    app.fmtLarge(company.market_cap));
-        setText('peRatio',      company.pe_ratio ? app.fmt(company.pe_ratio) + 'x' : 'N/A');
-        setText('epsVal',       sym + app.fmt(company.eps));
-        setText('betaVal',      company.beta ? app.fmt(company.beta) : 'N/A');
-        setText('divYield',     company.dividend_yield ? app.fmt(company.dividend_yield * 100) + '%' : 'N/A');
-        setText('fwdPE',        company.forward_pe ? app.fmt(company.forward_pe) + 'x' : 'N/A');
-        setText('employees',    company.employees ? Number(company.employees).toLocaleString() : 'N/A');
-        setText('country',      company.country || '–');
+        setText('peRatio',      (company.pe_ratio != null && !isNaN(company.pe_ratio)) ? app.fmt(company.pe_ratio, 2) + 'x' : 'N/A');
+        setText('epsVal',       (company.eps != null && !isNaN(company.eps)) ? sym + app.fmt(company.eps, 2) : 'N/A');
+        setText('betaVal',      (company.beta != null && !isNaN(company.beta)) ? app.fmt(company.beta, 2) : 'N/A');
+
+        let divDisplay = 'N/A';
+        if (company.dividend_yield != null && !isNaN(company.dividend_yield)) {
+            const rawYield = Number(company.dividend_yield);
+            const yPct = rawYield > 0.15 ? rawYield : rawYield * 100;
+            divDisplay = app.fmt(yPct, 2) + '%';
+        }
+        setText('divYield',     divDisplay);
+
+        setText('fwdPE',        (company.forward_pe != null && !isNaN(company.forward_pe)) ? app.fmt(company.forward_pe, 2) + 'x' : 'N/A');
+        setText('employees',    (company.employees != null && !isNaN(company.employees) && company.employees > 0) ? Number(company.employees).toLocaleString() : 'N/A');
+        setText('country',      (company.country && company.country !== 'Global') ? company.country : (company.country || '–'));
 
         // 52-week range bar
         const low52  = company['52_week_low']  || company.week52_low;

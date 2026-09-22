@@ -23,8 +23,13 @@ def calculate_wacc(ticker: str, data_fetcher, peers: list = None, use_peer_beta:
         
     # 2. Beta
     beta_raw = info.get('beta')
-    if beta_raw is None:
-        beta_raw = 1.0 # Fallback
+    if beta_raw is None or beta_raw == 1.0:
+        if hasattr(data_fetcher, 'calculate_beta'):
+            b_calc = data_fetcher.calculate_beta(ticker, country=info.get('country'))
+            if b_calc is not None:
+                beta_raw = b_calc
+        if beta_raw is None:
+            beta_raw = 1.0 # Fallback
         
     # 3. Market Values
     market_cap = info.get('market_cap', 0)

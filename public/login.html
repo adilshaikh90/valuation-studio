@@ -153,22 +153,6 @@
     .auth-footer a:hover {
       text-decoration: underline;
     }
-    .demo-hint {
-      text-align: center;
-      margin-top: 0.75rem;
-      font-size: 0.78rem;
-      color: #64748b;
-    }
-    .demo-btn {
-      background: transparent;
-      border: none;
-      color: #38bdf8;
-      font-size: 0.78rem;
-      text-decoration: underline;
-      cursor: pointer;
-      margin-top: 0.35rem;
-      display: inline-block;
-    }
 
     /* Cookie & Analytics Banner */
     .cookie-banner {
@@ -291,11 +275,6 @@
         Don't have an account? <a href="signup.html?v=2.1">Sign up</a>
       </div>
 
-      <div class="demo-hint">
-        Demo: use any email &amp; password to access<br>
-        <button type="button" class="demo-btn" onclick="fillDemo()">Fill Demo Credentials</button>
-      </div>
-
       <div style="font-size:0.68rem; color:#71717a; text-align:center; margin-top:1.25rem; line-height:1.45; font-family:var(--font-mono, monospace);">
         Educational &amp; Research Platform • Not Investment Advice
       </div>
@@ -320,10 +299,6 @@
   <script src="js/havu-engine.js?v=3.0"></script>
   <script src="js/auth.js?v=3.0"></script>
   <script>
-    function fillDemo() {
-      document.getElementById('email').value = 'adilshaikh908281@gmail.com';
-      document.getElementById('password').value = 'TestPass123!';
-    }
     function handleForgot(e) {
       e.preventDefault();
       const email = document.getElementById('email').value.trim() || 'your email';
